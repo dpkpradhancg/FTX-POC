@@ -1,0 +1,73 @@
+     A                                      DSPSIZ(24 80 *DS3)
+     A                                      REF(*LIBL/FDTSREF)
+     A                                      PRINT(*LIBL/SCREENPRNT)
+     A  91                                  INVITE
+     A                                      WDWBORDER((*DSPATR RI) (*CHAR '    -
+     A                                          '))
+     A          R CNFIRM
+     A                                      WINDOW(4 11 8 55)
+     A                                      SETOF(91 'Cancel Invite')
+     A                                      OVERLAY
+     A                                      WDWBORDER((*COLOR BLU) (*DSPATR RI)-
+     A                                       (*CHAR '        '))
+     A                                      USRRSTDSP
+     A                                  1  1'DTSTCTNR'
+     A                                  1 19'CONFIRM TRIP NUMBER'
+     A                                      DSPATR(HI)
+     A                                  1 48DATE
+     A                                      EDTCDE(Y)
+     A                                  3 15'Enter Trip Number:'
+     A            SCTRIP    R        B  3 34REFFLD(DTSTRIP)
+     A  41                                  DSPATR(PC)
+     A  41                                  DSPATR(RI)
+     A  50                                  DSPATR(PR)
+     A N50                                  DSPATR(UL)
+     A  50        PSHFL1         2Y 0B  5 17PSHBTNFLD(*RSTCSR)
+     A                                      PSHBTNCHC(1 'Re-Enter')
+     A            ERRMSG        55A  O  7  1DSPATR(HI)
+     A          R DUMMY                     ASSUME
+     A                                  1  2 ' '
+     A                                      DSPATR(ND)
+     A          R WAITFMT                   TEXT('Dummy Record Format')
+     A                                      FRCDTA
+     A                                      LOCK
+     A                                      KEEP
+     A                                  1  2' '
+MV01 A          R DDMERR
+MV01 A                                  1  2DATE
+MV01 A                                      EDTCDE(Y)
+MV01 A                                  1 12TIME
+MV01 A            LDCNAM        24A  O  2  2
+MV01 A                                  1 29'DRIVER TRIP SYSTEM (DTS)'
+MV01 A                                  1 63'System:'
+MV01 A            LDSYSN        10A  O  1 71
+MV01 A            LDNAME        24A  O  2 57
+MV01 A                                  2 29'Remote Connection Error'
+MV01 A                                 13  3'The program you are using was canc-
+MV01 A                                      elled due to remote connection fail-
+MV01 A                                      ure.'
+MV01 A                                 14  3'Please contact MIS with the follow-
+MV01 A                                      ing information.'
+MV01 A                                 16  3'Program cancelled when it was tryi-
+MV01 A                                      ng to write into File'
+MV01 A            DERFIL        10A  O 16 59
+MV01 A                                 18  3'Please Do Not re-enter the Trip#'
+MV01 A                                      DSPATR(HI)
+MV01 A                                      DSPATR(RI)
+MV01 A                                      COLOR(RED)
+MV01 A            DERTR#         8A  O 18 36DSPATR(HI)
+MV01 A                                      DSPATR(RI)
+MV01 A                                      COLOR(GRN)
+MV01 A                                 18 45'without confirmation from MIS.'
+MV01 A                                      DSPATR(HI)
+MV01 A                                      DSPATR(RI)
+MV01 A                                      COLOR(RED)
+MV01 A                                  5  6'Box Number...........:'
+MV01 A                                  7  6'Batch Number.........:'
+MV01 A                                  9  6'Trip Number..........:'
+MV01 A            DERBOX         7A  O  5 29
+MV01 A            DERBAT         7A  O  7 29
+MV01 A            DERTRP         8A  O  9 29
+MV01 A                                  3  2'-----------------------------------
+MV01 A                                      ------------------------------------
+MV01 A                                      ---------'

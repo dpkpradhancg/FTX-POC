@@ -1,0 +1,364 @@
+     A                                      DSPSIZ(24 80 *DS3)
+     A                                      REF(*LIBL/FDTSBAT)
+     A  91                                  INVITE
+     A                                      CA01(01)
+     A                                      VLDCMDKEY(29)
+     A                                      PRINT(*LIBL/SCREENPRNT)
+     A                                      OPENPRT
+     A          R DS1SFL                    SFL
+     A  35                                  SFLNXTCHG
+     A            DSRRN1         4S 0H      TEXT('Hidden-Subfile Record Number')
+     A            S1SYMD         7S 0H
+DA08 A            S1OPT          1A  B 10  2
+     A  40                                  DSPATR(RI)
+     A  40
+     AO 42                                  DSPATR(PC)
+     A N41                                  DSPATR(UL)
+     A  41                                  DSPATR(PR)
+     A                                      VALUES(' ' '4' '5' '6' '8' '9')
+DA08 A            S1BOX          7A  O 10  4
+DA08 A            S1BSTS         7A  O 10 12
+DA08 A            S1TBAT         3Y 0O 10 21EDTCDE(3)
+DA08 A            S1CBAT         3Y 0O 10 25EDTCDE(3)
+DA08 A            S1OBAT         3Y 0O 10 29EDTCDE(3)
+DA08 A            S1DOPN         6Y 0O 10 34EDTCDE(Y)
+DA08 A            S1CLKO         3A  O 10 43
+DA08 A            S1DCLO         6Y 0O 10 48EDTCDE(Y)
+DA08 A            S1CLKC         3A  O 10 57
+DA08 A            S1DSHP         6Y 0O 10 62EDTCDE(Y)
+DA08 A            S1CLKS         3A  O 10 71
+DA08 A            S1BCSS         1A  O 10 77
+     A          R DS1SFC                    SFLCTL(DS1SFL)
+     A                                      SFLSIZ(0013)
+     A                                      SFLPAG(0012)
+     A  70                                  CF06(06 'Add new box')
+DA08 A                                      CA18(18 'Toggle Key')
+BB02 A                                      CF05(05 'Work Queue')
+     A                                      SETOF(91 'Cancel Invite')
+     A N33                                  ROLLUP(61)
+     A                                      BLINK
+     A                                      OVERLAY
+     A  30                                  SFLDSP
+     A  31                                  SFLDSPCTL
+     A  32                                  SFLCLR
+     A  33                                  SFLEND
+     A            SFRRN1         4S 0H      SFLRCDNBR
+     A                                  1  2DATE
+     A                                      EDTCDE(Y)
+     A                                  1 11TIME
+     A                                  1 27'Driver Trip System (DTS)'
+     A                                      DSPATR(HI)
+     A                                  1 58'System:'
+     A            SCSYSN        10A  O  1 67
+     A                                  2  2'XXXXXXXXXXXXXXXXXXXX'
+     A                                  2 30'Box Control Display'
+     A                                  2 58'Name:'
+     A            SCUSER        15A  O  2 65
+     A                                  4  2'Box Opened Clerk. . .'
+     A            SC1CLK         3A  B  4 24CHANGE(38)
+     A                                  4 28'(Blanks=*ALL)'
+     A                                  4 47'Position to Box . . . .'
+     A            SC1BOX         7A  B  4 71CHANGE(39)
+     A  72                                  DSPATR(PC)
+     A                                  5  2'Type options, Press enter.'
+     A                                  6  3'4=Delete'
+     A                                  6 13'5=Work with Batches'
+     A                                  6 34'6=Add Batch'
+     A                                  6 47'8=Ship Box'
+     A                                  6 59'9=Unship Box'
+DA08 A                                  8 20'<--Batches--> <--Opened-->  <--Clo-
+DA08 A                                      sed-->  <--Shipped--> Cust'
+     A                                      DSPATR(HI)
+DA08 A                                  9  1'Opt Box    Status   Tot Clo Opn   -
+DA08 A                                      Date    Clk   Date    Clk   Da-
+DA08 A                                      te    Clk  Box '
+     A                                      DSPATR(HI)
+     A                                      DSPATR(UL)
+     A          R CMDKY1
+     A                                      OVERLAY
+     A                                 23  2'F1=Exit'
+     A                                      COLOR(BLU)
+BB02 A                                 23 11'F5=Work Queue'
+BB02 A                                      COLOR(BLU)
+BB02 A  70                             23 27'F6=Add New Box'
+     A                                      COLOR(BLU)
+BB02 A                                 23 43'F18=Toggle Cust# Boxes/All'
+DA08 A                                      COLOR(BLU)
+     A          R ADDBOX
+     A                                      SETOF(91 'Cancel Invite')
+     A                                      CA02(02)
+SS01 A                                      CF04(04 'Prompt')
+SS01 A                                      RTNCSRLOC(&CSRRCD &CSRFLD &CSRPOS)
+SS01 A                                      CSRLOC(LINE COL)
+     A                                      BLINK
+     A                                      OVERLAY
+SS01 A            LINE           3S 0H
+SS01 A            COL            3S 0H
+SS01 A            CSRRCD        10A  H
+SS01 A            CSRFLD        10A  H
+SS01 A            CSRPOS         4S 0H
+     A                                  1  2DATE
+     A                                      EDTCDE(Y)
+     A                                  1 11TIME
+     A                                  1 27'Driver Trip System (DTS)'
+     A                                      DSPATR(HI)
+     A                                  1 58'System:'
+     A            SCSYSN        10A  O  1 67
+     A                                  2  2'XXXXXXXXXXXXXXXXXXXX'
+     A            ADDTXT        18A  O  2 30
+     A                                  2 58'Name:'
+     A            SCUSER        15A  O  2 65
+     A                                  8  3'Box Number.......'
+     A            ADBOX#         7S 0O  8 21
+     A                                 10  3'Add'
+     A            ADNBCH         3Y 0B 10  7EDTCDE(3)
+     A  46                                  DSPATR(RI)
+     A  46                                  DSPATR(PC)
+     A                                 10 11'Batch(es) @'
+     A            ADNTRP         3Y 0O 10 23EDTCDE(3)
+     A                                 10 27'Trips per Batch'
+     A                                 10 46'Last Batch Trip count'
+     A            ADLBTC         3Y 0B 10 68EDTCDE(3)
+     A  47                                  DSPATR(RI)
+     A  47                                  DSPATR(PC)
+     A                                 12  3'DTR Forms type for the Batch(es)..-
+     A                                      .'
+     A            ADFORM         1   B 12 39
+     A  48                                  DSPATR(RI)
+     A  48                                  DSPATR(PC)
+DA08 A                                 14  3'Customer Number Suspend Box  :'
+DA08 A            ADSUSB         1   B 14 35
+DA08 A  49                                  DSPATR(RI)
+DA08 A  49                                  DSPATR(PC)
+DA08 A  25                                  DSPATR(PR)
+DA08 A                                 14 38'( Y=Yes, N=No )'
+SS01 A            ADFDES        15   O 12 41
+     A                                 23  2'F1=Exit'
+     A                                      COLOR(BLU)
+     A                                 23 18'F2=Cancel'
+     A                                      COLOR(BLU)
+SS01 A                                 23 34'F4=Prompt'
+SS01 A                                      COLOR(BLU)
+     A          R DL1SFL                    SFL
+     A  35                                  SFLNXTCHG
+     A            DLRRN1         4S 0H      TEXT('Hidden-Subfile Record Number')
+     A            S1BOX          7A  O  9  3
+     A            S1BSTS         7A  O  9 11
+     A            S1TBAT         3Y 0O  9 19EDTCDE(3)
+     A            S1CBAT         3Y 0O  9 24EDTCDE(3)
+     A            S1OBAT         3Y 0O  9 29EDTCDE(3)
+     A            S1DOPN         6Y 0O  9 34EDTCDE(Y)
+     A            S1CLKO         3A  O  9 43
+     A            S1DCLO         6Y 0O  9 48EDTCDE(Y)
+     A            S1CLKC         3A  O  9 57
+     A            S1DSHP         6Y 0O  9 63EDTCDE(Y)
+     A            S1CLKS         3A  O  9 72
+     A          R DL1SFC                    SFLCTL(DL1SFL)
+     A                                      SFLSIZ(0013)
+     A                                      SFLPAG(0012)
+     A                                      CA02(02)
+     A                                      SETOF(91 'Cancel Invite')
+     A                                      BLINK
+     A                                      OVERLAY
+     A  30                                  SFLDSP
+     A  31                                  SFLDSPCTL
+     A  32                                  SFLCLR
+     A  36                                  SFLEND
+     A            DLRRN1         4S 0H      SFLRCDNBR
+     A                                  1  2DATE
+     A                                      EDTCDE(Y)
+     A                                  1 11TIME
+     A                                  1 27'Driver Trip System (DTS)'
+     A                                      DSPATR(HI)
+     A                                  1 58'System:'
+     A            SCSYSN        10A  O  1 67
+     A                                  2  2'XXXXXXXXXXXXXXXXXXXX'
+     A                                  2 29'Box Control Delete'
+     A                                  2 58'Name:'
+     A            SCUSER        15A  O  2 65
+     A                                  4  2'Press Enter to confirm your choice-
+     A                                       for Delete.'
+     A                                  5  2'Press F2=Cancel to return to chang-
+     A                                      e your choices.'
+     A                                  7 19'<--Batches-->  <--Opened-->  <--Cl-
+     A                                      osed-->  <--Shipped-->'
+     A                                      DSPATR(HI)
+     A                                  8  3'Box     Status  Tot Clos Open     -
+     A                                       Date Clk      Date Clk      Date  -
+     A                                      Clk'
+     A                                      DSPATR(HI)
+     A                                      DSPATR(UL)
+     A          R DS2SFL                    SFL
+     A  35                                  SFLNXTCHG
+     A            DSRRN2         4S 0H      TEXT('Hidden-Subfile Record Number')
+     A            S2EFLG         1A  H      TEXT('EDIT DTR TOT FLAG')
+     A            S2OPT          1A  B 10  3
+     A  50                                  DSPATR(RI)
+     A  50
+     AO 52                                  DSPATR(PC)
+     A N51                                  DSPATR(UL)
+     A  51                                  DSPATR(PR)
+     A                                      VALUES(' ' '2' '4' '5')
+     A            S2BOX          7A  O 10  5
+     A            S2BAT          7A  O 10 13
+     A            S2DCRT         6Y 0O 10 21EDTCDE(Y)
+     A            S2BTST         7A  O 10 30
+     A            S2FORM         1A  O 10 39
+     A            S2DFIN         6Y 0O 10 42EDTCDE(Y)
+     A            S2CLKC         3A  O 10 51
+     A            S2CLKK         3A  O 10 55
+     A            S2MDTR         3Y 0B 10 59EDTCDE(3)
+     A  55                                  DSPATR(UL)
+     A N55                                  DSPATR(PR)
+     A  56                                  DSPATR(RI)
+     A  55
+     AO 56                                  DSPATR(PC)
+     A            S2KDTR         3Y 0O 10 63EDTCDE(3)
+     A            S2VDTR         3Y 0O 10 67EDTCDE(3)
+     A            S2SDTR         3Y 0O 10 71EDTCDE(3)
+     A            S2DDTR         3Y 0O 10 75EDTCDE(3)
+     A          R DS2SFC                    SFLCTL(DS2SFL)
+     A                                      SFLSIZ(0013)
+     A                                      SFLPAG(0012)
+     A                                      CA02(02)
+VA01 A                                      CA07(07 'Susp.Trips')
+     A                                      CA18(18)
+     A                                      SETOF(91 'Cancel Invite')
+     A N34                                  ROLLUP(61)
+     A                                      BLINK
+     A                                      OVERLAY
+     A  30                                  SFLDSP
+     A  31                                  SFLDSPCTL
+     A  32                                  SFLCLR
+     A  34                                  SFLEND
+     A            SFRRN2         4S 0H      SFLRCDNBR
+     A                                  1  2DATE
+     A                                      EDTCDE(Y)
+     A                                  1 11TIME
+     A                                  1 27'Driver Trip System (DTS)'
+     A                                      DSPATR(HI)
+     A                                  1 58'System:'
+     A            SCSYSN        10A  O  1 67
+     A                                  2  2'XXXXXXXXXXXXXXXXXXXX'
+     A                                  2 28'Batch Control Display'
+     A                                  2 58'Name:'
+     A            SCUSER        15A  O  2 65
+     A                                  3 50'Position to Box..:'
+     A            SC2BOX         7A  B  3 69CHANGE(44)
+     A  71                                  DSPATR(PR)
+     A N71                                  DSPATR(UL)
+     A  75N71                               DSPATR(PC)
+     A                                  4  2'Clerk Keyed...:'
+     A            SC2CLK         3A  B  4 18CHANGE(43)
+     A                                  4 22'(Blanks=*ALL)'
+     A                                  4 48'Position to Batch..:'
+     A            SC2BAT         7A  B  4 69CHANGE(45)
+     A  75                                  DSPATR(PC)
+     A                                  5  2'Type options, Press enter.'
+     A                                  6  2'2=Edit DTR count'
+     A                                  6 21'4=Delete'
+     A                                  6 32'5=Work with DTRs'
+     A N73N74                           6 60'ALL BATCHES      '
+     A                                      DSPATR(HI)
+     A  73                              6 60'OPEN BATCHES     '
+     A                                      DSPATR(HI)
+     A  74                              6 60'SUSPENDED BATCHES'
+     A                                      DSPATR(HI)
+     A                                  8 24'Batch Batch  Form    Date  <-Clk->-
+     A                                       <----DTR COUNT---->'
+     A                                      DSPATR(HI)
+     A                                  9  2'Opt Box    Batch       Date Status-
+     A                                       Type  Entered Crt Kyd Tot Kyd Vld -
+     A                                      Sus Rej'
+     A                                      DSPATR(HI)
+     A                                      DSPATR(UL)
+     A          R CMDKY2
+     A                                      OVERLAY
+     A                                 23  2'F1=Exit'
+     A                                      COLOR(BLU)
+     A                                 23 12'F2=Prev'
+     A                                      COLOR(BLU)
+VA01 A                                 23 22'F7=Suspended Trips'
+VA01 A                                      COLOR(BLU)
+     A N73N74                          23 49'F18=Open Batches '
+     A N73N74                               COLOR(BLU)
+     A  73                             23 49'F18=Susp. Batches'
+     A  73                                  COLOR(BLU)
+     A  74                             23 49'F18=ALL Batches  '
+     A  74                                  COLOR(BLU)
+     A          R DL2SFL                    SFL
+     A            DLRRN2         4S 0H      TEXT('Hidden-Subfile Record Number')
+     A            S2BOX          7A  O  9  5
+     A            S2BAT          7A  O  9 13
+     A            S2DCRT         6Y 0O  9 21EDTCDE(Y)
+     A            S2BTST         7A  O  9 30
+     A            S2FORM         1A  O  9 39
+     A            S2DFIN         6Y 0O  9 42EDTCDE(Y)
+     A            S2CLKC         3A  O  9 51
+     A            S2CLKK         3A  O  9 55
+     A            S2MDTR         3Y 0O  9 59EDTCDE(3)
+     A            S2KDTR         3Y 0O  9 63EDTCDE(3)
+     A            S2VDTR         3Y 0O  9 67EDTCDE(3)
+     A            S2SDTR         3Y 0O  9 71EDTCDE(3)
+     A            S2DDTR         3Y 0O  9 75EDTCDE(3)
+     A          R DL2SFC                    SFLCTL(DL2SFL)
+     A                                      SFLSIZ(0013)
+     A                                      SFLPAG(0012)
+     A                                      CA02(02)
+     A                                      SETOF(91 'Cancel Invite')
+     A                                      BLINK
+     A                                      OVERLAY
+     A  30                                  SFLDSP
+     A  31                                  SFLDSPCTL
+     A  32                                  SFLCLR
+     A  37                                  SFLEND
+     A            DLRRN2         4S 0H      SFLRCDNBR
+     A                                  1  2DATE
+     A                                      EDTCDE(Y)
+     A                                  1 11TIME
+     A                                  1 27'Driver Trip System (DTS)'
+     A                                      DSPATR(HI)
+     A                                  1 58'System:'
+     A            SCSYSN        10A  O  1 67
+     A                                  2  2'XXXXXXXXXXXXXXXXXXXX'
+     A                                  2 29'Batch Control Delete'
+     A                                  2 58'Name:'
+     A            SCUSER        15A  O  2 65
+     A                                  4  2'Press Enter to confirm your choice-
+     A                                       for Delete.'
+     A                                  5  2'Press F2=Cancel to return to chang-
+     A                                      e your choices.'
+     A                                  7 24'Batch Batch  Form    Date  <-Clk->-
+     A                                       <----DTR Count---->'
+     A                                      DSPATR(HI)
+     A                                  8  5'Box     Batch       Date Status Ty-
+     A                                      pe  Entered Crt Kyd Tot Kyd Vld Sus-
+     A                                       Rej'
+     A                                      DSPATR(HI)
+     A                                      DSPATR(UL)
+     A          R OPTIO2
+     A                                      OVERLAY
+     A                                 23  2'F1=Exit'  COLOR(BLU)
+     A                                 23 11'F2=Cancel' COLOR(BLU)
+     A          R NODATA
+     A                                      SETOF(91 'Cancel Invite')
+     A                                      OVERLAY
+     A                                 14 10'(No Data available on file)'
+     A          R CMDKYD
+     A                                      OVERLAY
+     A                                 23  2'F2=Cancel'  COLOR(BLU)
+     A          R WAITFMT                   TEXT('Dummy Record Format')
+     A                                      FRCDTA
+     A                                      LOCK
+     A                                  1  2' '
+     A          R MSGSFL                    SFL
+     A                                      SFLMSGRCD(24)
+     A            @MSGKY                    SFLMSGKEY
+     A            PSPGNM                    SFLPGMQ
+     A          R MSGSFC                    SFLCTL(MSGSFL)
+     A                                      SETOF(91 'Cancel Invite')
+     A                                      SFLSIZ(2) SFLPAG(1)
+     A                                      BLINK  OVERLAY
+     A N60                                  SFLEND  SFLINZ
+     A                                      SFLDSP  SFLDSPCTL
+     A            PSPGNM                    SFLPGMQ

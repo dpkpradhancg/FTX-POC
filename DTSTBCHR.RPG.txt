@@ -1,0 +1,1703 @@
+     FDTSTBCHDCF  E                    WORKSTN      KINFDS DSINFO
+     F                                        DSRRN1KSFILE DS1SFL
+     F                                        DSRRN2KSFILE DS2SFL
+     F                                        DLRRN1KSFILE DL1SFL
+     F                                        DLRRN2KSFILE DL2SFL
+     F                                              KINFSR *PSSR
+     F                                              KNUM        1
+     FFDTSBOX UF  E           K        DISK                      A
+     F                                              KINFSR *PSSR
+     FLDTSBOX1IF  E           K        DISK
+     F                                              KINFSR *PSSR
+     F            RDTSBOX                           KRENAMERDTSBOX1
+     FLDTSBOX2IF  E           K        DISK
+     F                                              KINFSR *PSSR
+     F            RDTSBOX                           KRENAMERDTSBOX2
+     FLDTSBOX3IF  E           K        DISK
+     F                                              KINFSR *PSSR
+     F            RDTSBOX                           KRENAMERDTSBOX3
+     FFDTSBAT UF  E           K        DISK                      A
+     F                                              KINFSR *PSSR
+     FLDTSBAT1IF  E           K        DISK
+     F                                              KINFSR *PSSR
+     F            RDTSBAT                           KRENAMERDTSBAT1
+     FLDTSBAT3IF  E           K        DISK
+     F                                              KINFSR *PSSR
+     F            RDTSBAT                           KRENAMERDTSBAT3
+     FFCOMTRN O   E           K        DISK         KINFSR *PSSR A    UC
+SS01 FVEHTABLVIF  E           K        DISK
+DA02 E                    BT        999  7               BATCH-COUNT ARRY
+DA02 E                    CT        999  3 0             BATCH-COUNT ARRY
+     IDS1SFC
+     I              *IN01                           F1
+     I              *IN06                           F6
+     I              *IN29                           CMDKEY
+     I              *IN61                           ROLLUP
+     I              *IN91                           INVITE
+BB02 I              *IN05                           F5
+     IDL1SFC
+     I              *IN02                           F2
+     I              *IN29                           CMDKEY
+     I              *IN91                           INVITE
+     IADDBOX
+     I              *IN01                           F1
+     I              *IN02                           F2
+SS01 I              *IN04                           F4
+     I              *IN29                           CMDKEY
+     I              *IN91                           INVITE
+     IDS2SFC
+     I              *IN01                           F1
+     I              *IN02                           F2
+VA01 I              *IN07                           F07
+     I              *IN18                           F18
+     I              *IN29                           CMDKEY
+     I              *IN61                           ROLLUP
+     I              *IN91                           INVITE
+     IDL2SFC
+     I              *IN02                           F2
+     I              *IN29                           CMDKEY
+     I              *IN91                           INVITE
+     IBOXTRN    E DSFDTSBOX                                               DTSHDR
+     IBATTRN    E DSFDTSBAT                                               DTSHDR
+     IPASFLD      DS                            733                       PASFLD
+     I                                        1  12 TIMEDT                PASFLD
+     I                                       13  16 SNDMCH                PASFLD
+     I                                       17 199 BFF1                  PASFLD
+     I                                      200 450 BFF2                  PASFLD
+     I                                      451 700 BFF3                  PASFLD
+     I                                      701 733 BFF4                  PASFLD
+     IPSSA       SDS                            429
+     I                                        1  10 PSPGNM
+     I                                       11  150PSPGSC
+     I                                       21  28 PSPGST
+     I                                       29  36 PSPGRT
+     I                                       37  390PSPARM
+     I                                       40  46 PSPGMI
+     I                                       81  90 PSPGLB
+     I                                       91 168 PSPGMS
+     I                                      201 208 PSLFNM
+     I                                      209 213 PSLFSC
+     I                                      220 227 PSLFRT
+     I                                      228 235 PSLFST
+     I                                      244 253 PSJBNM
+     I                                      254 263 PSJBUS
+     I                                      264 2690PSJBNR
+     I                                      276 2810PSMDY
+     I                                      282 2850PSHM
+     I                                      282 2870UTIME
+     IDSINFO      DS
+SS01 I                                    B 370 3710ICURLN
+     I                                    B 378 3790DSMRRN
+     IFLTM        DS
+     I                                        1   4 FLMACH
+     ILDA         DS
+     I                                        1   60WKDATE
+     I                                        8   8 TAPE
+     I                                       10  10 COPIES
+     I                                       12  12 AFFECT
+     I                                       14  14 LOC1
+     I                                       16  16 LOC2
+     I                                       18  18 HIST
+     I                                       19  24 AUTDST
+     I                                      401 410 LDPGM
+     I                                      411 411 LDCODE
+     I                                      412 415 LDCORP
+     I                                      416 419 LDDIST
+     I                                      420 443 LDNAME
+     I                                      444 446 LDINIT
+     I                                      447 448 LDAUT1
+     I                                      449 450 LDAUT2
+     I                                      451 452 LDAUT3
+     I                                    P 453 4560LDLIM1
+     I                                    P 457 4600LDLIM2
+     I                                    P 461 4640LDLIM3
+     I                                      465 488 LDINDS
+     I                                      497 500 LDMACH
+     I                                      501 510 LDACCS
+     I                                    P 511 5120LDLEVL
+     I                                      521 524 LDADMN
+     I                                      525 528 LDREGN
+     I                                      529 532 LDAREA
+     I                                      533 536 LDRDST
+     I                                      537 560 LDCNAM
+     I            DS
+     I                                        1  24 AUTFLG
+     I                                        2   2 AUTEBT
+     I                                       10  10 AUTDBX
+     I                                       11  11 AUTABX
+     I                                       12  12 AUTSHP
+     I                                       13  13 AUTABT
+     I                                       14  14 AUTDBT
+     IBOXA        DS
+     I                                        1   70NXTBOX
+     ICONTRL      DS
+     I                                        1   30TRPBAT
+     I                                        4   70TRPBOX
+     I                                        8  100TRPDAY
+     I                                       11  130USHDAY
+     I                                       14  160CYCLDY
+KRI  I                                       17  19 TRCTDY
+DA01 I                                       20  21 TRDAYS
+     I            DS
+     I                                        1   3 UNSHPD
+     I                                        1   1 CHR1
+     I                                        2   2 CHR2
+     I                                        3   3 CHR3
+KRI5 IJOBRUN      DS
+KRI5 I                                        1   1 BCHRUN
+     I            DS
+     I                                        1  17 LIMIT
+     I                                        1   1 BP
+     I                                        2   8 START
+     I                                        9   9 DH
+     I                                       10  16 END
+     I                                       17  17 EP
+Y2   I            DS
+Y2   I                                        1   70YXCYMD
+Y2   I                                        1   10YXCENT
+Y2   I                                        2   30YXYR1
+Y2   I                                        4   70YXMMDD
+Y2   I                                        8   90YXYR2
+Y2   I                                        4   90YXMDY
+     I              ' New Box Creation '  C         ADTXT1
+     I              'New Batch Creation'  C         ADTXT2
+SS01 I              'SPPROMPTR'           C         PRMPTR
+SS01 I              'PTFID = ''ADFORM'' ' C         WHEREC
+SS01 I              'DTR FORMS TYPE'      C         TITLE
+     C                     EXSR ONETM                      ONE-TIME
+     C                     EXSR MAIN                       MAIN
+     C                     MOVE '1'       *INLR
+     C/EJECT
+     C           MAIN      BEGSR
+     C           F1        DOUEQON
+KRI5 C           *NAMVAR   DEFN DTSBCHUPD JOBRUN           System
+KRI5 C                     IN   JOBRUN
+KRI5 C           BCHRUN    IFEQ 'Y'
+KRI5 C                     LEAVE
+KRI5 C                     ENDIF
+     C           SCRNID    IFEQ 'BOX'
+     C                     EXSR DSPBOX
+     C                     ELSE
+     C                     EXSR DSPBAT
+     C                     ENDIF
+     C                     ENDDO
+     C                     ENDSR
+     C/EJECT
+     C           DSPBOX    BEGSR
+     C           F1        DOUEQON
+KRI5 C                     IN   JOBRUN
+KRI5 C           BCHRUN    IFEQ 'Y'
+KRI5 C                     LEAVE
+KRI5 C                     ENDIF
+     C                     WRITEMSGSFC                     Error Messages
+     C                     WRITECMDKY1
+     C                     SETON                     31    SFLDSPCTL
+     C           DSRRN1    IFGT 0
+     C                     SETON                     30    SFLDSP
+     C                     ELSE
+     C                     SETOF                     30    SFLDSP
+     C                     WRITENODATA
+     C                     ENDIF
+     C                     MOVE ON        INVITE
+     C                     WRITEDS1SFC
+     C                     READ DTSTBCHD                 99
+     C           DSMRRN    IFNE *ZERO
+     C                     Z-ADDDSMRRN    SFRRN1
+     C                     ENDIF
+     C                     CALL 'SPCLRMSG'             98  Clr Error Msgs
+     C           *IN98     CASEQON        FPERR            File/Pgm Error
+     C                     END
+     C           F1        IFEQ ON                         EXIT
+     C                     Z-ADD6         LENGTH 155
+     C                     CALL 'QCAEXEC'
+     C                     PARM 'RCLRSC'  WRK6A   6
+     C                     PARM           LENGTH
+     C                     END
+     C           F6        IFEQ ON
+     C                     EXSR $NBOX
+     C                     ENDIF
+BB02 C           F5        IFEQ ON
+BB02 C                     CALL 'DTSTWRQR'
+BB02 C                     ENDIF
+DA08 C           *IN18     IFEQ ON
+DA08 C           TOGFLG    IFEQ '1'
+DA08 C                     MOVE '0'       TOGFLG
+DA08 C                     ELSE
+DA08 C                     MOVE '1'       TOGFLG
+DA08 C                     ENDIF
+DA08 C                     EXSR BLDBOX
+DA08 C                     ENDIF
+     C           ROLLUP    IFEQ ON
+     C                     EXSR BLDBOX
+     C                     ENDIF
+     C           CMDKEY    IFEQ OFF
+     C                     MOVE NO        ERROR   1
+     C           *IN38     IFEQ '1'
+     C           *IN39     OREQ '1'
+     C                     EXSR BLDBOX
+     C                     ELSE
+     C                     EXSR EDTSF1
+     C           ERROR     IFEQ NO                         NO ERRORS
+     C                     EXSR PRCOP1
+     C                     ENDIF
+     C                     ENDIF
+     C                     ENDIF                           NO F KEYS
+     C                     ENDDO                           DOU F1=ON
+     C                     ENDSR
+     C/EJECT
+     C           EDTSF1    BEGSR
+     C           DSRRN1    IFGT *ZERO                      Recs in SFL
+     C                     READCDS1SFL                   88
+     C           *IN88     DOWEQ'0'
+     C                     SETON                     35    SFLNXTCHG
+     C           S1OPT     IFNE *BLANK
+     C           S1OPT     IFEQ '4'                        4=Delete
+     C           AUTDBX    ANDNE'1'
+     C           S1OPT     OREQ '6'                        6=ADD BATCH
+     C           AUTABT    ANDNE'1'
+     C           S1OPT     OREQ '8'                        8=SHIP
+     C           AUTSHP    ANDNE'1'
+     C           S1OPT     OREQ '9'                        9=UNSHIP
+     C           AUTSHP    ANDNE'1'
+     C                     MOVE 'DTS0188' MSGID
+     C                     MOVE *BLANKS   MSGDTA
+     C                     CALL 'SPSNDPGM'SNDPGM       98
+     C                     MOVE YES       ERROR
+     C                     SETON                     3540
+     C                     ELSE
+     C           S1BSTS    IFEQ 'SHIPPED'
+     C           S1OPT     ANDNE'5'                        5=WORK
+     C           S1OPT     ANDNE'9'                        9=UNSHIP
+     C                     MOVE 'DTS0024' MSGID
+     C                     MOVE *BLANKS   MSGDTA
+     C                     CALL 'SPSNDPGM'SNDPGM       98
+     C                     MOVE YES       ERROR
+     C                     SETON                     3540
+     C                     ELSE
+     C           S1BOX     SETLLFDTSBAT                  89
+     C           S1OPT     IFEQ '4'                        4=Delete
+     C           *IN89     ANDEQ'1'
+     C                     MOVE 'DTS0009' MSGID
+     C                     MOVE *BLANKS   MSGDTA
+     C                     CALL 'SPSNDPGM'SNDPGM       98
+     C                     MOVE YES       ERROR
+     C                     SETON                     3540
+     C                     ENDIF
+     C           S1OPT     IFEQ '5'                        5=WORK
+     C           *IN89     ANDEQ'0'
+     C                     MOVE 'DTS0010' MSGID
+     C                     MOVE *BLANKS   MSGDTA
+     C                     CALL 'SPSNDPGM'SNDPGM       98
+     C                     MOVE YES       ERROR
+     C                     SETON                     3540
+     C                     ENDIF
+     C                     ENDIF                           *IN97 = 1
+     C                     ENDIF
+     C                     Z-ADDDSRRN2    SFRRN2
+     C                     ENDIF
+     C                     UPDATDS1SFL
+     C                     SETOF                     40
+     C           ERROR     IFEQ YES
+     C                     LEAVE
+     C                     ENDIF
+     C                     READCDS1SFL                   88
+     C                     ENDDO                           *IN88 DOWE 0
+     C                     ENDIF                           NUM1 > 1
+     C                     ENDSR
+     C           PRCOP1    BEGSR
+     C                     MOVE 'N'       CANCEL  1
+     C           DSRRN1    IFGT *ZERO                      Recs in SFL
+     C                     READCDS1SFL                   88
+     C           *IN88     DOWEQ'0'
+     C                     SETON                     35    SFLNXTCHG
+     C           S1OPT     IFNE ' '
+     C           UPDTR1    TAG
+     C           S1BOX     CHAINFDTSBOX              8096
+     C           *IN96     IFEQ '1'
+     C           PSLFSC    IFEQ '01218'                    record lock
+     C                     EXSR $LOCK                      ask for user
+     C           RESPON    CABEQ'RETRY'   UPDTR1           response
+     C           RESPON    IFEQ 'ABORT'
+     C                     MOVE 'DTS0014' MSGID
+     C                     MOVE *BLANKS   MSGDTA
+     C                     CALL 'SPSNDPGM'SNDPGM       98
+     C                     MOVE YES       ERROR
+     C                     MOVE 'Y'       CANCEL
+     C                     SETON                       3540
+     C                     GOTO CNLTAG
+     C                     ENDIF                           ENDIF RESPON
+     C                     ELSE                            other error
+     C                     EXSR *PSSR
+     C                     ENDIF                           ENDIF PSLFSC
+     C                     ENDIF
+     C           *IN80     IFEQ '1'
+     C                     MOVE 'DTS0023' MSGID
+     C                     MOVE *BLANKS   MSGDTA
+     C                     CALL 'SPSNDPGM'SNDPGM       98
+     C                     MOVE YES       ERROR
+     C                     SETON                       3540
+     C                     MOVE 'Y'       CANCEL
+     C                     GOTO CNLTAG
+     C                     ENDIF
+     C           S1OPT     IFEQ '4'                        Delete
+     C                     EXSR PRCDL1
+     C           CANCEL    IFEQ 'Y'
+     C                     GOTO CNLTAG
+     C                     ENDIF
+     C                     ENDIF
+     C           S1OPT     IFEQ '5'
+     C                     UNLCKFDTSBOX
+     C                     MOVE S1BOX     SC2BOX
+     C                     MOVE ON        *IN71            PR BOX
+     C                     MOVE OFF       *IN73            SHOW ALL
+     C                     MOVE OFF       *IN74            SHOW ALL
+     C                     MOVE *BLANKS   SC2BAT
+     C                     MOVE *BLANKS   SC2CLK
+     C                     EXSR BLDBAT
+     C                     EXSR DSPBAT
+     C           S1BOX     CHAINFDTSBOX             N8096
+     C                     EXSR MOVBOX
+     C                     ENDIF                           OPTION = 25'
+     C           S1OPT     IFEQ '6'
+     C           S1BOX     SETGTFDTSBAT
+     C           S1BOX     REDPEFDTSBAT             N    8096
+     C           *IN96     IFEQ '1'
+     C           PSLFSC    IFEQ '01218'                    record lock
+     C                     EXSR $LOCK                      ask for user
+     C           RESPON    CABEQ'RETRY'   UPDTR1           response
+     C           RESPON    IFEQ 'ABORT'
+     C                     MOVE 'DTS0014' MSGID
+     C                     MOVE *BLANKS   MSGDTA
+     C                     CALL 'SPSNDPGM'SNDPGM       98
+     C                     MOVE YES       ERROR
+     C                     MOVE 'Y'       CANCEL
+     C                     SETON                       3540
+     C                     GOTO CNLTAG
+     C                     ENDIF                           ENDIF RESPON
+     C                     ELSE                            other error
+     C                     EXSR *PSSR
+     C                     ENDIF                           ENDIF PSLFSC
+     C                     ENDIF
+     C           *IN80     IFEQ '1'
+     C                     MOVE 'DTS0023' MSGID
+     C                     MOVE *BLANKS   MSGDTA
+     C                     CALL 'SPSNDPGM'SNDPGM       98
+     C                     MOVE YES       ERROR
+     C                     MOVE 'Y'       CANCEL
+     C                     SETON                       3540
+     C                     GOTO CNLTAG
+     C                     ELSE                            other error
+     C                     MOVE BTBOX     ADBOX#
+     C                     MOVE BTBAT     BATSEQ  70
+     C                     MOVELADTXT2    ADDTXT                       LTS
+     C                     MOVEL'N'       NEWBOX  1                    LTS
+DA08 C                     SETON                     25                LTS
+DA08 C                     MOVELS1BCSS    ADSUSB                       LTS
+     C                     EXSR $ADD
+     C           F1        IFEQ OFF                                    or
+     C           F2        ANDEQOFF                                    or
+     C                     MOVE 'DTS0016' MSGID
+     C                     MOVELADBOX#    MSGDTA
+     C                     CALL 'SPSNDPGM'SNDPGM       98
+     C                     EXSR MOVBOX
+     C                     ELSE
+     C                     MOVE 'Y'       CANCEL
+     C                     SETON                       3540
+     C                     GOTO CNLTAG
+     C                     ENDIF
+     C                     ENDIF
+     C                     ENDIF                           OPTION = '6'
+     C           S1OPT     IFEQ '8'                        SHIP
+     C           BXSTS     IFNE 'C'
+     C                     MOVE 'DTS0025' MSGID
+     C                     MOVEL*BLANKS   MSGDTA
+     C                     CALL 'SPSNDPGM'SNDPGM       98
+     C                     MOVE YES       ERROR
+     C                     MOVE 'Y'       CANCEL
+     C                     SETON                       3540
+     C                     GOTO CNLTAG
+     C                     ELSE
+     C                     MOVEL'SHP'     FUNC    3
+     C                     EXSR SHPUSH
+     C                     ENDIF
+     C                     ENDIF
+     C           S1OPT     IFEQ '9'                        UNSHIP
+     C           BXSTS     IFNE 'S'
+     C                     MOVE 'DTS0026' MSGID
+     C                     MOVEL*BLANKS   MSGDTA
+     C                     CALL 'SPSNDPGM'SNDPGM       98
+     C                     MOVE YES       ERROR
+     C                     MOVE 'Y'       CANCEL
+     C                     SETON                       3540
+     C                     GOTO CNLTAG
+     C                     ELSE
+     C           S1SYMD    IFLT USHPDT
+     C                     MOVE 'DTS0027' MSGID
+     C                     MOVELUNSHPD    MSGDTA
+     C                     CALL 'SPSNDPGM'SNDPGM       98
+     C                     MOVE YES       ERROR
+     C                     MOVE 'Y'       CANCEL
+     C                     SETON                       3540
+     C                     GOTO CNLTAG
+     C                     ELSE
+     C                     MOVEL'USH'     FUNC    3
+     C                     EXSR SHPUSH
+     C                     ENDIF
+     C                     ENDIF
+     C                     ENDIF
+     C                     Z-ADDDSRRN1    SFRRN1
+     C                     MOVE *BLANK    S1OPT
+     C                     ENDIF                           SHOPTN¬=' '
+     C           CNLTAG    TAG
+     C                     UPDATDS1SFL
+     C                     SETOF                     404142
+     C           CANCEL    IFEQ 'Y'
+     C                     Z-ADDDSRRN1    SFRRN1
+     C                     UNLCKFDTSBOX
+     C                     LEAVE
+     C                     ENDIF                           CANCEL=YES
+     C                     READCDS1SFL                   88
+     C                     ENDDO                           *IN88 DOWE 0
+     C                     ENDIF                           DSRRN1 IFGT
+     C           CANCEL    IFNE 'Y'
+     C                     MOVE '1'       *IN72
+     C                     ELSE
+     C                     MOVE '0'       *IN72
+     C                     ENDIF
+     C                     ENDSR                           PRCOP1
+     C/EJECT
+     C           PRCDL1    BEGSR
+     C                     Z-ADD*ZERO     DLRRN1  40
+     C                     Z-ADD*ZERO     SVDLR1  40
+     C                     SETON                     32    SFLCLR
+     C                     SETOF                     3031  SFLDSP,CTL
+     C                     WRITEDL1SFC
+     C                     SETOF                     32    SFLCLR
+     C                     SETON                     36    SFLEND
+     C                     SETON                     35
+     C                     ADD  1         DLRRN1
+     C                     WRITEDL1SFL
+     C                     Z-ADDDLRRN1    SVDLR1  40
+     C                     MOVE 'N'       EXTFLG  1
+     C           EXTFLG    DOWEQ'N'
+     C                     SETON                     30    SFLDSP
+     C                     SETON                     31    SFLDSPCTL
+     C                     WRITECMDKYD                     CMD KEYS
+     C                     MOVE ON        INVITE           INVITE INPUT
+     C                     WRITEDL1SFC                     SFL CONTROL
+     C                     READ DTSTBCHD                 LR
+     C           F2        IFEQ ON
+     C                     MOVE 'Y'       CANCEL
+     C                     MOVE 'Y'       EXTFLG
+     C                     MOVE '1'       *IN42
+     C                     ENDIF
+     C           CMDKEY    CASEQ'0'       DELET1           ENTER
+     C                     ENDCS
+     C                     ENDDO
+     C           DLTEN1    ENDSR                           PRCDL1
+     C/EJECT
+     C           DELET1    BEGSR
+     C           1         DO   SVDLR1    RRN     40
+     C           RRN       CHAINDL1SFL               88
+     C           *IN88     IFEQ '0'
+     C                     MOVEL'BOX'     REC     3
+     C                     Z-ADDBXDCOM    COMDTE  70
+     C                     MOVELBXCCOM    COMUPD  3
+     C                     EXSR WRTTRN
+     C                     DELETRDTSBOX
+     C                     MOVEL'DELETED' S1BSTS
+     C                     SETON                     41
+     C                     SETOF                     35
+     C                     CLEARS1TBAT
+     C                     CLEARS1CBAT
+     C                     CLEARS1OBAT
+     C                     CLEARS1DOPN
+     C                     CLEARS1CLKO
+     C                     CLEARS1DCLO
+     C                     CLEARS1CLKC
+     C                     CLEARS1DSHP
+     C                     CLEARS1CLKS
+     C                     ENDIF                           *IN88 = 0
+     C                     ENDDO
+     C                     MOVE 'Y'       EXTFLG
+     C                     ENDSR                           DELET1
+     C/EJECT
+     C           SHPUSH    BEGSR
+     C           S1BOX     SETLLFDTSBAT
+     C           *IN80     DOUEQ'1'
+     C           RETRY1    TAG
+     C           S1BOX     READEFDTSBAT                9680
+     C           *IN96     IFEQ '1'
+     C                     GOTO RETRY1
+     C                     ENDIF
+     C           *IN80     IFEQ '0'
+     C           FUNC      IFEQ 'SHP'
+     C                     MOVEL'S'       BTSTS
+     C                     ELSE
+     C                     MOVEL'C'       BTSTS
+     C                     ENDIF
+     C                     MOVELLDINIT    BTLCIN
+     C                     MOVE SYSDTE    BTLCDT
+     C                     MOVELTIMTMP    BTLCTM
+     C           BTDCOM    IFNE *ZEROS                     B007           $DLPMT
+     C           BTDCOM    OREQ 0
+     C           BTCCOM    ANDNE'ADD'
+     C                     MOVE *ZEROS    BTDCOM                          $DLPMT
+     C                     MOVE 'UPD'     BTCCOM                          $DLPMT
+     C                     END                             E007           $DLPMT
+     C                     UPDATRDTSBAT                                   $WRITE
+     C                     ENDIF                           *IN88 = 0
+     C                     ENDDO
+     C                     Z-ADD0         @MBAT   30                      $DLPMT
+     C                     Z-ADD0         @CBAT   30                      $DLPMT
+     C                     EXSR UPDBOX
+     C                     EXSR MOVBOX
+     C                     ENDSR                           DELET1
+     C/EJECT
+     C           WRTTRN    BEGSR
+     C           COMDTE    IFGT *ZEROS                                    $DLPMT
+     C           COMDTE    OREQ *ZEROS                                    $DLPMT
+     C           COMUPD    ANDNE'ADD'                                     $DLPMT
+     C           OPNTRN    CASEQ' '       OPNCOM
+     C                     END                             E009
+     C                     CLEARCTFNAM
+     C                     CLEARCTMNAM
+     C                     CLEARCTLNAM
+     C                     CLEARCTVSEC
+     C                     TIME           TIMSTP 120       TIME/DATE (MDY)
+     C                     MOVELTIMSTP    TIME6   60       TIME
+     C                     MOVE TIMSTP    Y2MDY   60
+     C                     EXSR @MDY
+     C                     MOVE Y2CYMD    TODAY   70
+     C                     MOVE TIME6     CTODTE           ORIGINATING
+     C                     MOVELTODAY     CTODTE           DATE/TIME
+     C                     CLEARPASFLD
+     C                     MOVE TIMSTP    TIMEDT           TIME/DATE-MDY
+     C                     MOVE LDMACH    SNDMCH           SENDING MACH
+     C           REC       IFEQ 'BOX'
+     C                     MOVEL'FDTSBOX' CTFNAM           FILE NAME
+     C                     MOVEL'FDTSBOX' CTMNAM           MEMBER NAME
+     C                     MOVE PASFLD    CTVSEC           TIME/DATE-MDY
+     C                     MOVELBOXTRN    CTVSEC           DATA RECORD
+     C                     ELSE
+     C                     MOVEL'FDTSBAT' CTFNAM           FILE NAME
+     C                     MOVEL'FDTSBAT' CTMNAM           MEMBER NAME
+     C                     MOVE PASFLD    CTVSEC           TIME/DATE-MDY
+     C                     MOVELBATTRN    CTVSEC           DATA RECORD
+     C                     ENDIF
+     C                     MOVEL'DTS'     CTLNAM           LIB NAME
+     C                     MOVE 'D'       CTACT            DELETE
+     C                     WRITERCOMTRN                    WRITE FCOMTRN
+     C                     ENDIF
+     C                     ENDSR
+     C           OPNCOM    BEGSR
+     C                     MOVE '1'       OPNTRN  1
+     C                     OPEN FCOMTRN
+     C                     MOVE PSPGNM    CTOPGM           PGM NAME
+     C                     MOVE 'SPL'     CTTYPE           TRAN TYPE
+     C                     CLEARCTSDTE                     SENT DATE TM
+     C                     CLEARCTRDTE                     REC DATE TM
+     C                     MOVE LDMACH    CTSNDA           ORIG DEST
+     C                     MOVE LDMACH    CTLSTA           LAST SENDING
+     C                     MOVE FLMACH    CTDSTA           FINAL DEST
+     C                     CALL 'SPCOMDST'
+     C                     PARM           CTDSTA           SENDING ADMIN
+     C                     PARM           CTNXTA           NEXT ADMIN
+     C           *IN32     PARM           WKC01   1        0=VAL, 1=INVAL
+     C                     PARM 'SPL'     SPLTYP  3        TRANS TYPE
+     C                     PARM           CTPRIO           SEND PRIORITY
+     C                     MOVE FLMACH    CTNXTA           NEXT DEST
+     C                     CLEARCTDSTT                     DEST TYPE CODE
+     C                     CLEARCTDSTK                     DEST KEY
+     C                     ENDSR
+     C/EJECT
+     C           DSPBAT    BEGSR
+     C           F1        DOUEQON
+KRI5 C                     IN   JOBRUN
+KRI5 C           BCHRUN    IFEQ 'Y'
+KRI5 C                     LEAVE
+KRI5 C                     ENDIF
+     C                     WRITEMSGSFC                     Error Messages
+     C                     WRITECMDKY2
+     C                     SETON                     31    SFLDSPCTL
+     C           DSRRN2    IFGT 0
+     C                     SETON                     30    SFLDSP
+     C                     ELSE
+     C                     SETOF                     30    SFLDSP
+     C                     WRITENODATA
+     C                     ENDIF
+     C                     MOVE ON        INVITE
+     C                     WRITEDS2SFC
+     C                     READ DTSTBCHD                 99
+     C                     MOVE NO        ERROR
+     C           DSMRRN    IFGT *ZERO
+     C                     Z-ADDDSMRRN    SFRRN2
+     C                     END
+     C                     CALL 'SPCLRMSG'             98  Clr Error Msgs
+     C           *IN98     CASEQON        FPERR            File/Pgm Error
+     C                     END
+     C           F1        IFEQ ON                         EXIT
+     C                     Z-ADD6         LENGTH 155
+     C                     CALL 'QCAEXEC'
+     C                     PARM 'RCLRSC'  WRK6A   6
+     C                     PARM           LENGTH
+     C                     ENDIF
+     C           F2        IFEQ ON                         PREVIOUS
+     C           SCRNID    IFEQ 'BAT'
+     C           DSMRRN    IFGT *ZERO
+     C           DSMRRN    CHAINDS2SFL               92
+     C           *IN92     IFEQ OFF
+     C                     MOVELS2BOX     SC1BOX
+     C                     ELSE
+     C                     MOVELBEGBOX    SC1BOX
+     C                     ENDIF
+     C                     MOVEL*BLANKS   SC1CLK
+     C                     MOVEL'BOX'     SCRNID
+     C                     EXSR BLDBOX
+     C                     ENDIF
+     C                     ELSE
+     C                     EXSR MOVBOX
+     C                     ENDIF
+     C                     LEAVE
+     C                     ENDIF
+VA01 C           F07       IFEQ ON
+VA01 C                     CALL 'DTSTSUSR'
+VA01 C                     ENDIF
+     C           F18       IFEQ ON                         ALL/OPN/SUSP
+     C           *IN73     IFEQ OFF                        ALL
+     C           *IN74     ANDEQOFF
+     C                     MOVE ON        *IN73            OPEN
+     C                     MOVE OFF       *IN74            SUSPEND
+     C                     ELSE
+     C           *IN73     IFEQ ON
+     C                     MOVE ON        *IN74            SUSPEND
+     C                     MOVE OFF       *IN73            OPEN
+     C                     ELSE
+     C           *IN74     IFEQ ON
+     C                     MOVE OFF       *IN73
+     C                     MOVE OFF       *IN74
+     C                     ENDIF
+     C                     ENDIF
+     C                     ENDIF
+     C                     EXSR BLDBAT                     LOAD SUBFILE
+     C                     ENDIF
+     C           ROLLUP    IFEQ ON
+     C                     EXSR BLDBAT
+     C                     ENDIF
+     C           CMDKEY    IFEQ OFF
+     C                     MOVE NO        ERROR   1
+     C           *IN43     IFEQ '1'
+     C           *IN44     OREQ '1'
+     C           *IN45     OREQ '1'
+     C                     EXSR BLDBAT
+     C                     ELSE
+     C                     EXSR EDTSF2
+     C           ERROR     IFEQ NO                         NO ERRORS
+     C                     EXSR PRCOP2
+     C                     ENDIF
+     C                     ENDIF
+     C                     ENDIF
+     C                     ENDDO
+     C                     ENDSR
+     C/EJECT
+     C           EDTSF2    BEGSR
+     C           DSRRN2    IFGT *ZERO                      Recs in SFL
+     C                     READCDS2SFL                   88
+     C           *IN88     DOWEQ'0'
+     C                     SETON                     35    SFLNXTCHG
+     C           S2OPT     IFNE *BLANK
+     C           S2OPT     IFEQ '2'                        2=EDIT
+     C           AUTEBT    ANDNE'1'
+     C           S2OPT     OREQ '4'                        4=Delete
+     C           AUTDBT    ANDNE'1'
+     C                     MOVE 'DTS0188' MSGID
+     C                     MOVE *BLANKS   MSGDTA
+     C                     CALL 'SPSNDPGM'SNDPGM       98
+     C                     MOVE YES       ERROR
+     C                     SETON                     3550
+     C                     ELSE
+     C           S2OPT     IFNE '5'                        4=Delete
+     C           S2BTST    ANDEQ'SHIPPED'
+     C                     MOVE 'DTS0024' MSGID
+     C                     MOVE *BLANKS   MSGDTA
+     C                     CALL 'SPSNDPGM'SNDPGM       98
+     C                     MOVE YES       ERROR
+     C                     SETON                     3550
+     C                     ELSE
+     C           S2OPT     IFEQ '2'                        2=EDIT
+     C           S2EFLG    ANDEQ'N'
+     C                     MOVEL'Y'       S2EFLG
+     C                     SETON                     355155
+     C                     MOVE YES       ERROR
+     C                     ELSE
+     C           S2OPT     IFEQ '4'                        4=Delete
+     C           S2KDTR    IFNE S2DDTR
+     C                     MOVE 'DTS0015' MSGID
+     C                     MOVE *BLANKS   MSGDTA
+     C                     CALL 'SPSNDPGM'SNDPGM       98
+     C                     MOVE YES       ERROR
+     C                     SETON                       3550
+     C                     ENDIF
+     C                     ENDIF
+     C                     ENDIF
+     C                     ENDIF
+     C                     ENDIF
+DA02 C           S2OPT     IFEQ '2'
+DA02 C           S2EFLG    ANDEQ'Y'
+DA02 C           ERROR     ANDEQ'N'
+DA02 C                     Z-ADD1         Z       30
+DA02 C           S2BAT     LOKUPBT,Z                     54
+DA02 C           *IN54     IFEQ *ON
+DA02 C                     Z-ADDS2MDTR    CT,Z
+DA02 C                     ELSE
+DA02 C                     ADD  1         I
+DA02 C                     MOVE S2BAT     BT,I
+DA02 C                     Z-ADDS2MDTR    CT,I
+DA02 C                     ENDIF
+DA02 C                     ENDIF
+     C                     Z-ADDDSRRN2    SFRRN2
+     C                     ENDIF                           OPTION¬=' '
+     C                     UPDATDS2SFL
+     C                     SETOF                     505155
+     C                     MOVEL'N'       S2EFLG
+     C           ERROR     IFEQ YES
+     C                     LEAVE
+     C                     ENDIF
+     C                     READCDS2SFL                   88
+     C                     ENDDO                           *IN88 DOWE 0
+     C                     ENDIF                           NUM1 > 1
+     C                     ENDSR
+     C           PRCOP2    BEGSR
+     C                     MOVE 'N'       CANCEL  1
+     C           DSRRN2    IFGT *ZERO                      Recs in SFL
+     C                     READCDS2SFL                   88
+     C           *IN88     DOWEQ'0'
+     C                     SETON                     35    SFLNXTCHG
+     C           S2OPT     IFNE ' '
+     C           UPDTR2    TAG
+     C           KBAT3     CHAINFDTSBAT              8096
+     C           S2BOX     CHAINFDTSBOX              8197
+     C           *IN96     IFEQ '1'
+     C           *IN97     OREQ '1'
+     C           PSLFSC    IFEQ '01218'                    record lock
+     C                     EXSR $LOCK                      ask for user
+     C           RESPON    CABEQ'RETRY'   UPDTR2           response
+     C           RESPON    IFEQ 'ABORT'
+     C                     MOVE 'DTS0014' MSGID
+     C                     MOVE *BLANKS   MSGDTA
+     C                     CALL 'SPSNDPGM'SNDPGM       98
+     C                     MOVE YES       ERROR
+     C                     MOVE 'Y'       CANCEL
+     C                     SETON                       3550
+     C                     GOTO CNCLTG
+     C                     ENDIF                           ENDIF RESPON
+     C                     ELSE                            other error
+     C                     EXSR *PSSR
+     C                     ENDIF                           ENDIF PSLFSC
+     C                     ENDIF
+     C           *IN80     IFEQ '1'
+     C           *IN81     OREQ '1'
+     C                     MOVE 'DTS0023' MSGID
+     C                     MOVE *BLANKS   MSGDTA
+     C                     CALL 'SPSNDPGM'SNDPGM       98
+     C                     MOVE YES       ERROR
+     C                     SETON                       3550
+     C                     MOVE 'Y'       CANCEL
+     C                     GOTO CNCLTG
+     C                     ENDIF
+     C           S2OPT     IFEQ '2'                        EDIT DTR TOT
+     C           S2EFLG    ANDEQ'Y'
+     C                     EXSR EDTTOT
+     C           CANCEL    IFEQ 'Y'
+     C                     GOTO CNCLTG
+     C                     ENDIF
+     C                     ENDIF
+     C           S2OPT     IFEQ '4'                        Not Delete
+     C                     EXSR PRCDL2
+     C           CANCEL    IFEQ 'Y'
+     C                     GOTO CNCLTG
+     C                     ENDIF
+     C                     ENDIF
+     C           S2OPT     IFEQ '5'
+     C                     UNLCKFDTSBOX
+     C                     UNLCKFDTSBAT
+     C                     EXSR WRKDTR
+     C                     ENDIF                           *IN80 = 0
+     C                     Z-ADDDSRRN2    SFRRN2
+     C                     MOVE *BLANK    S2OPT
+     C                     ENDIF                           SHOPTN¬=' '
+     C           CNCLTG    TAG
+     C                     UPDATDS2SFL
+     C                     SETOF                     505155
+     C                     SETOF                     5652
+     C           CANCEL    IFEQ 'Y'
+     C                     Z-ADDDSRRN2    SFRRN2
+     C                     UNLCKFDTSBOX
+     C                     UNLCKFDTSBAT
+     C                     LEAVE
+     C                     ENDIF                           CANCEL=YES
+     C                     READCDS2SFL                   88
+     C                     ENDDO                           *IN88 DOWE 0
+     C                     ENDIF                           DSRRN1 IFGT
+     C           CANCEL    IFNE 'Y'
+     C                     MOVE '1'       *IN75
+     C                     ELSE
+     C                     MOVE '0'       *IN75
+     C                     ENDIF
+     C           ENDOP2    ENDSR                           PRCOP2
+     C/EJECT
+     C           EDTTOT    BEGSR
+DA02 C                     EXSR $CHECK
+     C           S2MDTR    IFLT S2KDTR
+     C           S2MDTR    OREQ 0
+     C                     MOVE 'DTS0022' MSGID
+     C                     MOVE *BLANKS   MSGDTA
+     C                     CALL 'SPSNDPGM'SNDPGM       98
+     C                     MOVE YES       ERROR
+     C                     MOVE 'Y'       CANCEL
+     C                     SETON                     355155
+     C                     SETON                       56
+     C                     ELSE
+DA02 C           S2MDTR    IFLT 0
+DA02 C           S2MDTR    ORGT TRPBAT
+DA02 C                     MOVE 'DTS0006' MSGID
+DA02 C                     MOVE *BLANKS   MSGDTA
+DA02 C                     CALL 'SPSNDPGM'SNDPGM       98
+DA02 C                     MOVE YES       ERROR
+DA02 C                     MOVE 'Y'       CANCEL
+DA02 C                     SETON                     355155
+DA02 C                     SETON                       56
+DA02 C                     ELSE
+DA02 C           TMPCNT    IFGT TRPBOX
+DA02 C                     MOVE 'DTS0021' MSGID
+DA02 C                     MOVELTRPBOX    MSGDTA
+DA02 C                     CALL 'SPSNDPGM'SNDPGM       98
+DA02 C                     MOVE YES       ERROR
+DA02 C                     MOVE 'Y'       CANCEL
+DA02 C                     SETON                     355155
+DA02 C                     SETON                       56
+DA02 C                     ELSE
+     C                     SETOF                     515556
+     C                     MOVEL'N'       S2EFLG
+     C                     TIME           TIMTMP 120       TIME/DATE
+VA02 C                     Z-ADDSTMDTR    BTMDTR                          $DLPMT
+     C                     Z-ADD0         @MBAT                           $DLPMT
+     C                     Z-ADD0         @CBAT                           $DLPMT
+     C           S2MDTR    IFEQ S2KDTR
+     C           S2BTST    IFEQ 'OPENED '                                 $DLPMT
+     C           S2SDTR    ANDEQ0                                         $DLPMT
+     C                     Z-ADD1         @CBAT                           $DLPMT
+     C                     MOVEL'C'       BTSTS                           $DLPMT
+     C                     MOVEL'CLOSED ' S2BTST                          $DLPMT
+     C                     MOVELSYSDTE    BTDCLO
+     C                     MOVELTIMTMP    BTTCLO
+     C                     ENDIF                                          $DLPMT
+     C                     ELSE
+     C           S2BTST    IFEQ 'CLOSED '                                 $DLPMT
+     C                     Z-ADD-1        @CBAT                           $DLPMT
+     C                     MOVEL'O'       BTSTS                           $DLPMT
+     C                     MOVEL'OPENED ' S2BTST                          $DLPMT
+     C                     Z-ADD0         BTDCLO
+     C                     Z-ADD0         BTTCLO
+     C                     ENDIF
+     C                     ENDIF
+     C                     MOVELLDINIT    BTLCIN
+     C                     MOVE SYSDTE    BTLCDT
+     C                     MOVELTIMTMP    BTLCTM
+     C           BTDCOM    IFNE *ZEROS                     B007           $DLPMT
+     C           BTDCOM    OREQ 0
+     C           BTCCOM    ANDNE'ADD'
+     C                     MOVE *ZEROS    BTDCOM                          $DLPMT
+     C                     MOVE 'UPD'     BTCCOM                          $DLPMT
+     C                     END                             E007           $DLPMT
+     C                     UPDATRDTSBAT                                   $WRITE
+     C                     MOVEL'EDT'     FUNC    3
+     C                     EXSR UPDBOX
+DA02 C                     ENDIF
+DA02 C                     ENDIF
+     C                     ENDIF
+     C                     ENDSR
+     C           PRCDL2    BEGSR
+     C                     Z-ADD*ZERO     DLRRN2  40
+     C                     Z-ADD*ZERO     SVDLR2  40
+     C                     SETON                     32    SFLCLR
+     C                     SETOF                     3031  SFLDSP,CTL
+     C                     WRITEDL2SFC
+     C                     SETOF                     32    SFLCLR
+     C                     SETON                     37    SFLEND
+     C                     SETON                     35
+     C                     ADD  1         DLRRN2
+     C                     WRITEDL2SFL
+     C                     Z-ADDDLRRN2    SVDLR2  40
+     C                     MOVE 'N'       EXTFLG
+     C           EXTFLG    DOWEQ'N'
+     C                     SETON                     30    SFLDSP
+     C                     SETON                     31    SFLDSPCTL
+     C                     WRITECMDKYD                     CMD KEYS
+     C                     MOVE ON        INVITE           INVITE INPUT
+     C                     WRITEDL2SFC                     SFL CONTROL
+     C                     READ DTSTBCHD                 LR
+     C           F2        IFEQ ON
+     C                     MOVE 'Y'       CANCEL
+     C                     MOVE 'Y'       EXTFLG
+     C                     MOVE '1'       *IN52
+     C                     ENDIF
+     C           CMDKEY    CASEQ'0'       DELET2           ENTER
+     C                     ENDCS
+     C                     ENDDO
+     C           DLTEN2    ENDSR                           PRCDL2
+     C/EJECT
+     C           DELET2    BEGSR
+     C           1         DO   SVDLR2    RRN     40
+     C           RRN       CHAINDL2SFL               88
+     C           *IN88     IFEQ '0'
+     C                     MOVEL'BAT'     REC     3
+     C                     Z-ADDBTDCOM    COMDTE  70
+     C                     MOVELBTCCOM    COMUPD  3
+     C                     EXSR WRTTRN
+     C                     DELETRDTSBAT
+     C                     Z-ADD0         @MBAT
+     C                     Z-ADD0         @CBAT
+     C           BTSTS     IFEQ 'C'
+     C                     Z-ADD-1        @CBAT
+     C                     ENDIF
+     C                     Z-ADD-1        @MBAT
+     C                     MOVEL'DEL'     FUNC    3
+     C                     EXSR UPDBOX
+     C                     MOVEL'DELETED' S2BTST
+     C                     SETON                     51
+     C                     SETOF                     35
+     C                     CLEARS2DCRT
+     C                     CLEARS2DFIN
+     C                     CLEARS2FORM
+     C                     CLEARS2CLKC
+     C                     CLEARS2CLKK
+     C                     CLEARS2MDTR
+VA02 C                     CLEARSTMDTR
+     C                     CLEARS2KDTR
+     C                     CLEARS2VDTR
+     C                     CLEARS2SDTR
+     C                     CLEARS2DDTR
+     C                     ENDIF                           *IN88 = 0
+     C                     ENDDO
+     C                     MOVE 'Y'       EXTFLG
+     C                     ENDSR                           $DELET
+     C/EJECT
+     C           WRKDTR    BEGSR
+     C           S2MDTR    IFEQ S2KDTR
+     C                     MOVE YES       FULL
+     C                     ELSE
+     C                     MOVE NO        FULL
+     C                     END
+     C                     MOVELS2BOX     ##BOX   7
+     C                     MOVELS2BAT     ##BAT   7
+     C                     CALL 'DTSTENTR'             94
+     C                     PARM           ##BOX
+     C                     PARM           ##BAT
+     C                     PARM '0'       EXIT    1
+     C                     PARM '0'       RDISP   1
+     C                     PARM           FULL    1
+     C           *IN94     IFEQ ON
+     C                     EXSR SRCAER                     Pgm Not Fnd
+     C                     ENDIF
+     C           EXIT      IFEQ ON
+     C                     Z-ADD6         LENGTH 155
+     C                     CALL 'QCAEXEC'
+     C                     PARM 'RCLRSC'  WRK6A   6
+     C                     PARM           LENGTH
+     C                     MOVE ON        F1
+     C                     ENDIF
+     C           RDISP     IFEQ ON
+     C           KBAT3     CHAINFDTSBAT             N8096
+     C                     EXSR MOVBAT
+     C                     MOVE 'Y'       CANCEL
+     C                     ENDIF
+     C                     ENDSR
+     C/EJECT
+     C           $NBOX     BEGSR
+     C           *NAMVAR   DEFN DTSBCHA   BOXA
+     C           *LOCK     IN   BOXA
+     C                     ADD  1         NXTBOX
+     C           NXTBOX    IFEQ 9999990
+     C                     Z-ADD0000001   NXTBOX
+     C                     ENDIF
+     C                     OUT  BOXA
+     C                     Z-ADDNXTBOX    ADBOX#
+     C                     Z-ADD0         BATSEQ  70
+     C                     MOVEL'Y'       NEWBOX                       LTS
+     C                     MOVELADTXT1    ADDTXT                       LTS
+DA08 C                     SETOF                     25                LTS
+DA08 C                     MOVEL'N'       ADSUSB                       LTS
+     C                     EXSR $ADD
+     C           F1        IFEQ OFF                                    or
+     C           F2        ANDEQOFF                                    or
+     C                     MOVE 'DTS0012' MSGID
+     C                     MOVELADBOX#    MSGDTA
+     C                     CALL 'SPSNDPGM'SNDPGM       98
+     C                     ENDIF
+     C                     ENDSR
+     C           $ADD      BEGSR
+     C                     Z-ADD0         ADNBCH
+     C                     Z-ADD0         ADLBTC
+     C                     Z-ADDTRPBAT    ADNTRP
+     C                     MOVEL'S'       ADFORM
+SS01 C                     CLEARADFDES
+SS01 C                     MOVEL'STANDARD'ADFDES
+     C           F1        DOUEQON
+     C           F2        OREQ ON
+     C                     WRITEMSGSFC                     Error Messages
+     C                     MOVE ON        INVITE
+     C                     WRITEADDBOX
+     C                     READ DTSTBCHD                 99
+DA08 C                     MOVE '0'       *IN49
+     C                     CALL 'SPCLRMSG'             98  Clr Error Msgs
+     C           *IN98     CASEQON        FPERR            File/Pgm Error
+     C                     END
+     C                     MOVEA'000'     *IN,46
+     C                     MOVE NO        ERROR
+     C           F1        IFEQ ON
+     C                     EXSR LBOX#                      ADJUST BOX#
+     C                     Z-ADD6         LENGTH 155
+     C                     CALL 'QCAEXEC'
+     C                     PARM 'RCLRSC'  WRK6A   6
+     C                     PARM           LENGTH
+     C                     ENDIF
+     C           F2        IFEQ ON
+     C                     EXSR LBOX#                      ADJUST BATCH
+     C                     ENDIF
+SS01 C           F4        IFEQ ON
+SS01 C           ICURLN    DIV  256       LINE
+SS01 C                     MVR            COL
+SS01 C           CSRFLD    IFEQ 'ADFORM'
+SS01 C                     CALL PRMPTR
+SS01 C                     PARM TITLE     WKTITL 16
+SS01 C                     PARM 'VEHTABF' WKFNAM 10
+SS01 C                     PARM 'PTSDS'   WKFLDN 30
+SS01 C                     PARM 'PTDES'   WKFDES 30
+SS01 C                     PARM ' '       WKIN12  1
+SS01 C                     PARM ' '       WKRSLT 20
+SS01 C                     PARM ' '       WKRETD 40
+SS01 C                     PARM ' '       WKHIDC  1
+SS01 C                     PARM WHEREC    WKWHRC256
+SS01 C                     PARM ' '       WHREC1 44
+SS01 C           WKRSLT    IFNE ' '
+SS01 C                     MOVELWKRSLT    ADFORM
+SS01 C                     MOVELWKRETD    ADFDES
+SS01 C                     ENDIF
+SS01 C                     ELSE
+SS01 C                     MOVE 'DTS0915' MSGID
+SS01 C                     MOVE *BLANKS   MSGDTA
+SS01 C                     CALL 'SPSNDPGM'SNDPGM       98
+SS01 C                     ENDIF
+SS01 C                     ENDIF
+     C           CMDKEY    IFEQ OFF
+SS01 C                     CLEARLINE
+SS01 C                     CLEARCOL
+     C           ADNBCH    IFEQ 0
+     C           ADLBTC    ANDEQ0
+     C                     MOVE ON        *IN46
+     C                     MOVE ON        *IN47
+     C                     MOVE 'DTS0005' MSGID
+     C                     MOVE *BLANKS   MSGDTA
+     C                     CALL 'SPSNDPGM'SNDPGM       98
+     C                     MOVE YES       ERROR
+     C                     ENDIF
+DA02 C           ADNBCH    IFLE 0
+     C           ADNBCH    ORGT 999
+     C                     MOVE ON        *IN46
+     C                     MOVE 'DTS0004' MSGID
+     C                     MOVE *BLANKS   MSGDTA
+     C                     CALL 'SPSNDPGM'SNDPGM       98
+     C                     MOVE YES       ERROR
+     C                     ENDIF
+     C           ADLBTC    IFLT 0
+     C           ADLBTC    ORGT ADNTRP
+     C                     MOVE ON        *IN47
+     C                     MOVE 'DTS0006' MSGID
+     C                     MOVE *BLANKS   MSGDTA
+     C                     CALL 'SPSNDPGM'SNDPGM       98
+     C                     MOVE YES       ERROR
+     C                     ENDIF
+     C           ERROR     IFEQ NO
+     C           ADLBTC    IFEQ 0
+     C           ADNBCH    MULT ADNTRP    TOTTRP  70
+     C                     ELSE
+     C           ADNBCH    SUB  1         TOTBCH  70
+     C           TOTBCH    MULT ADNTRP    TOTTRP  70
+     C                     ENDIF
+     C                     ADD  ADLBTC    TOTTRP
+DA02 C                     EXSR CHECK1
+DA02 C                     ADD  TMPCNT    TOTTRP
+     C           TOTTRP    IFGT TRPBOX
+     C                     MOVE ON        *IN46
+     C                     MOVE ON        *IN47
+     C                     MOVE 'DTS0021' MSGID
+     C                     MOVELTRPBOX    MSGDTA
+     C                     CALL 'SPSNDPGM'SNDPGM       98
+     C                     MOVE YES       ERROR
+     C                     ENDIF
+     C                     ENDIF
+SS01 C                     CLEARADFDES
+SS01 C           ADFORM    IFEQ *BLANKS
+SS01 C                     MOVE ON        *IN48
+SS01 C                     MOVE 'DTS0028' MSGID
+SS01 C                     MOVE *BLANKS   MSGDTA
+SS01 C                     CALL 'SPSNDPGM'SNDPGM       98
+SS01 C                     MOVE YES       ERROR
+SS01 C                     ELSE
+SS01 C                     MOVE '*ALL'    PTCORP
+SS01 C                     MOVE 'DTS'     PTSYS
+SS01 C                     MOVEL'DTSTBCHR'PTPGM
+SS01 C                     MOVEL'ADFORM'  PTFID
+SS01 C                     MOVEL'BOX_TYPE'PTFDES
+SS01 C                     MOVELADFORM    PTSDS
+SS01 C           KVEHTB    CHAINVEHTABLV             92
+SS01 C           *IN92     IFEQ '0'
+SS01 C                     MOVE OFF       *IN48
+SS01 C                     MOVELPTDES     ADFDES
+SS01 C                     ELSE
+SS01 C                     MOVE ON        *IN48
+SS01 C                     MOVE 'DTS0028' MSGID
+SS01 C                     MOVE *BLANKS   MSGDTA
+SS01 C                     CALL 'SPSNDPGM'SNDPGM       98
+SS01 C                     MOVE YES       ERROR
+SS01 C                     ENDIF
+SS01 C                     ENDIF
+DA08 C           ADSUSB    IFNE 'Y'
+DA08 C           ADSUSB    ANDNE'N'
+DA08 C                     MOVE ON        *IN49
+DA08 C                     MOVE 'DTS0460' MSGID
+DA08 C                     MOVE *BLANKS   MSGDTA
+DA08 C                     CALL 'SPSNDPGM'SNDPGM       98
+DA08 C                     MOVE YES       ERROR
+DA08 C                     ENDIF
+     C           ERROR     IFEQ NO
+     C                     EXSR ADUPDT                     FILE UPDATE
+     C                     LEAVE
+     C                     ENDIF                           NO ERRORS
+     C                     ENDIF
+     C                     ENDDO                           DOU F2=ON
+     C                     ENDSR
+     C/EJECT
+     C           LBOX#     BEGSR
+     C           NEWBOX    IFEQ 'Y'
+     C           *LOCK     IN   BOXA
+     C           NXTBOX    IFEQ ADBOX#
+     C                     SUB  1         NXTBOX
+     C                     END
+     C                     OUT  BOXA
+     C                     ENDIF
+     C                     ENDSR
+     C/EJECT
+     C           ADUPDT    BEGSR
+     C           ADNBCH    IFEQ 0
+     C           ADLBTC    ANDNE0
+     C                     ADD  1         ADNBCH
+     C                     ENDIF
+     C           BATSEQ    ADD  ADNBCH    LSTBT#  70
+     C                     DO   ADNBCH
+     C                     CLEARRDTSBAT
+     C                     MOVELADBOX#    BTBOX            BOX
+     C                     ADD  1         BATSEQ           BATCH SEQ
+     C                     MOVE BATSEQ    BTBAT            BATCH #
+     C                     MOVEL'O'       BTSTS            STATUS
+     C                     MOVELADFORM    BTFORM           FORM TYPE
+     C           LSTBT#    IFEQ BATSEQ
+     C           ADLBTC    ANDNE0
+     C                     Z-ADDADLBTC    BTODTR           ORIG.DTR
+     C                     Z-ADDADLBTC    BTMDTR           MODIF.DTR
+     C                     ELSE
+     C                     Z-ADDADNTRP    BTODTR           ORIG.DTR
+     C                     Z-ADDADNTRP    BTMDTR           MODIF.DTR
+     C                     ENDIF
+     C                     Z-ADDSYSDTE    BTDCRT           DATE ENTER
+     C                     TIME           TIMTMP 120       TIME/DATE
+     C                     MOVELTIMTMP    BTTCRT           TIME ENTERD
+     C                     Z-ADDBTDCRT    BTDREC           DATE RECVD
+     C                     Z-ADDBTTCRT    BTTREC           TIME RECVD
+     C                     MOVE 'ADD'     BTCCOM           COMM UPDATE CODE
+     C                     MOVE LDINIT    BTCLKC           CLERK ASSIGN
+     C                     WRITERDTSBAT
+     C                     ENDDO
+     C           NEWBOX    IFEQ 'Y'                        NEW BOX
+     C                     CLEARRDTSBOX
+     C                     MOVELADBOX#    BXBOX            BOX
+     C                     MOVEL'O'       BXSTS            STATUS
+     C                     Z-ADDADNBCH    BXOBAT           ORIG.BATCH
+     C                     Z-ADDADNBCH    BXMBAT           MODIF.BATCH
+     C                     Z-ADDSYSDTE    BXDOPN           DATE OPEN
+     C                     TIME           TIMTMP 120       TIME/DATE
+     C                     MOVELTIMTMP    BXTOPN           TIME OPENED
+     C                     MOVE 'ADD'     BXCCOM           COMM UPDATE CODE
+     C                     MOVE LDINIT    BXCLKO           CLERK OPENED
+DA08 C                     MOVELADSUSB    BX01A1
+     C                     WRITERDTSBOX
+     C                     ELSE
+     C                     Z-ADDADNBCH    @MBAT                           $DLPMT
+     C                     Z-ADD0         @CBAT                           $DLPMT
+     C                     MOVEL'ADD'     FUNC    3
+     C                     EXSR UPDBOX
+     C                     ENDIF
+     C                     ENDSR
+     C/EJECT
+     C           UPDBOX    BEGSR                                          $DLPMT
+     C                     TIME           TIMTMP 120       TIME/DATE
+     C           FUNC      IFNE 'SHP'
+     C           FUNC      ANDNE'USH'
+     C                     ADD  @MBAT     BXMBAT
+     C                     ADD  @CBAT     BXCBAT
+     C           BXMBAT    IFEQ BXCBAT
+     C                     MOVEL'C'       BXSTS                           $DLPMT
+     C                     Z-ADDSYSDTE    BXDCLO
+     C                     MOVELTIMTMP    BXTCLO
+     C                     MOVELLDINIT    BXCLKC
+     C                     ELSE
+     C                     MOVEL'O'       BXSTS            STATUS
+     C                     Z-ADD0         BXDCLO           DATE CLOSED
+     C                     Z-ADD0         BXTCLO           TIME CLOSED
+     C                     MOVE *BLANKS   BXCLKC           CLERKCLOSED
+     C                     ENDIF
+     C                     ELSE
+     C           FUNC      IFEQ 'SHP'
+     C                     MOVEL'S'       BXSTS                           $DLPMT
+     C                     Z-ADDSYSDTE    BXDSHP
+     C                     MOVELTIMTMP    BXTSHP
+     C                     MOVELLDINIT    BXCLKS
+     C                     ELSE
+     C                     MOVEL'C'       BXSTS                           $DLPMT
+     C                     Z-ADD0         BXDSHP
+     C                     MOVEL0         BXTSHP
+     C                     MOVEL*BLANKS   BXCLKS
+     C                     ENDIF
+     C                     ENDIF
+     C                     MOVELLDINIT    BXLCIN
+     C                     Z-ADDSYSDTE    BXLCDT
+     C                     MOVELTIMTMP    BXLCTM
+     C           BXDCOM    IFGT *ZEROS                                    $DLPMT
+     C           BXDCOM    OREQ *ZEROS                                    $DLPMT
+     C           BXCCOM    ANDNE'ADD'                                     $DLPMT
+     C                     Z-ADD0         BXDCOM
+     C                     MOVE 'UPD'     BXCCOM
+     C                     ENDIF
+     C                     UPDATRDTSBOX
+     C                     ENDSR
+     C/EJECT
+     C           ONETM     BEGSR
+     C           *ENTRY    PLIST
+     C                     PARM           SCRNID  3
+     C           PLADD     PLIST
+     C                     PARM           WKN5    50
+     C                     PARM           WKN7    70
+     C           *NAMVAR   DEFN *LDA      LDA
+     C           LDPGM     IFNE PSPGNM                     In Pgm Flds?   LDA
+     C                     IN   LDA                        Read *Lda      LDA
+     C           *NAMVAR   DEFN FLEETMACH FLTM             In Pgm Flds?   LDA
+     C                     IN   FLTM                       Read *Lda      LDA
+     C           LDPGM     IFNE PSPGNM                     Got In *Lda?   LDA
+     C                     MOVELPSPGNM    LDPGM            Move Pgm Name  LDA
+     C                     OUT  LDA                        Upd *Lda       LDA
+     C                     CALL 'SECURITY'                 Auths to *Lda  LDA
+     C                     IN   LDA                        *Lda to Pgm    LDA
+     C                     END                                            LDA
+     C                     END                                            LDA
+     C                     MOVELLDINDS    AUTFLG                       orsLDA
+Y2   C           *NAMVAR   DEFN DTSASOFDT ASOFA   5
+     C                     IN   ASOFA
+Y2   C                     MOVE ASOFA     ASOF    50
+DA01 C           *NAMVAR   DEFN DTRCTL    CONTRL 21
+     C                     IN   CONTRL
+     C                     MOVELLDACCS    SCSYSN
+     C                     MOVELLDNAME    SCUSER
+     C                     MOVE '('       BP
+     C                     MOVE '-'       DH
+     C                     MOVE ')'       EP
+     C                     MOVE '1'       ON      1
+     C                     MOVE '0'       OFF     1
+     C                     MOVE 'Y'       YES     1
+     C                     MOVE 'Y'       OPEN    1
+     C                     MOVE 'N'       CLOSED  1
+     C                     MOVE 'N'       NO      1
+     C                     MOVE OFF       @SUD    1
+DA08 C                     MOVE '0'       TOGFLG  1
+     C                     Z-ADD*ZERO     X       50
+     C                     Z-ADD*ZEROS    MSRRN   40
+     C                     MOVE OFF       *IN73            SUSPENDED
+     C           LDMACH    IFEQ '0029'
+     C                     MOVE '0000001' START
+     C                     MOVE '2000000' END
+     C                     Z-ADD0000001   LOW     70
+     C                     Z-ADD2000000   HIGH    70
+     C                     END
+     C           LDMACH    IFEQ '0400'
+     C                     MOVE '2000001' START
+     C                     MOVE '4000000' END
+     C                     Z-ADD2000001   LOW
+     C                     Z-ADD4000000   HIGH
+     C                     END
+     C           LDMACH    IFEQ '0600'
+     C                     MOVE '4000001' START
+     C                     MOVE '6000000' END
+     C                     Z-ADD4000001   LOW
+     C                     Z-ADD6000000   HIGH
+     C                     END
+     C           LDMACH    IFEQ '0700'
+     C                     MOVE '6000001' START
+     C                     MOVE '8000000' END
+     C                     Z-ADD6000001   LOW
+     C                     Z-ADD8000000   HIGH
+     C                     END
+     C           AUTABX    IFEQ '1'
+     C                     MOVE ON        *IN70
+     C                     ENDIF
+     C                     MOVE UDATE     Y2MDY   60
+     C                     EXSR @MDY
+     C                     MOVE Y2CYMD    SYSDTE  70
+     C           TRPDAY    MULT -1        WKN5    50
+     C                     Z-ADDSYSDTE    WKN7    70
+     C                     CALL 'SPADDYMD'PLADD
+     C                     Z-ADDWKN7      BEGDTE  70
+     C           USHDAY    MULT -1        WKN5    50
+     C                     Z-ADDSYSDTE    WKN7    70
+     C                     CALL 'SPADDYMD'PLADD
+     C                     Z-ADDWKN7      USHPDT  70
+     C                     MOVELUSHDAY    UNSHPD
+     C           CHR1      IFEQ '0'
+     C                     CLEARCHR1
+     C                     ENDIF
+     C           CHR2      IFEQ '0'
+     C                     CLEARCHR2
+     C                     ENDIF
+     C           CHR3      IFEQ '0'
+     C                     CLEARCHR3
+     C                     ENDIF
+     C           KBOX1     KLIST
+     C                     KFLD           SC1CLK
+     C                     KFLD           SC1BOX
+     C           KBAT1     KLIST
+     C                     KFLD           SC2BOX
+     C                     KFLD           SC2BAT
+     C           KBAT2     KLIST
+     C                     KFLD           SC2CLK
+     C                     KFLD           SC2BOX
+     C                     KFLD           SC2BAT
+     C           KBAT3     KLIST
+     C                     KFLD           S2BOX
+     C                     KFLD           S2BAT
+SS01 C           KVEHTB    KLIST
+SS01 C                     KFLD           PTCORP
+SS01 C                     KFLD           PTSYS
+SS01 C                     KFLD           PTPGM
+SS01 C                     KFLD           PTFID
+SS01 C                     KFLD           PTFDES
+SS01 C                     KFLD           PTSDS
+     C           SNDPGM    PLIST
+     C                     PARM           MSGID   7        Msg Id
+     C                     PARM 'DTSMSG'  MSGF   10        Msg File
+     C                     PARM '*LIBL'   MSGFL  10        Msg Library
+     C                     PARM           MSGDTA256        Msg Data
+     C                     PARM '*PRV'    TMSGQ  10        To Msgq
+     C                     PARM '*'       TMSGQL 10        To Msgq Lib
+     C                     PARM '*INFO'   MSGTYP 56        Msg Type
+     C                     PARM           RMSGQ  10        Reply Msgq
+     C                     PARM           RMSGQL 10        Reply Msgq Lib
+     C           BEGDTE    SETLLLDTSBOX2
+     C                     READ LDTSBOX2                 90
+     C           *IN90     IFEQ '0'
+     C                     MOVELBXBOX     BEGBOX  7
+     C                     ELSE
+     C                     MOVEL*BLANKS   BEGBOX
+     C                     ENDIF
+     C           SCRNID    IFEQ 'BOX'
+     C                     MOVELBEGBOX    SC1BOX
+     C                     MOVEL*BLANKS   SC1CLK
+     C                     EXSR BLDBOX
+     C                     ELSE
+     C                     MOVE OFF       *IN71            DON'T PR BOX
+     C                     MOVE OFF       *IN73
+     C                     MOVE OFF       *IN74
+     C                     MOVELBEGBOX    SC2BOX
+     C                     MOVEL*BLANKS   SC2BAT
+     C                     MOVEL*BLANKS   SC2CLK
+     C                     EXSR BLDBAT
+     C                     ENDIF
+     C                     ENDSR
+     C/EJECT
+     C           BLDBOX    BEGSR
+     C           ROLLUP    IFEQ ON
+     C                     Z-ADDSVRRN1    DSRRN1
+     C                     ELSE
+     C                     EXSR CLRSF1
+     C           SC1BOX    IFEQ *BLANKS
+     C                     MOVELBEGBOX    SC1BOX
+     C                     ENDIF
+     C           SC1CLK    IFEQ *BLANKS
+     C           SC1BOX    SETLLLDTSBOX1
+     C                     ELSE
+     C           KBOX1     SETLLLDTSBOX3
+     C                     ENDIF
+     C                     ENDIF
+     C                     Z-ADD0         LINCTR  20
+     C           *IN92     DOUEQ'1'
+     C           LINCTR    OREQ 12
+     C           SC1CLK    IFEQ *BLANKS
+     C                     READ LDTSBOX1                 92
+     C                     ELSE
+     C           SC1CLK    READELDTSBOX3                 92
+     C                     ENDIF
+     C           *IN92     IFEQ '0'
+DA08 C           TOGFLG    IFEQ '1'
+DA08 C           BX01A1    ANDNE'Y'
+DA08 C                     ELSE
+     C                     MOVEL*BLANKS   S1OPT
+     C                     EXSR MOVBOX
+     C                     MOVEA'000'     *IN,40
+     C                     MOVE '0'       *IN35
+     C                     ADD  1         LINCTR
+     C                     ADD  1         DSRRN1
+     C                     WRITEDS1SFL
+     C                     Z-ADDDSRRN1    SFRRN1  40
+     C                     Z-ADDDSRRN1    SVRRN1  40
+     C                     ENDIF
+DA08 C                     ENDIF
+     C                     ENDDO
+     C           *IN92     IFEQ '1'
+     C                     SETON                     33    SFLEND
+     C                     ELSE
+     C                     SETOF                     33    SFLEND
+     C                     ENDIF
+     C                     MOVEL*BLANKS   SC1BOX
+     C                     ENDSR
+     C/EJECT
+     C           MOVBOX    BEGSR
+     C                     MOVELBXBOX     S1BOX
+     C           BXSTS     IFEQ 'O'
+     C                     MOVEL'OPENED ' S1BSTS
+     C                     ELSE
+     C           BXSTS     IFEQ 'C'
+     C                     MOVEL'CLOSED ' S1BSTS
+     C                     ELSE
+     C           BXSTS     IFEQ 'S'
+     C                     MOVEL'SHIPPED' S1BSTS
+     C                     ENDIF
+     C                     ENDIF
+     C                     ENDIF
+     C                     Z-ADDBXMBAT    S1TBAT
+     C                     Z-ADDBXCBAT    S1CBAT
+     C           BXMBAT    SUB  BXCBAT    S1OBAT
+     C                     Z-ADDBXDOPN    Y2CYMD
+     C                     EXSR @CYMD
+     C                     Z-ADDY2MDY     S1DOPN
+     C                     MOVELBXCLKO    S1CLKO
+     C                     Z-ADDBXDCLO    Y2CYMD
+     C                     EXSR @CYMD
+     C                     Z-ADDY2MDY     S1DCLO
+     C                     MOVELBXCLKC    S1CLKC
+     C                     Z-ADDBXDSHP    Y2CYMD
+     C                     EXSR @CYMD
+     C                     Z-ADDBXDSHP    S1SYMD
+     C                     Z-ADDY2MDY     S1DSHP
+     C                     MOVELBXCLKS    S1CLKS
+DA08 C                     MOVELBX01A1    S1BCSS
+     C                     ENDSR
+     C/EJECT
+     C           BLDBAT    BEGSR
+     C           ROLLUP    IFEQ ON
+     C                     Z-ADDSVRRN2    DSRRN2
+     C                     ELSE
+DA02 C                     MOVEA*BLANKS   BT
+DA02 C                     MOVEA*ZEROS    CT
+DA02 C                     Z-ADD0         I       30
+     C                     EXSR CLRSF2
+     C           SC2BOX    IFEQ *BLANKS
+     C                     MOVELBEGBOX    SC2BOX
+     C                     ENDIF
+     C           SC2CLK    IFEQ *BLANKS
+     C           KBAT1     SETLLLDTSBAT1
+     C                     ELSE
+     C           KBAT2     SETLLLDTSBAT3
+     C                     ENDIF
+     C                     ENDIF
+     C                     Z-ADD0         LINCTR  20
+     C           *IN92     DOUEQ'1'
+     C           LINCTR    OREQ 12
+     C           SC2CLK    IFEQ *BLANKS
+     C           *IN71     IFEQ ON                         SPECIFC BOX
+     C           SC2BOX    READELDTSBAT1                 92
+     C                     ELSE
+     C                     READ LDTSBAT1                 92
+     C                     ENDIF
+     C                     ELSE
+     C           SC2CLK    READELDTSBAT3                 92
+     C                     ENDIF
+     C           *IN92     IFEQ '0'
+     C                     MOVE NO        SELECT  1
+     C                     MOVEL*BLANKS   S2OPT
+     C                     EXSR MOVBAT
+     C                     MOVEL'N'       S2EFLG
+     C           *IN73     IFEQ OFF
+     C           *IN74     ANDEQOFF
+     C                     MOVE YES       SELECT
+     C                     END
+     C           *IN73     IFEQ ON
+     C           BTSTS     IFEQ 'O'
+     C                     MOVE YES       SELECT
+     C                     END
+     C                     END                             73=ON
+     C           *IN74     IFEQ ON
+     C           BTSDTR    IFNE 0
+     C                     MOVE YES       SELECT
+     C                     END
+     C                     END                             73=ON
+     C           SELECT    IFEQ YES
+     C                     MOVEA'000'     *IN,50
+     C                     MOVEA'00'      *IN,55
+     C                     MOVE '0'       *IN35
+     C                     ADD  1         DSRRN2
+     C                     ADD  1         LINCTR
+     C                     WRITEDS2SFL
+     C                     ENDIF
+     C                     Z-ADDDSRRN2    SVRRN2  40
+     C                     Z-ADDDSRRN2    SFRRN2  40
+     C                     ENDIF
+     C                     ENDDO
+     C           *IN92     IFEQ '1'
+     C                     SETON                     34    SFLEND
+     C                     ELSE
+     C                     SETOF                     34    SFLEND
+     C                     ENDIF
+     C           *IN71     IFEQ OFF
+     C                     MOVEL*BLANKS   SC2BOX
+     C                     ENDIF
+     C                     MOVEL*BLANKS   SC2BAT
+     C                     ENDSR
+     C           MOVBAT    BEGSR
+     C                     MOVELBTBOX     S2BOX
+     C                     MOVELBTBAT     S2BAT
+     C                     Z-ADDBTDCRT    Y2CYMD
+     C                     EXSR @CYMD
+     C                     Z-ADDY2MDY     S2DCRT
+     C           BTSTS     IFEQ 'O'
+     C                     MOVEL'OPENED ' S2BTST
+     C                     ELSE
+     C           BTSTS     IFEQ 'C'
+     C                     MOVEL'CLOSED ' S2BTST
+     C                     ELSE
+     C           BTSTS     IFEQ 'S'
+     C                     MOVEL'SHIPPED' S2BTST
+     C                     ENDIF
+     C                     ENDIF
+     C                     ENDIF
+     C                     Z-ADDBTDFIN    Y2CYMD
+     C                     EXSR @CYMD
+     C                     Z-ADDY2MDY     S2DFIN
+     C                     MOVELBTFORM    S2FORM
+     C                     MOVELBTCLKC    S2CLKC
+     C                     MOVELBTCLKK    S2CLKK
+VA02 C                     Z-ADDBTMDTR    STMDTR  30
+VA02 C                     Z-ADDBTODTR    S2MDTR
+     C                     Z-ADDBTKDTR    S2KDTR
+     C                     Z-ADDBTVDTR    S2VDTR
+     C                     Z-ADDBTSDTR    S2SDTR
+     C                     Z-ADDBTDDTR    S2DDTR
+     C                     ENDSR
+     C           CLRSF1    BEGSR
+     C                     SETON                     32    SFLCLR
+     C                     SETOF                     3031  SFLDSP,CTL
+     C                     WRITEDS1SFC
+     C                     SETOF                     32    SFLCLR
+     C                     Z-ADD*ZERO     SVRRN1  40
+     C                     Z-ADD*ZERO     DSRRN1
+     C                     ENDSR
+     C           CLRSF2    BEGSR
+     C                     SETON                     32    SFLCLR
+     C                     SETOF                     3031  SFLDSP,CTL
+     C                     WRITEDS2SFC
+     C                     SETOF                     32    SFLCLR
+     C                     Z-ADD*ZERO     SVRRN2  40
+     C                     Z-ADD*ZERO     DSRRN2
+     C                     ENDSR
+      /EJECT
+     C           SRCAER    BEGSR
+     C                     MOVEA*IN,99    ##IND   1        HOLD *IN99
+     C                     CALL 'SPRCVMSG'             99  GET ESCAPE MSG
+     C                     PARM           WKMSG  80        TO MESSAGE FLD
+     C           WKMSG     IFEQ ' '                        GOT NONE?
+     C                     MOVE PSPGMS    WKMSG            USE PSSA MSG
+     C                     END
+     C                     CALL 'SPRCLRSC'             99  CLOSE FILES,ETC
+     C                     MOVEA##IND     *IN,99           RESTORE *IN99
+     C                     ENDSR
+      /EJECT
+     C           *PSSR     BEGSR                           ANY ERROR
+     C           #PSSR#    CABNE' '       @PSSR@           LOOP?
+     C                     MOVE '1'       #PSSR#  1        SET ONE-TIME SW
+     C                     TIME           TIMSTP 120
+     C                     CLOSEDTSTBCHD
+     C           PSLFSC    COMP '01331'                  99DISP TIME OUT?
+     C                     CALL 'SPCNLRPG'             99  SEND ESCAPE MSG
+     C                     PARM           PSSA
+     C           @PSSR@    ENDSR'*CANCL'                   CANCELS PROG
+     C/EJECT
+     C           FPERR     BEGSR
+     C                     CALL 'SPRCVMSG'             98  Get Escape Msg
+     C                     PARM           WKMSG  80        To Message Fld
+     C           WKMSG     IFEQ ' '                        Got None?
+     C                     MOVE PSPGMS    WKMSG            Use PSSA Msg
+     C                     END
+     C                     CALL 'SPRCLRSC'             98  Close Files,Etc
+     C                     MOVE 'CPF9898' MSGID
+     C                     MOVEL'QCPFMSG 'MSGF
+     C                     MOVELWKMSG     MSGDTA
+     C                     CALL 'SPSNDPGM'SNDPGM       98
+     C                     ENDSR
+Y2   C           @MDY      BEGSR
+Y2   C                     MOVE *ZERO     Y2CYMD
+Y2   C           Y2MDY     IFEQ 999999
+Y2   C                     MOVE 9999999   Y2CYMD
+Y2   C                     ELSE
+Y2   C           Y2MDY     IFNE *ZERO
+Y2   C                     CALL 'SPV1MDYN'
+Y2   C                     PARM           Y2MDY   60
+Y2   C                     PARM           Y2ERR   1
+Y2   C                     PARM           Y2CYMD  70
+Y2   C                     ENDIF
+Y2   C                     ENDIF
+Y2   C                     ENDSR
+Y2   C           @CYMD     BEGSR
+Y2   C                     MOVE Y2CYMD    YXCYMD
+Y2   C                     MOVE YXYR1     YXYR2
+Y2   C                     MOVE YXMDY     Y2MDY   60
+Y2   C                     ENDSR
+     C/EJECT
+     C           $LOCK     BEGSR
+     C                     WRITEWAITFMT
+     C                     CALL 'FPELCKER'
+     C                     PARM           SKIPOK  1
+     C                     PARM           PSSA
+     C                     PARM           RESPON  5
+     C                     MOVE 'N'       SKIPOK           No F2
+     C                     ENDSR                           $LOCK
+DA02 C           $CHECK    BEGSR
+DA02 C                     Z-ADD*ZERO     TMPCNT  40
+DA02 C           S2BOX     CHAINLDTSBAT1             53
+DA02 C           *IN53     DOWEQ*OFF
+DA02 C                     Z-ADD1         Z       30
+DA02 C           BTBAT     LOKUPBT,Z                     54
+DA02 C           *IN54     IFNE *ON
+DA02 C                     ADD  BTMDTR    TMPCNT
+DA02 C                     ELSE
+DA02 C                     ADD  CT,Z      TMPCNT
+DA02 C                     ENDIF
+DA02 C           S2BOX     READERDTSBAT1                 53
+DA02 C                     ENDDO
+DA02 C           KBAT3     CHAINLDTSBAT1             53
+DA02 C                     ENDSR
+DA02 C           CHECK1    BEGSR
+DA02 C                     Z-ADD*ZERO     TMPCNT  40
+DA02 C                     MOVE ADBOX#    BOXNUM  7
+DA02 C           BOXNUM    CHAINLDTSBAT1             53
+DA02 C           *IN53     DOWEQ*OFF
+DA02 C                     ADD  BTMDTR    TMPCNT
+DA02 C           BOXNUM    READERDTSBAT1                 53
+DA02 C                     ENDDO
+DA02 C                     ENDSR

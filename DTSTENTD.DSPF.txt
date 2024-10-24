@@ -1,0 +1,1195 @@
+     A                                      DSPSIZ(24 80 *DS3)
+     A                                      REF(*LIBL/FDTSREF)
+     A  64                                  INVITE
+     A                                      PRINT(*LIBL/SCREENPRNT)
+     A                                      OPENPRT
+     A                                      CF01
+     A  22                                  CF04
+     A                                      HELP(90)
+     A          R TITLE
+     A                                      OVERLAY
+KRI1 A                                      SETOF(64 'Disable Invite')
+     A                                  1  2DATE
+     A                                      EDTCDE(Y)
+     A                                  1 13TIME
+     A                                  1 26'DRIVER TRIP SYSTEM (DTS)'
+     A                                      DSPATR(HI)
+     A            MODE           7A  O  1 53DSPATR(HI)
+     A                                  1 62'System:'
+     A            LDSYSN        10A  O  1 70
+     A            LDCNAM        24A  O  2  2DSPATR(HI)
+     A                                  2 47'Name:'
+     A            LDNAME        24A  O  2 53
+     A                                  3  2'-----------------------------------
+     A                                      ------------------------------------
+     A                                      --------'
+     A          R PROMPT
+     A                                      CHGINPDFT(UL)
+     A  34
+     AO 20                                  CF02
+     A N20                                  CF08
+     A  01N20                               CF09
+     A  02N20                               CF10
+     A  03N20                               CF11
+     A                                      BLINK
+     A                                      OVERLAY
+KRI1 A                                      SETOF(64 'Disable Invite')
+     A N27 32                               CF05
+     A N27 33                               CF07
+     A            DSTKTR    R        H      REFFLD(DTSVTCD)
+     A            DSLIC     R        H      REFFLD(DTSSTLC)
+     A            DSFUEL    R        H      REFFLD(DTSFTYP)
+     A            DSAXLS    R        H      REFFLD(DTSAXLS)
+     A            DSOBR     R        H      REFFLD(DTSDIST)
+     A            DSTANK         3S 0H
+     A            DSNTNK         1S 0H
+     A                                  4  2'Box:'
+     A            DSBOX     R        B  4  7REFFLD(DTSBTCH)
+     A  40                                  DSPATR(PC)
+     A  40                                  DSPATR(RI)
+     A  34
+     AO 20                                  DSPATR(PR)
+     A N34N20                               DSPATR(UL)
+     A                                  4 48'Trip Number:'
+     A            DSHTRP    R        B  4 61REFFLD(DTSTRIP)
+     A  80N20
+     AO 41                                  DSPATR(PC)
+     A  41                                  DSPATR(RI)
+     A  20                                  DSPATR(PR)
+     A N20                                  DSPATR(UL)
+     A                                  5  2'Bch:'
+     A            DSBCNO    R        B  5  7REFFLD(DTSBTCH)
+     A  40                                  DSPATR(PC)
+     A  40                                  DSPATR(RI)
+     A  34
+     AO 20                                  DSPATR(PR)
+     A N34N20                               DSPATR(UL)
+     A                                  5 18'Batch Status :'
+     A            WKSTS          7A  O  5 33DSPATR(HI)
+     A N25                              5 48'Unit:'
+     A            DSUNIT    R        B  5 54REFFLD(DTSUNIT)
+     A N25N27                               DSPATR(UL)
+     A  25
+     AO 27                                  DSPATR(PR)
+     A  25                                  DSPATR(ND)
+     A  42                                  DSPATR(PC)
+     A  42                                  DSPATR(RI)
+     A N25                              5 66'Corp:'
+     A            DSCORP    R        O  5 72REFFLD(DTSCORP)
+     A  25                                  DSPATR(ND)
+     A N25                             11 11' Date '
+     A            DSBDAT         6Y 0B 12 11EDTCDE(Z)
+     A N25N27                               DSPATR(UL)
+     A  25                                  DSPATR(ND)
+     A  25
+     AO 27                                  DSPATR(PR)
+     A  43                                  DSPATR(PC)
+     A  43                                  DSPATR(RI)
+     A            FUNCLN        80A  O 23  1COLOR(BLU)
+     A          R CUST
+     A                                      CF02
+     A N27 32                               CF05
+     A N27 33                               CF07
+     A                                      BLINK
+     A                                      OVERLAY
+     A                                      SETOF(64 'Disable Invite')
+     A            DSLNTR    R        H      REFFLD(DTSSUBM)
+     A            DSOBR     R        H      REFFLD(DTSDIST)
+     A                                  4  2'Box:'
+     A            DSBOX     R        O  4  7REFFLD(DTSBTCH)
+     A N24                              4 18'Date-Seq#:'
+     A N24        DKEYDT         6Y 0O  4 29EDTCDE(Y)
+     A N24                              4 38'-'
+     A N24        DSSEQ          3S 0O  4 40
+     A                                  4 48'Trip Number:'
+     A            DSHTRP    R        O  4 61REFFLD(DTSTRIP)
+     A            STATUS         9A  O  4 71DSPATR(BL)
+     A                                      DSPATR(HI)
+     A                                  5  2'Bch:'
+     A            DSBCNO    R        O  5  7REFFLD(DTSBTCH)
+     A                                  5 18'Batch Status :'
+     A            WKSTS          7A  O  5 33DSPATR(HI)
+     A                                  5 48'Unit:'
+     A            DSUNIT    R        O  5 54REFFLD(DTSUNIT)
+     A                                  5 66'Corp:'
+     A            DSCORP    R        O  5 72REFFLD(DTSCORP)
+     A                                  6  2'Customer:'
+     A            DSCUSN    R        O  6 12REFFLD(RCUSPRM/CPCNAM FCUSPRM)
+     A                                  6 46'Number:'
+     A            DSCUST    R        B  6 54REFFLD(DTSCUST)
+     A N26 22                               DSPATR(UL)
+     A N22
+     AO 26                                  DSPATR(PR)
+     A  45                                  DSPATR(PC)
+     A  45                                  DSPATR(RI)
+     A            DSCBG     R        B  6 61REFFLD(DTSCBG)
+     A N26 22                               DSPATR(UL)
+     A N22
+     AO 26                                  DSPATR(PR)
+     A  45                                  DSPATR(RI)
+     A            DSCDST    R        B  6 64REFFLD(DTSCDST)
+     A N26 22                               DSPATR(UL)
+     A N22
+     AO 26                                  DSPATR(PR)
+     A  45                                  DSPATR(RI)
+     A                                  7  2'Departing City/St:'
+     A            DSDPC     R        B  7 23REFFLD(DTSCITY)
+     A N26                                  DSPATR(UL)
+     A  26                                  DSPATR(PR)
+     A  81
+     AO 46                                  DSPATR(PC)
+     A  46                                  DSPATR(RI)
+     A            DSDPS     R        B  7 34REFFLD(DTSSTAT)
+     A N26                                  DSPATR(UL)
+     A  26                                  DSPATR(PR)
+     A  47                                  DSPATR(PC)
+     A  47                                  DSPATR(RI)
+     A  57        $CNTRY         3A  O  7 54DSPATR(HI)
+     A                                      DSPATR(BL)
+     A  57                              7 58'- UNIT(Metric UOM)'
+     A                                      DSPATR(HI)
+     A                                      DSPATR(BL)
+     A                                  8  2'Destination City/St:'
+     A            DSDSC     R        B  8 23REFFLD(DTSCITY)
+     A N26                                  DSPATR(UL)
+     A  26                                  DSPATR(PR)
+     A  82
+     AO 48                                  DSPATR(PC)
+     A  48                                  DSPATR(RI)
+     A            DSDSS     R        B  8 34REFFLD(DTSSTAT)
+     A N26                                  DSPATR(UL)
+     A  26                                  DSPATR(PR)
+     A  49                                  DSPATR(PC)
+     A  49                                  DSPATR(RI)
+     A                                  8 53'DTR"s Entered'
+     A            DSTCNT    R        O  8 69REFFLD(DTSSUBM)
+     A                                      EDTCDE(1)
+     A          R CUSTDAT
+     A                                      OVERLAY
+     A                                      SETOF(64 'Disable Invite')
+     A                                 11 11' Date '
+     A            DSBDAT         6Y 0O 12 11EDTCDE(Z)
+     A                                 23  2'F1=Exit  F2=Prompt'
+     A                                      COLOR(BLU)
+     A N27 32                          23 40'F5=Override'
+     A                                      COLOR(BLU)
+     A N27 33N07                       23 54'F7=Suspend'
+     A                                      COLOR(BLU)
+     A N27 33 07                       23 54'F7=Sus/Rej'
+     A                                      COLOR(BLU)
+     A                                 23 76'Help'
+     A                                      COLOR(BLU)
+     A  22                             23 24'F4=Window'
+     A                                      COLOR(BLU)
+     A          R MILSFL                    SFL
+     A                                      TEXT('Mileage Lines')
+     A                                      CHANGE(23)
+     A  65                                  SFLNXTCHG
+     A            DSLE      R        H      REFFLD(DTSLE)
+     A            DSTOLL    R        H      REFFLD(DTSTOLL)
+     A            DSRCWT    R        H      REFFLD(DTSWGHT)
+     A            DSAXLE    R        H      REFFLD(DTSAXLS)
+     A            DSKYU     R        H      REFFLD(DTSKYU)
+     A            HODOM     R        H      REFFLD(DTSMILE)
+     A            HMILE     R        H      REFFLD(DTSMILE)
+     A            MILOPT         1A  B 12  3
+     A N27 30                               DSPATR(UL)
+     A  27                                  DSPATR(ND)
+     A N30                                  DSPATR(PR)
+     A  56                                  DSPATR(RI)
+     A            DSLINE    R        O 12  6REFFLD(DTSLINE)
+     A            DSTMDY         6Y 0B 12 11EDTCDE(Z)
+     A N27N29                               DSPATR(UL)
+     A  27
+     AO 29                                  DSPATR(PR)
+     A  43
+     AON29N28N44                            DSPATR(PC)
+     A  43                                  DSPATR(RI)
+     A            DSSE      R        B 12 19REFFLD(DTSSTAT)
+     A N27N29                               DSPATR(UL)
+     A  27
+     AO 29                                  DSPATR(PR)
+     A  52                                  DSPATR(PC)
+     A  52                                  DSPATR(RI)
+     A            DSSTNM        14A  O 12 22
+     A            DSRTES    R        B 12 37REFFLD(DTSOUTE)
+     A  28                                  DSPATR(UL)
+     A N28                                  DSPATR(PR)
+     A  28 53                               DSPATR(PC)
+     A            DSBODM    R        B 12 45REFFLD(DTSMILE)
+     A N27                                  DSPATR(UL)
+     A  27                                  DSPATR(PR)
+     A  58
+     AO 53N28                               DSPATR(PC)
+     A  58                                  DSPATR(RI)
+     A                                      EDTCDE(Z)
+     A            DSCODE    R        B 12 54REFFLD(DTSMLCD)
+     A N27                                  DSPATR(UL)
+     A  27                                  DSPATR(PR)
+     A  59                                  DSPATR(PC)
+     A  59                                  DSPATR(RI)
+     A            KILOS          7Y 0O 12 59
+     A  35                                  DSPATR(HI)
+     A N35                                  DSPATR(ND)
+     A                                      EDTCDE(B)
+     A          R MILCTL
+     A                                      SFLCTL(MILSFL)
+     A                                      SFLSIZ(18)
+     A                                      SFLPAG(9)
+     A                                      CF02
+     A N27 32                               CF05
+     A N27 33                               CF07
+     A N27N28                               CF14
+     A                                      CF15
+     A N27N30                               CF16
+     A N68                                  PAGEDOWN(61)
+     A                                      BLINK
+     A                                      OVERLAY
+KRI1 A                                      SETOF(64 'Disable Invite')
+     A  60                                  SFLCLR
+     A  62                                  SFLDSPCTL
+     A  63                                  SFLDSP
+     A  68                                  SFLEND
+     A  69                                  SFLDLT
+     A  66                                  SFLMSGID(CPF5203 *LIBL/QCPFMSG)
+     A            MISRN          4S 0H      SFLRCDNBR(CURSOR)
+     A                                  9  2'-----------------------  S T A T E-
+     A                                         M I L E A G E  ------------------
+     A                                      --------'
+     A                                      DSPATR(HI)
+     A N27                             10  2'Options: I=Insert new line   D=Del-
+     A                                      ete line'
+     A N27                             11  2'Opt'
+     A                                      DSPATR(HI)
+     A                                 11  6'No'
+     A                                      DSPATR(HI)
+     A                                 11 12'Date'
+     A                                      DSPATR(HI)
+     A                                 11 19'St'
+     A                                      DSPATR(HI)
+     A                                 11 22'State Name'
+     A                                      DSPATR(HI)
+     A                                 11 37'Route'
+     A                                      DSPATR(HI)
+     A N35                             11 45'Spdo'
+     A                                      DSPATR(HI)
+     A  35N57                          11 45'Miles'
+     A                                      DSPATR(HI)
+     A  35 57                          11 45'Kilom'
+     A                                      DSPATR(HI)
+     A                                 11 54'Cd'
+     A                                      DSPATR(HI)
+     A N57                             11 60'Kilom'
+     A  35                                  DSPATR(HI)
+     A N35                                  DSPATR(ND)
+     A  57                             11 60'Miles'
+     A  35                                  DSPATR(HI)
+     A N35                                  DSPATR(ND)
+     A          R ENDSPD                    TEXT('Ending Speedo & F-Keys')
+     A                                      CF02
+     A N27 32                               CF05
+     A N27 33                               CF07
+     A N27N28                               CF14
+     A                                      CF15
+     A N68                                  PAGEDOWN(61)
+     A                                      BLINK
+     A                                      OVERLAY
+KRI1 A                                      SETOF(64 'Disable Invite')
+     A                                      CHANGE(23)
+     A                                 21 29'Ending Spdo:'
+     A            DSENDS    R        B 21 44REFFLD(DTSMILE)
+     A                                      EDTCDE(Z)
+     A N27 63                               DSPATR(UL)
+     A  27
+     AON63                                  DSPATR(PR)
+     A  51                                  DSPATR(RI)
+     A  55                                  DSPATR(PC)
+     A                                 22  2'F1=Exit'
+     A                                      COLOR(BLU)
+     A                                 22 14'F2=Cust'
+     A                                      COLOR(BLU)
+     A  22                             22 26'F4=Window'
+     A                                      COLOR(BLU)
+     A N27 32                          22 40'F5=Override'
+     A                                      COLOR(BLU)
+     A N27 33N07                       22 54'F7=Suspend'
+     A                                      COLOR(BLU)
+     A N27 33 07                       23 54'F7=Sus/Rej'
+     A                                      COLOR(BLU)
+     A N27N28                          23 14'F14=Route'
+     A                                      COLOR(BLU)
+     A N35                             23 26'F15=Miles'
+     A                                      COLOR(BLU)
+     A  35                             23 26'F15=Spdo'
+     A                                      COLOR(BLU)
+     A N27N30                          23 38'F16=Option'
+     A                                      COLOR(BLU)
+     A                                 23 76'Help'
+     A                                      COLOR(BLU)
+     A          R MILEOF
+     A                                      OVERLAY
+KRI1 A                                      SETOF(64 'Disable Invite')
+     A            INSEOF         1A  I 13  3
+     A N27                                  DSPATR(UL)
+     A  27                                  DSPATR(ND PR)
+     A                                 13  6'  (No mileage records found for th-
+     A                                      is trip)'
+     A          R ASRSFL                    SFL
+     A                                      TEXT('Mileage Lines')
+     A  65                                  SFLNXTCHG
+     A            HODOM     R        H      REFFLD(DTSMILE)
+     A            HMILE     R        H      REFFLD(DTSMILE)
+     A            DSLINE    R        O 12  6REFFLD(DTSLINE)
+     A            DSTMDY         6Y 0O 12 11EDTCDE(Z)
+     A            DSSE      R        O 12 19REFFLD(DTSSTAT)
+     A            DSRTES    R        O 12 22REFFLD(DTSOUTE)
+     A            DSBODM    R        O 12 30REFFLD(DTSMILE)
+     A                                      EDTCDE(Z)
+     A            DSCODE    R        O 12 39REFFLD(DTSMLCD)
+     A                                 12 42'|'
+     A            DSLE      R        B 12 45REFFLD(DTSLE)
+     A  27
+     AON36                                  DSPATR(PR)
+     A N36                                  DSPATR(ND)
+     A N27 36                               DSPATR(UL)
+     A N27 36N72
+     AO 71                                  DSPATR(PC)
+     A  71                                  DSPATR(RI)
+     A            DSTOLL    R        B 12 48REFFLD(DTSTOLL)
+     A                                      EDTCDE(Z)
+     A  27
+     AON37                                  DSPATR(PR)
+     A N37                                  DSPATR(ND)
+     A N27 37                               DSPATR(UL)
+     A N27 37
+     AO 72                                  DSPATR(PC)
+     A  72                                  DSPATR(RI)
+     A            DSRCWT    R        B 12 55REFFLD(DTSWGHT)
+SB01 A                                      EDTCDE(3)
+     A  27
+     AON38                                  DSPATR(PR)
+     A N38                                  DSPATR(ND)
+     A N27 38                               DSPATR(UL)
+     A N27 38
+     AO 74                                  DSPATR(PC)
+     A  74                                  DSPATR(RI)
+     A                                 12 63'LBS'
+     A                                      DSPATR(HI)
+     A  57                                  DSPATR(ND)
+     A                                 12 63'KGM'
+     A                                      DSPATR(HI)
+     A N57                                  DSPATR(ND)
+     A            DSAXLE    R        B 12 68REFFLD(DTSAXLS)
+     A  27
+     AON39                                  DSPATR(PR)
+     A N39                                  DSPATR(ND)
+     A N27 39                               DSPATR(UL)
+     A N27 39
+     AO 73                                  DSPATR(PC)
+     A  73                                  DSPATR(RI)
+     A                                      EDTCDE(4)
+     A            DSKYU     R        B 12 73REFFLD(DTSKYU)
+     A  27
+     AON84                                  DSPATR(PR)
+     A N84                                  DSPATR(ND)
+     A N27 84                               DSPATR(UL)
+     A N27 84                               DSPATR(PC)
+     A                                      EDTCDE(4)
+KV01 A            DSTAX          1   B 12 72
+KV01 AON85                                  DSPATR(PR)
+KV01 A N85                                  DSPATR(ND)
+KV01 A N27 85                               DSPATR(UL)
+KV01 A N27N86                               DSPATR(PC)
+KV01 A  86                                  DSPATR(RI)
+     A          R ASRCTL                    SFLCTL(ASRSFL)
+     A                                      SFLSIZ(0018)
+     A                                      SFLPAG(0009)
+     A                                      TEXT('Addtn"l Stare Requirements')
+     A                                      BLINK
+     A                                      OVERLAY
+KRI1 A                                      SETOF(64 'Disable Invite')
+     A                                      CF02
+     A N27 32                               CF05
+     A N27 33                               CF07
+     A  60                                  SFLCLR
+     A  62                                  SFLDSPCTL
+     A  63                                  SFLDSP
+     A  68                                  SFLEND
+     A  69                                  SFLDLT
+     A  66                                  SFLMSGID(CPF5203 *LIBL/QCPFMSG)
+     A            ASSRN          4S 0H      SFLRCDNBR(CURSOR)
+     A                                  9  2'--------------------  ADDITIONAL S-
+     A                                      TATE REQUIREMENTS  -----------------
+     A                                      --------'
+     A                                      DSPATR(HI)
+     A                                 10 49'Toll'
+     A                                      DSPATR(HI)
+     A N37                                  DSPATR(ND)
+     A N57                             10 57'Lbs.'
+     A                                      DSPATR(HI)
+     A N38 57                               DSPATR(ND)
+     A                                 10 57'Kgms'
+     A                                      DSPATR(HI)
+     A N38N57                               DSPATR(ND)
+     A                                 11  6'No'
+     A                                      DSPATR(HI)
+     A                                 11 12'Date'
+     A                                      DSPATR(HI)
+     A                                 11 19'St'
+     A                                      DSPATR(HI)
+     A                                 11 23'Route'
+     A                                      DSPATR(HI)
+     A                                 11 31'Spdo'
+     A                                      DSPATR(HI)
+     A  35                                  DSPATR(ND)
+     A  35                             11 31'Miles'
+     A                                      DSPATR(HI)
+     A  57                                  DSPATR(ND)
+     A  35                             11 31'Kilom'
+     A                                      DSPATR(HI)
+     A N57                                  DSPATR(ND)
+     A                                 11 39'Cd'
+     A                                      DSPATR(HI)
+     A                                 11 44'L/E'
+     A                                      DSPATR(HI)
+     A N36                                  DSPATR(ND)
+     A N57                             11 48'Miles'
+     A                                      DSPATR(HI)
+     A N37 57                               DSPATR(ND)
+     A                                 11 48'Kilom'
+     A                                      DSPATR(HI)
+     A N37N57                               DSPATR(ND)
+     A                                 11 56'Weight'
+     A                                      DSPATR(HI)
+     A N38                                  DSPATR(ND)
+     A                                 11 66'Axles'
+     A                                      DSPATR(HI)
+     A N39                                  DSPATR(ND)
+KV01 A            DSASRTXT       9   O 11 72COLOR(WHT)
+     A                                      DSPATR(HI)
+KV01 A N84N85                               DSPATR(ND)
+     A          R ASRFUN                    TEXT('Addtn"l State Req. Functions')
+     A                                      BLINK
+     A                                      OVERLAY
+KRI1 A                                      SETOF(64 'Disable Invite')
+     A                                 21 29'Ending Speedo:'
+     A            DSENDS    R        O 21 44REFFLD(TMEODM)
+     A                                      EDTCDE(Z)
+     A                                 23  3'F1=Exit'
+     A                                      COLOR(BLU)
+     A                                 23 12'F2=Mile'
+     A                                      COLOR(BLU)
+     A  22                             23 21'F4=Window'
+     A                                      COLOR(BLU)
+     A N27 32                          23 33'F5=Override'
+     A                                      COLOR(BLU)
+     A N27 33N07                       23 46'F7=Suspend'
+     A                                      COLOR(BLU)
+     A N27 33 07                       23 46'F7=Sus/Rej'
+     A                                      COLOR(BLU)
+     A                                 23 76'Help'
+     A                                      COLOR(BLU)
+     A          R BILSFL                    TEXT('Billing Fuel')
+     A                                      SFL
+     A  65                                  SFLNXTCHG
+JP03 A            HSCORP    R        H      REFFLD(FTCORP FFUELTKT)
+JP03 A            HSFSRC    R        H      REFFLD(FTSRC  FFUELTKT)
+JP03 A            HSTKNO    R        H      REFFLD(DTSTKNO)
+JP03 A            HSVEND    R        H      REFFLD(FTVEND FFUELTKT)
+     A            BILOPT         1A  B 12  2
+     A N27N30                               DSPATR(UL)
+     A  27                                  DSPATR(ND)
+     A  27
+     AO 30                                  DSPATR(PR)
+     A  56                                  DSPATR(RI)
+     A            DSPDAT         6  0O 12  5TEXT('FUEL PURCHASE DATE')
+     A                                      EDTCDE(Z)
+     A            DSSTST    R        O 12 12REFFLD(FTSTST FFUELTKT)
+     A            DSTKNO    R        O 12 15REFFLD(DTSTKNO)
+     A            DSGALN    R        O 12 25REFFLD(FTGALN FFUELTKT)
+     A                                      EDTCDE(3)
+DA07 A            DSSCUS    R        O 12 32REFFLD(FTICUS FFUELTKT)
+DA07 A            DSSDST    R        O 12 41REFFLD(FTODIS FFUELTKT)
+DA07 A            DSVEND    R        O 12 46REFFLD(FTVEND FFUELTKT)
+DA07 A            DSSTNA    R   16   O 12 53REFFLD(FTSTNA FFUELTKT)
+DA07 A            DSSTCT    R   10   O 12 70REFFLD(FTSTCT FFUELTKT)
+     A          R BILCTL                    TEXT('Billing Fuel Control Record')
+     A                                      SFLCTL(BILSFL)
+     A                                      SFLSIZ(20)
+     A                                      SFLPAG(10)
+     A                                      BLINK
+     A                                      OVERLAY
+KRI1 A                                      SETOF(64 'Disable Invite')
+     A                                      CF02
+DA07 A N27 33                               CF07
+     A  60                                  SFLCLR
+     A N68                                  PAGEDOWN(61)
+     A  62                                  SFLDSPCTL
+     A  63                                  SFLDSP
+     A  68                                  SFLEND
+     A  69                                  SFLDLT
+     A  66                                  SFLMSGID(CPF5203 QCPFMSG)
+     A            BISRN          4S 0H      SFLRCDNBR(CURSOR)
+     A                                  9  2'-----------------------   B I L L -
+     A                                      I N G   F U E L   ------------------
+     A                                      --------'
+     A                                      DSPATR(HI)
+     A                                 10  2'Start Date:'
+     A                                      DSPATR(HI)
+     A            DSSTDT         6  0B 10 14
+     A  27
+     AO 43                                  DSPATR(PC)
+     A  43                                  DSPATR(RI)
+     A                                 10 22'Options: X=Select to add to DTR Fu-
+     A                                      el'
+     A                                 11  1'Opt'
+     A                                      DSPATR(HI)
+     A                                 11  6'Date'
+     A                                      DSPATR(HI)
+     A                                 11 12'St'
+     A                                      DSPATR(HI)
+     A                                 11 15'Tkt #  '
+     A                                      DSPATR(HI)
+     A                                 11 24'Gallons'
+     A                                      DSPATR(HI)
+DA07 A                                 11 32'Cust Number'
+DA07 A                                      DSPATR(HI)
+DA07 A                                 11 46'Vendor'
+     A                                      DSPATR(HI)
+DA07 A                                 11 53'Vendor Name'
+     A                                      DSPATR(HI)
+DA07 A                                 11 70'Vendor City'
+     A                                      DSPATR(HI)
+     A          R BILFUN                    TEXT('Billing Fuel Function keys')
+     A                                      BLINK
+     A                                      OVERLAY
+KRI1 A                                      SETOF(64 'Disable Invite')
+     A                                 23  2'F1=Exit'
+     A                                      COLOR(BLU)
+     A                                 23 11'F2=Mile'
+     A                                      COLOR(BLU)
+     A  22                             23 20'F4=Window'
+     A                                      COLOR(BLU)
+DA07 A N27 33N07                       23 45'F7=Suspend'
+DA07 A                                      COLOR(BLU)
+DA07 A N27 33 07                       23 45'F7=Sus/Rej'
+DA07 A                                      COLOR(BLU)
+     A                                 23 76'Help'
+     A                                      COLOR(BLU)
+     A          R BILEOF
+     A                                      OVERLAY
+KRI1 A                                      SETOF(64 'Disable Invite')
+     A                                 13  2'  (No billing fuel records found f-
+     A                                      or this unit)'
+     A          R FULSFL                    TEXT('Fuel Lines')
+     A                                      SFL
+     A  65                                  SFLNXTCHG
+JP03 A            HSFSRC    R        H      REFFLD(FTSRC  FFUELTKT)
+JP03 A            HSINVC    R        H      REFFLD(TFINV  FDTSFUEL)
+JP03 A            HSSRCF    R        H      REFFLD(TFFSRC FDTSFUEL)
+     A            FULOPT         1A  B 12  3
+     A N27                                  DSPATR(UL)
+     A  27                                  DSPATR(ND PR)
+     A  56                                  DSPATR(RI)
+     A            DSLINE    R        O 12  6REFFLD(DTSLINE)
+     A            DSSRC     R        B 12  9REFFLD(DTSSRC)
+     A  79                                  DSPATR(UL PC RI)
+     A N79                                  DSPATR(PR)
+     A            DSDPUR         6Y 0B 12 11EDTCDE(Z)
+     A N27N31                               DSPATR(UL)
+     A  27
+     AO 31                                  DSPATR(PR)
+     A  43                                  DSPATR(RI)
+     A  43
+     AO 53                                  DSPATR(PC)
+SB02 A            DSSPUR    R        B 12 18REFFLD(DTSSTAT)
+     A N27N31                               DSPATR(UL)
+     A  27
+     AO 31                                  DSPATR(PR)
+     A  52                                  DSPATR(PC RI)
+SB02 A            DSTKNO    R        B 12 21REFFLD(DTSTKNO)
+     A                                      CHECK(RZ)
+     A N27N31                               DSPATR(UL)
+     A  27
+     AO 31                                  DSPATR(PR)
+     A  74                                  DSPATR(PC RI)
+SB02 A            DSFPG0         5Y 0B 12 31EDTWRD('   0. ')
+     A N27N31                               DSPATR(UL)
+     A  27
+     AO 31                                  DSPATR(PR)
+     A  75                                  DSPATR(PC RI)
+SB02 A            DSQTM     R        B 12 39REFFLD(TFQTM)
+     A  28N31                               DSPATR(UL)
+     A N28
+     AO 31                                  DSPATR(PR)
+     A  28N31
+     AO 76                                  DSPATR(PC)
+     A  76                                  DSPATR(RI)
+SB02 A            DSVEND    R        B 12 42REFFLD(DTSVENO)
+     A N27N31                               DSPATR(UL)
+     A  27
+     AO 31                                  DSPATR(PR)
+     A  77                                  DSPATR(PC RI)
+SB02 A            DSVNDN    R        B 12 49REFFLD(DTSVENM)
+     A N27N31                               DSPATR(UL)
+     A  27
+     AO 31                                  DSPATR(PR)
+     A  78                                  DSPATR(PC RI)
+SB02 A            DSVNDC    R        B 12 66REFFLD(DTSVENC)
+     A N27N31                               DSPATR(UL)
+     A  27
+     AO 31                                  DSPATR(PR)
+     A  78                                  DSPATR(PC RI)
+SB02 A            DSTKTRCVD      1A  B 12 77
+SB03 A N27                                  DSPATR(UL)
+SB03 A  27                                  DSPATR(PR)
+SB02 A  35                                  DSPATR(PC RI)
+     A            HSRC      R        H      REFFLD(DTSSRC)
+     A            DSTAXP    R        H      REFFLD(DTSTAXP)
+     A            DSORIG    R        H      REFFLD(DTSORIG)
+     A            DSGRIN    R        H      REFFLD(DTSGRIN)
+     A            DSFX      R        H      REFFLD(DTSFULC)
+     A          R FULCTL
+     A                                      SFLCTL(FULSFL)
+     A                                      CF02
+     A N27 32                               CF05
+     A N27 33                               CF07
+     A N27N28                               CF14
+     A N68                                  PAGEDOWN(61)
+     A                                      BLINK
+     A                                      OVERLAY
+KRI1 A                                      SETOF(64 'Disable Invite')
+     A  60                                  SFLCLR
+     A  62                                  SFLDSPCTL
+     A  63                                  SFLDSP
+     A  68                                  SFLEND
+     A  69                                  SFLDLT
+     A                                      SFLSIZ(20)
+     A                                      SFLPAG(10)
+     A  66                                  SFLMSGID(CPF5203 QCPFMSG)
+     A            FUSRN          4S 0H      SFLRCDNBR(CURSOR)
+     A                                  9  2'-----------------------  F U E L  -
+     A                                      P U R C H A S E D ------------------
+     A                                      --------'
+     A                                      DSPATR(HI)
+     A N27                             10  2'Options: I=Insert new line   D=Del-
+     A                                      ete line'
+SB02 A                                 10 76'TKT'
+SB02 A                                      DSPATR(HI)
+     A N27                             11  2'Opt'
+     A                                      DSPATR(HI)
+     A                                 11  6'No'
+     A                                      DSPATR(HI)
+     A                                 11  9'X'
+     A                                      DSPATR(HI)
+     A                                 11 12'Date'
+     A                                      DSPATR(HI)
+SB02 A                                 11 18'St'
+     A                                      DSPATR(HI)
+SB02 A                                 11 21' Tkt # '
+     A                                      DSPATR(HI)
+SB02 A                                 11 31'Qty'
+     A                                      DSPATR(HI)
+SB02 A                                 11 39'QM'
+     A                                      DSPATR(HI)
+SB02 A                                 11 42'Vendor'
+     A                                      DSPATR(HI)
+SB02 A                                 11 49'Vendor Name'
+     A                                      DSPATR(HI)
+SB02 A                                 11 66'City'
+     A                                      DSPATR(HI)
+SB02 A                                 11 76'Y/N'
+SB02 A                                      DSPATR(HI)
+     A          R FULFUN
+     A                                      OVERLAY
+KRI1 A                                      SETOF(64 'Disable Invite')
+     A                                 23  2'F1=Exit'
+     A                                      COLOR(BLU)
+     A                                 23 11'F2=Bill'
+     A                                      COLOR(BLU)
+     A  22                             23 20'F4=Window'
+     A                                      COLOR(BLU)
+     A N27 32                          23 32'F5=Override'
+     A                                      COLOR(BLU)
+     A N27 33N07                       23 45'F7=Suspend'
+     A                                      COLOR(BLU)
+     A N27 33 07                       23 45'F7=Sus/Rej'
+     A                                      COLOR(BLU)
+     A N27N28                          23 57'F14=Qty Measure'
+     A                                      COLOR(BLU)
+     A                                 23 76'Help'
+     A                                      COLOR(BLU)
+     A          R FULEOF
+     A                                      OVERLAY
+KRI1 A                                      SETOF(64 'Disable Invite')
+     A            INSEOF         1A  I 13  3
+     A N27                                  DSPATR(UL)
+     A  27                                  DSPATR(ND PR)
+     A                                 13  6'  (No fuel records found for this -
+     A                                      trip)'
+     A          R AFRSFL                    TEXT('Addtn"l Fuel Requirements')
+     A                                      SFL
+     A  65                                  SFLNXTCHG
+     A            DSLINE    R        O 12  2REFFLD(DTSLINE)
+     A            DSSRC     R        O 12  6REFFLD(DTSSRC)
+     A            DSDPUR         6Y 0O 12  9EDTCDE(Z)
+     A            DSSPUR    R        O 12 17REFFLD(DTSSTAT)
+     A            DSFPG0         5  0O 12 21EDTWRD('   0. ')
+     A            DSVNDN    R        O 12 29REFFLD(DTSVENM)
+     A            DSVNDC    R        O 12 46REFFLD(DTSVENC)
+     A            DSTAXP    R        B 12 59REFFLD(DTSTAXP)
+     A  27
+     AON36                                  DSPATR(PR)
+     A N36                                  DSPATR(ND)
+     A N27 36                               DSPATR(UL)
+     A N27 36
+     AO 71                                  DSPATR(PC)
+     A  71                                  DSPATR(RI)
+     A            DSORIG    R        B 12 65REFFLD(DTSORIG)
+     A  27
+     AON37                                  DSPATR(PR)
+     A N37                                  DSPATR(ND)
+     A N27 37                               DSPATR(UL)
+     A N27 37
+     AO 72                                  DSPATR(PC)
+     A  72                                  DSPATR(RI)
+     A            DSGRIN    R        B 12 70REFFLD(DTSGRIN)
+     A  27
+     AON38                                  DSPATR(PR)
+     A N38                                  DSPATR(ND)
+     A N27 38                               DSPATR(UL)
+     A N27 38
+     AO 73                                  DSPATR(PC)
+     A  73                                  DSPATR(RI)
+     A            DSTKNO    R        H      REFFLD(DTSTKNO)
+     A            DSQTM     R        H      REFFLD(TFQTM)
+     A            DSVEND    R        H      REFFLD(DTSVENO)
+     A            DSFX      R        H      REFFLD(DTSFULC)
+     A            HSRC      R        H      REFFLD(DTSSRC)
+     A          R AFRCTL                    TEXT('Fuel Lines Control Record')
+     A                                      SFLCTL(AFRSFL)
+     A                                      SFLSIZ(20)
+     A                                      SFLPAG(10)
+     A                                      BLINK
+     A                                      OVERLAY
+KRI1 A                                      SETOF(64 'Disable Invite')
+     A                                      CF02
+     A N27 32                               CF05
+     A N27 33                               CF07
+     A  60                                  SFLCLR
+     A  62                                  SFLDSPCTL
+     A  63                                  SFLDSP
+     A  68                                  SFLEND
+     A  69                                  SFLDLT
+     A  66                                  SFLMSGID(CPF5203 QCPFMSG)
+     A            AFSRN          4S 0H      SFLRCDNBR(CURSOR)
+     A                                  9  2'-------------------   ADDITIONAL F-
+     A                                      UEL REQUIREMENTS  ------------------
+     A                                      --------'
+     A                                      DSPATR(HI)
+     A                                 11  2'No'
+     A                                      DSPATR(HI)
+     A                                 11  6'X'
+     A                                      DSPATR(HI)
+     A                                 11 10'Date'
+     A                                      DSPATR(HI)
+     A                                 11 17'St'
+     A                                      DSPATR(HI)
+     A                                 11 23'Qty'
+     A                                      DSPATR(HI)
+     A                                 11 31'Vendor Name'
+     A                                      DSPATR(HI)
+     A                                 11 48'City'
+     A                                      DSPATR(HI)
+     A  36                             10 58'Tax'
+     A                                      DSPATR(HI)
+     A  36                             11 58'Paid'
+     A                                      DSPATR(HI)
+     A  37                             10 64'Orig'
+     A                                      DSPATR(HI)
+     A  37                             11 64'Tick'
+     A                                      DSPATR(HI)
+     A  38                             10 70'Green'
+     A                                      DSPATR(HI)
+     A  38                             11 70'Ticket No'
+     A                                      DSPATR(HI)
+     A          R AFRFUN                    TEXT('Addtn"l Fuel Req. Functions')
+     A                                      BLINK
+     A                                      OVERLAY
+KRI1 A                                      SETOF(64 'Disable Invite')
+     A                                 23  3'F1=Exit'
+     A                                      COLOR(BLU)
+     A                                 23 12'F2=Fuel'
+     A                                      COLOR(BLU)
+     A  22                             23 21'F4=Window'
+     A                                      COLOR(BLU)
+     A N27 32                          23 33'F5=Override'
+     A                                      COLOR(BLU)
+     A N27 33N07                       23 46'F7=Suspend'
+     A                                      COLOR(BLU)
+     A N27 33 07                       23 46'F7=Sus/Rej'
+     A                                      COLOR(BLU)
+     A                                 23 76'Help'
+     A                                      COLOR(BLU)
+     A          R LSTSFL                    SFL
+     A                                      TEXT('List Batch Trips')
+     A  65                                  SFLNXTCHG
+     A            WPRYR          3S 0H
+     A            WPRMO          2S 0H
+     A            WKEYDT         6S 0H
+     A            WSEQ           3S 0H
+     A            WCORP          4A  H
+MV01 A            LSTOPT         1A  B 11  3
+     A                                      DSPATR(UL)
+     A  83                                  DSPATR(RI)
+MV01 A  83                                  DSPATR(PC)
+     A            WHTRP     R        O 11  5REFFLD(DTSTRIP)
+     A            WCUST     R        O 11 14REFFLD(DTSCUST)
+     A            WCBG      R        O 11 21REFFLD(DTSCBG)
+     A            WCDST     R        O 11 24REFFLD(DTSCDST)
+     A            WUNIT     R        O 11 29REFFLD(DTSUNIT)
+     A            WBDAT          6Y 0O 11 40TEXT('BEGINING TRIP DATR')
+     A                                      EDTCDE(Y)
+     A            WDPC      R        O 11 50REFFLD(DTSCITY)
+     A            WDPS      R        O 11 60REFFLD(DTSSTAT)
+     A            WDSC      R        O 11 63REFFLD(DTSCITY)
+     A            WDSS      R        O 11 73REFFLD(DTSSTAT)
+     A            WERR           5A  O 11 76
+     A          R LSTCTL                    SFLCTL(LSTSFL)
+     A                                      SFLSIZ(0012)
+     A                                      SFLPAG(0011)
+     A                                      TEXT('List Batch Trips')
+     A                                      CF18
+     A  01                                  CF09
+     A N68                                  PAGEDOWN(61)
+     A                                      BLINK
+     A                                      OVERLAY
+KRI1 A                                      SETOF(64 'Disable Invite')
+     A  60                                  SFLCLR
+     A  62                                  SFLDSPCTL
+     A  63                                  SFLDSP
+     A  68                                  SFLEND
+     A  69                                  SFLDLT
+     A  66                                  SFLMSGID(CPF5203 *LIBL/QCPFMSG)
+     A            LSSRN          4S 0H      SFLRCDNBR(CURSOR)
+     A            WKLNTR    R        H      REFFLD(DTSSUBM)
+     A                                  1  2DATE
+     A                                      EDTCDE(Y)
+     A                                  1 13TIME
+     A                                  1 26'DRIVER TRIP SYSTEM (DTS)'
+     A                                      DSPATR(HI)
+     A                                  1 62'System:'
+     A            LDSYSN        10A  O  1 70
+     A            LDCNAM        24A  O  2  2DSPATR(HI)
+     A                                  2 47'Name:'
+     A            LDNAME        24A  O  2 53
+     A                                  3  2'-----------------------------------
+     A                                      ------------------------------------
+     A                                      --------'
+     A                                  4  2'Box:'
+     A            WKBOX     R        O  4  7REFFLD(DTSBTCH)
+     A                                  4 17'Bch:'
+     A            WKBCNO    R        O  4 22REFFLD(DTSBTCH)
+     A                                  4 31'Status :'
+     A            WKSTS          7A  O  4 40DSPATR(HI)
+     A                                  4 50'Total'
+     A                                  4 56'Keyed'
+     A                                  4 62'Valid'
+     A                                  4 68'Susp'
+     A                                  4 73'Rej'
+DA08 A                                  5  2'Customer Suspend Box:'
+DA08 A            BCSSBX         1   O  5 25
+     A                                  5 31'Batch Trips count :'
+VA01 A            BTODTR    R        O  5 52REFFLD(DTSSUBM)
+     A                                      EDTCDE(1)
+     A                                      DSPATR(HI)
+     A            BTKDTR    R        O  5 58REFFLD(DTSSUBM)
+     A                                      EDTCDE(1)
+     A                                      DSPATR(HI)
+     A            BTVDTR    R        O  5 64REFFLD(DTSSUBM)
+     A                                      EDTCDE(1)
+     A                                      DSPATR(HI)
+     A            BTSDTR    R        O  5 69REFFLD(DTSSUBM)
+     A                                      EDTCDE(1)
+     A                                      DSPATR(HI)
+     A            BTDDTR    R        O  5 73REFFLD(DTSSUBM)
+     A                                      EDTCDE(1)
+     A                                      DSPATR(HI)
+     A                                  6  2'Type options, press Enter.'
+     A                                      COLOR(BLU)
+     A  02                              7  4'2=Change'
+DA08 A  03                              7 16'4=Delete'
+DA08 A                                  7 28'5=Display'
+DA08 A  88                              7 41'3=Transfer'
+     A  18                              7 52'** SUSP/REJC TRIPS **'
+     A                                      DSPATR(HI)
+     A N18                              7 52'   ** ALL TRIPS **   '
+     A                                      DSPATR(HI)
+     A                                  9  7'Trip'
+     A                                      DSPATR(HI)
+     A                                  9 18'Customer'
+     A                                      DSPATR(HI)
+     A                                  9 33'Unit'
+     A                                      DSPATR(HI)
+     A                                  9 43'Trip'
+     A                                      DSPATR(HI)
+     A                                  9 50'Departing'
+     A                                      DSPATR(HI)
+     A                                  9 63'Destination'
+     A                                      DSPATR(HI)
+     A                                  9 76'Err'
+     A                                      DSPATR(HI)
+     A                                 10  2'Opt'
+     A                                      DSPATR(HI)
+     A                                 10  7'Number'
+     A                                      DSPATR(HI)
+     A                                 10 19'Number'
+     A                                      DSPATR(HI)
+     A                                 10 32'Number'
+     A                                      DSPATR(HI)
+     A                                 10 43'Date'
+     A                                      DSPATR(HI)
+     A                                 10 50'City      ST'
+     A                                      DSPATR(HI)
+     A                                 10 63'City      ST'
+     A                                      DSPATR(HI)
+     A                                 10 76'Code'
+     A                                      DSPATR(HI)
+     A          R LSTFUN
+     A                                      TEXT('Trip List Function keys')
+KRI1 A                                      SETOF(64 'Disable Invite')
+     A                                      BLINK
+     A                                      OVERLAY
+     A                                 23  2'F1=Exit'
+     A                                      COLOR(BLU)
+     A  22                             23 12'F4=Window'
+     A                                      COLOR(BLU)
+     A  01                             23 25'F9=Add'
+     A                                      COLOR(BLU)
+     A N18                             23 39'F18=Sus/Rej Trp'
+     A                                      COLOR(BLU)
+     A  18                             23 39'F18=ALL Trips  '
+     A                                      COLOR(BLU)
+     A                                 23 76'Help'
+     A                                      COLOR(BLU)
+     A          R LSTEOF
+     A                                      OVERLAY
+KRI1 A                                      SETOF(64 'Disable Invite')
+     A                                 12  4'(No driver trip reports for this B-
+     A                                      atch)'
+     A          R DELSFL                    TEXT('Trip Delete Confirmation')
+     A                                      SFL
+     A            DSHTRP    R        O  9  2REFFLD(DTSTRIP)
+MV01 A  67                                  DSPATR(RI)
+     A            DSCUST    R        O  9 12REFFLD(DTSCUST)
+MV01 A  67                                  DSPATR(RI)
+     A            DSCBG     R        O  9 19REFFLD(DTSCBG)
+MV01 A  67                                  DSPATR(RI)
+     A            DSCDST    R        O  9 22REFFLD(DTSCDST)
+MV01 A  67                                  DSPATR(RI)
+     A            DSUNIT    R        O  9 27REFFLD(DTSUNIT)
+MV01 A  67                                  DSPATR(RI)
+     A            DSBDAT         6Y 0O  9 38TEXT('BEGINING TRIP DATR')
+     A                                      EDTCDE(Y)
+MV01 A  67                                  DSPATR(RI)
+     A            DSDPC     R        O  9 47REFFLD(DTSCITY)
+MV01 A  67                                  DSPATR(RI)
+     A            DSDPS     R        O  9 57REFFLD(DTSSTAT)
+MV01 A  67                                  DSPATR(RI)
+     A            DSDSC     R        O  9 61REFFLD(DTSCITY)
+MV01 A  67                                  DSPATR(RI)
+     A            DSDSS     R        O  9 71REFFLD(DTSSTAT)
+MV01 A  67                                  DSPATR(RI)
+     A            DSERR          5   O  9 75
+MV01 A  67                                  DSPATR(RI)
+     A          R DELCTL                    TEXT('Trip Delete Confirmation')
+     A                                      SFLCTL(DELSFL)
+     A                                      SFLSIZ(26)
+     A                                      SFLPAG(13)
+     A                                      BLINK
+     A                                      OVERLAY
+KRI1 A                                      SETOF(64 'Disable Invite')
+     A                                      CF02
+     A  60                                  SFLCLR
+     A  62                                  SFLDSPCTL
+     A  63                                  SFLDSP
+     A  68                                  SFLEND
+     A  69                                  SFLDLT
+     A N68                                  PAGEDOWN(61)
+     A            DEL_RRN        3S 0H      SFLRCDNBR
+     A                                  1  2DATE
+     A                                      EDTCDE(Y)
+     A                                  1 13TIME
+     A                                  1 26'DRIVER TRIP SYSTEM (DTS)'
+     A                                      DSPATR(HI)
+     A                                  1 62'System:'
+     A            LDSYSN        10A  O  1 70
+     A            LDCNAM        24A  O  2  2DSPATR(HI)
+     A                                  2 47'Name:'
+     A            LDNAME        24A  O  2 53
+     A                                  4  2'Press Enter to confirm your choice-
+     A                                      s for Delete.'
+     A                                      COLOR(BLU)
+     A                                  5  2'Press F2=Cancel to return to chang-
+     A                                      e your choices.'
+     A                                      COLOR(BLU)
+     A                                  7  4'Trip'
+     A                                      DSPATR(HI)
+     A                                  7 12'Customer'
+     A                                      DSPATR(HI)
+     A                                  7 31'Unit'
+     A                                      DSPATR(HI)
+     A                                  7 40'Trip'
+     A                                      DSPATR(HI)
+     A                                  7 47'Departing'
+     A                                      DSPATR(HI)
+     A                                  7 61'Destination'
+     A                                      DSPATR(HI)
+     A                                  8  4'Number'
+     A                                      DSPATR(HI)
+     A                                  8 12'Number'
+     A                                      DSPATR(HI)
+     A                                  8 31'Number'
+     A                                      DSPATR(HI)
+     A                                  8 40'Date'
+     A                                      DSPATR(HI)
+     A                                  8 47'City      ST'
+     A                                      DSPATR(HI)
+     A                                  8 61'City      ST'
+     A                                      DSPATR(HI)
+     A                                  8 75'Code'
+     A                                      DSPATR(HI)
+     A                                  7 75'Error'
+     A                                      DSPATR(HI)
+     A          R DELFUN                    TEXT('Trip Delete Confirmation')
+     A                                      BLINK
+     A                                      OVERLAY
+KRI1 A                                      SETOF(64 'Disable Invite')
+     A                                 23  2'F2=Cancel'
+     A                                      COLOR(BLU)
+     A                                 23 76'Help'
+     A                                      COLOR(BLU)
+     A          R MSGSFL
+     A                                      SFL
+     A                                      SFLMSGRCD(24)
+     A            MSGKEY                    SFLMSGKEY
+     A            PGMQ                      SFLPGMQ
+     A          R MSGCTL
+     A                                      SFLCTL(MSGSFL)
+     A  70                                  SFLDSP
+     A  70                                  SFLDSPCTL
+     A  70                                  SFLEND
+     A N70                                  SFLCLR
+     A                                      SFLSIZ(20)
+     A                                      SFLPAG(1)
+     A          R MSGCLR                    TEXT('SFL Overlay')
+     A                                 24  1' '
+     A          R ACQ_SCREEN
+     A                                      CHGINPDFT(UL)
+     A                                      BLINK
+     A                                      OVERLAY
+     A                                      SETOF(64 'Disable Invite')
+     A  10                              5 10'La unidad capturada coincide con u-
+     A                                      na unidad de una Adquisicion'
+     A N10                                  DSPATR(ND)
+     A N10                              5 11'Unit number entered matches a rece-
+     A                                      nt Acquisition Unit Number'
+     A                                      DSPATR(HI)
+     A  10                                  DSPATR(ND)
+     A  10                              6 10'reciente Favor de selccionar con u-
+     A                                      na "S" la unidad correcta'
+     A N10                                  DSPATR(ND)
+     A N10                              7  4'Please enter "S" for the correct c-
+     A                                      ustomer/unit per the DTR being proc-
+     A                                      essed'
+     A                                      DSPATR(HI)
+     A  10                                  DSPATR(ND)
+     A  10                              7 10'que corresponda al'
+     A N10                                  DSPATR(ND)
+     A  10                              7 29'cliente especificado en el DTR'
+     A                                      DSPATR(HI)
+     A N10                                  DSPATR(ND)
+     A                                  9  3' '
+     A                                  9  5'Selct  Unit Number  CORP  Cust #  -
+     A                                      Customer Name'
+     A                                      DSPATR(HI)
+     A                                  9 69'Acq Cust #'
+     A                                      DSPATR(HI)
+     A            XXXXXX_SEL     1A  B 11  7DSPATR(PC)
+     A            DSUNIT        10A  O 11 13
+     A            VFCORP         4A  O 11 25
+     A            VFCUST         6A  O 11 31
+     A            VFCUSN        28A  O 11 39
+     A            ACQ_SEL        1A  B 13  7
+     A            ATUNIT        10A  O 13 13
+     A            ATCORP         4A  O 13 25
+     A            VTCUST         6A  O 13 31
+     A            VTCUSN        28A  O 13 39
+     A            BRCUST         7Y 0O 13 71EDTCDE(Z)
+MV01 A          R DDMERR
+MV01 A                                  1  2DATE
+MV01 A                                      EDTCDE(Y)
+MV01 A                                  1 12TIME
+MV01 A            LDCNAM        24A  O  2  2
+MV01 A                                  1 29'DRIVER TRIP SYSTEM (DTS)'
+MV01 A                                  1 63'System:'
+MV01 A            LDSYSN        10A  O  1 71
+MV01 A            LDNAME        24A  O  2 57
+MV01 A                                  2 29'Remote Connection Error'
+MV01 A                                 12  3'The program you are using was canc-
+MV01 A                                      elled due to remote connection fail-
+MV01 A                                      ure.'
+MV01 A                                 13  3'Please contact MIS with the follow-
+MV01 A                                      ing information.'
+MV01 A                                 15  3'Program cancelled when it was tryi-
+MV01 A                                      ng to write into File'
+MV01 A            DERFIL        10A  O 15 59DSPATR(HI)
+MV01 A                                      DSPATR(RI)
+MV01 A                                      COLOR(GRN)
+MV01 A                                 17  3'Please Do Not re-enter the Trip#'
+MV01 A                                      DSPATR(HI)
+MV01 A                                      DSPATR(RI)
+MV01 A                                      COLOR(RED)
+MV01 A  67                                  DSPATR(ND)
+MV01 A            DERTR#         8   O 17 36DSPATR(HI)
+MV01 A                                      DSPATR(RI)
+MV01 A                                      COLOR(GRN)
+MV01 A  67                                  DSPATR(ND)
+MV01 A                                 17 45'without confirmation from MIS.'
+MV01 A                                      DSPATR(HI)
+MV01 A                                      DSPATR(RI)
+MV01 A                                      COLOR(RED)
+MV01 A  67                                  DSPATR(ND)
+MV01 A                                  5  6'Box Number...........:'
+MV01 A                                  7  6'Batch Number.........:'
+MV01 A                                  9  6'Trip Number..........:'
+MV01 A  67                                  DSPATR(ND)
+MV01 A            DERBOX         7A  O  5 29
+MV01 A            DERBAT         7A  O  7 29
+MV01 A            DERTRP         8A  O  9 29
+MV01 A  67                                  DSPATR(ND)
+MV01 A                                  3  2'-----------------------------------
+MV01 A                                      ------------------------------------
+MV01 A                                      ---------'
+KK01 A          R CNFWND
+KK01 A                                      OVERLAY
+KK01 A                                      SETOF(64 'Disable Invite')
+KK01 A                                      WINDOW(10 8 5 60)
+KK01 A                                  2  2'Appropriate'
+KK01 A                                  2 14'Customer'
+KK01 A                                  2 23'Found,'
+KK01 A                                  2 30'Do'
+KK01 A                                  2 33'you'
+KK01 A                                  2 37'want'
+KK01 A                                  2 42'to'
+KK01 A                                  2 45'use'
+KK01 A                                  2 49'(Y/N):'
+KK01 A            DCUSYN         1   B  2 57
+KK01 A                                      VALUES('Y' 'N')
+KK01 A                                      DFTVAL('N')
+KK01 A            WCUST          6A  O  4 12
+KK01 A            WBGRP          2A  O  4 19
+KK01 A            WDIST          4A  O  4 22
+KK01 A                                  4  2'CUSTOMER:'
+KK01 A                                  4 27'NAME:'
+KK01 A            WCSNM         28   O  4 33

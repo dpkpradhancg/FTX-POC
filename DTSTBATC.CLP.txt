@@ -1,0 +1,15 @@
+
+             PGM
+
+             DCL        VAR(&UPDFLG) TYPE(*CHAR) LEN(1)     /* KRI */
+             RTVDTAARA  DTAARA(DTSBCHUPD (1 1)) RTNVAR(&UPDFLG) /* +
+                          KRI*/
+             IF         COND(&UPDFLG = 'Y') THEN(DO)         /* KRI */
+             SNDPGMMSG  MSG('Please Sign-off immeditely. +
+                          Transmission job needs to run now') /* KRI */
+             ENDDO                                          /* KRI */
+             ELSE       CMD(DO)                             /* KRI */
+             CALL       PGM(DTSTBCHR) PARM('BAT')
+             ENDDO                                          /* KRI */
+
+ EXIT:       ENDPGM
