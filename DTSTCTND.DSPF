@@ -1,3 +1,17 @@
+     A*%%TS  SD  19990309  113906  VINEY       REL-V4R2M0  5769-PW1
+     A*  CHANGED BY:  TIM FOX       7/29/98     NO CHANGE NEEDED
+     A*  YEAR 2000    COMPLIANCE    PROJECT #G752    PHASE I COMPLETE
+      ********************************************************************
+      *Changed by: Brundavathi S           Date:07/28/2010           *
+      *Project   : 120597                  Tag :SB01                 *
+      *Description:Removed The 'ACCEPT' Button From The Window.        *
+      *----------------------------------------------------------------***
+      *Changed by: Malarvizhi Y            Date:07/27/2010           *
+      *Project   : 120597                  Tag :MV01                 *
+      *Description:New Screen is added to display error message        *
+      *            whenever any  DDM error occurs.                     *
+      ********************************************************************
+     A*%%EC
      A                                      DSPSIZ(24 80 *DS3)
      A                                      REF(*LIBL/FDTSREF)
      A                                      PRINT(*LIBL/SCREENPRNT)
@@ -5,6 +19,7 @@
      A                                      WDWBORDER((*DSPATR RI) (*CHAR '    -
      A                                          '))
      A          R CNFIRM
+     A*%%TS  SD  19990309  113906  VINEY       REL-V4R2M0  5769-PW1
      A                                      WINDOW(4 11 8 55)
      A                                      SETOF(91 'Cancel Invite')
      A                                      OVERLAY
@@ -24,10 +39,17 @@
      A N50                                  DSPATR(UL)
      A  50        PSHFL1         2Y 0B  5 17PSHBTNFLD(*RSTCSR)
      A                                      PSHBTNCHC(1 'Re-Enter')
+SB01 A**                                    PSHBTNCHC(2 'Accept')
      A            ERRMSG        55A  O  7  1DSPATR(HI)
+     A*1********************
+     A* Window dummy format
+     A**********************
      A          R DUMMY                     ASSUME
      A                                  1  2 ' '
      A                                      DSPATR(ND)
+     A**********************
+     A* Window wait format
+     A**********************
      A          R WAITFMT                   TEXT('Dummy Record Format')
      A                                      FRCDTA
      A                                      LOCK

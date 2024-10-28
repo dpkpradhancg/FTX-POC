@@ -1,3 +1,57 @@
+     A*%%TS  SD  19990426  111809  VINEY       REL-V4R2M0  5769-PW1
+@Doc A*TITLE DTSTBCHD               Application Number:DTS.  .
+@Doc A********************************************************************
+@Doc A*                                                                  *
+@Doc A*File Name:DTSTBCHD                                              *
+@Doc A*                                                                  *
+@Doc A*Function:Driver Trip System Batch Logging Maint.                *
+@Doc A*                                                                  *
+@Doc A*Author:Karl Zeigler            Date:11/01/91                  *
+@Doc A*                                                                  *
+@Doc A********************************************************************
+@Doc A*                                                                  *
+     A* Changed by:  Dawn Siegrist  06/11/92
+     A*              - Added trip clerk for selection, changed clerk
+     A*                to batch clerk, added trip clerk to subfile
+     A*
+     A********************************************************************
+     A*
+     A* Changed by:  Diane Diefenderfer    1/19/94
+     A*              - Removed Branch, Received Dates, Customer number
+     A*                and number of DTRs from the display.
+     A*                                    1/28/94
+     A*              - Removed ADD AND CHANGE CAPABILITIES.
+Y2   A*                                                               *
+Y2   A*Changed by:DEEPAK AGARWAL          Date:05/29/98           *
+Y2   A* YEAR 2000  COMPLIANCE     PROJECT #G752     PHASE I COMPLETE  *
+Y2   A*                                                               *
+@Doc A********************************************************************
+VIN01A* Changed by:  VINAY RAMANAND   11/16/98
+     A*              NEW BOX/BATCH LOGGING FILES
+@Doc A********************************************************************
+DA08 A*                                                               *
+DA08 A*Changed by:DEEPAK AGARWAL          Date:12/07/99           *
+DA08 A* Changes for BOX/BATCH Control for adding the Customer Number  *
+DA08 A* Suspend Box.                                                  *
+DA08 A********************************************************************
+BB02 A*                                                               *
+BB02 A*Changed by:Bhavish Bhatia          Date:12/01/00           *
+BB02 A* Function key F5 included for the Work Queue Option.           *
+BB02 A*                                                               *
+BB02 A********************************************************************
+VA01 A*                                                               *
+VA01 A*Changed by:Vasanth D               Date:06/09/10           *
+VA01 A* Function key F7 included for the suspended trips display.     *
+VA01 A*                                                               *
+VA01 A********************************************************************
+SS01 A*                                                               *
+SS01 A*Changed by:Samynathan S            Date:01/24/14           *
+SS01 A* Added the function key F4-Prompt for DTR Forms type field on  *
+SS01 A* New Box Creation screen and added new filed ADFDES to display *
+SS01 A* description for Forms type                                    *
+SS01 A* PROJECT: 230696
+SS01 A********************************************************************
+     A*%%EC
      A                                      DSPSIZ(24 80 *DS3)
      A                                      REF(*LIBL/FDTSBAT)
      A  91                                  INVITE
@@ -5,10 +59,17 @@
      A                                      VLDCMDKEY(29)
      A                                      PRINT(*LIBL/SCREENPRNT)
      A                                      OPENPRT
+     A*
+     A**************************************************************
+     A* DS1SFL -- DISPLAY SUBFILE 1 -- BOX
+     A**************************************************************
+     A*
      A          R DS1SFL                    SFL
+     A*%%TS  SD  19981216  091816  VINEY       REL-V4R2M0  5769-PW1
      A  35                                  SFLNXTCHG
      A            DSRRN1         4S 0H      TEXT('Hidden-Subfile Record Number')
      A            S1SYMD         7S 0H
+DA08 A*           S1OPT          1A  B 10  3
 DA08 A            S1OPT          1A  B 10  2
      A  40                                  DSPATR(RI)
      A  40
@@ -16,19 +77,36 @@ DA08 A            S1OPT          1A  B 10  2
      A N41                                  DSPATR(UL)
      A  41                                  DSPATR(PR)
      A                                      VALUES(' ' '4' '5' '6' '8' '9')
+DA08 A*           S1BOX          7A  O 10  6
 DA08 A            S1BOX          7A  O 10  4
+DA08 A*           S1BSTS         7A  O 10 14
 DA08 A            S1BSTS         7A  O 10 12
+DA08 A*           S1TBAT         3Y 0O 10 22EDTCDE(3)
 DA08 A            S1TBAT         3Y 0O 10 21EDTCDE(3)
+DA08 A*           S1CBAT         3Y 0O 10 27EDTCDE(3)
 DA08 A            S1CBAT         3Y 0O 10 25EDTCDE(3)
+DA08 A*           S1OBAT         3Y 0O 10 32EDTCDE(3)
 DA08 A            S1OBAT         3Y 0O 10 29EDTCDE(3)
+DA08 A*           S1DOPN         6Y 0O 10 37EDTCDE(Y)
 DA08 A            S1DOPN         6Y 0O 10 34EDTCDE(Y)
+DA08 A*           S1CLKO         3A  O 10 46
 DA08 A            S1CLKO         3A  O 10 43
+DA08 A*           S1DCLO         6Y 0O 10 51EDTCDE(Y)
 DA08 A            S1DCLO         6Y 0O 10 48EDTCDE(Y)
+DA08 A*           S1CLKC         3A  O 10 60
 DA08 A            S1CLKC         3A  O 10 57
+DA08 A*           S1DSHP         6Y 0O 10 66EDTCDE(Y)
 DA08 A            S1DSHP         6Y 0O 10 62EDTCDE(Y)
+DA08 A*           S1CLKS         3A  O 10 75
 DA08 A            S1CLKS         3A  O 10 71
 DA08 A            S1BCSS         1A  O 10 77
+     A*
+     A**************************************************************
+     A* DS1SFC -- DISPLAY SUBFILE CONTROL 1 -- BOX
+     A**************************************************************
+     A*
      A          R DS1SFC                    SFLCTL(DS1SFL)
+     A*%%TS  SD  19981216  091816  VINEY       REL-V4R2M0  5769-PW1
      A                                      SFLSIZ(0013)
      A                                      SFLPAG(0012)
      A  70                                  CF06(06 'Add new box')
@@ -50,7 +128,7 @@ BB02 A                                      CF05(05 'Work Queue')
      A                                      DSPATR(HI)
      A                                  1 58'System:'
      A            SCSYSN        10A  O  1 67
-     A                                  2  2'XXXXXXXXXXXXXXXXXXXX'
+     A                                  2  2'XXXXXXX'
      A                                  2 30'Box Control Display'
      A                                  2 58'Name:'
      A            SCUSER        15A  O  2 65
@@ -66,25 +144,44 @@ BB02 A                                      CF05(05 'Work Queue')
      A                                  6 34'6=Add Batch'
      A                                  6 47'8=Ship Box'
      A                                  6 59'9=Unship Box'
+DA08 A*                                 8 22'<--Batches-->  <--Opened-->  <--Cl-
+DA08 A*                                     osed-->  <--Shipped-->'
 DA08 A                                  8 20'<--Batches--> <--Opened-->  <--Clo-
 DA08 A                                      sed-->  <--Shipped--> Cust'
      A                                      DSPATR(HI)
+DA08 A*                                 9  2'Opt Box     Status  Tot Clos Open -
+DA08 A*                                          Date Clk      Date Clk      Da-
+DA08 A*                                     te  Clk'
 DA08 A                                  9  1'Opt Box    Status   Tot Clo Opn   -
 DA08 A                                      Date    Clk   Date    Clk   Da-
 DA08 A                                      te    Clk  Box '
      A                                      DSPATR(HI)
      A                                      DSPATR(UL)
+     A**
+     A**************************************************************
+     A* CMDKY1 --- COMMAND KEYS FOR SUBFILE - 1 (BOX)
+     A**************************************************************
+     A**
      A          R CMDKY1
+     A*%%TS  SD  19981125  131848  VINEY       REL-V4R2M0  5769-PW1
      A                                      OVERLAY
      A                                 23  2'F1=Exit'
      A                                      COLOR(BLU)
 BB02 A                                 23 11'F5=Work Queue'
 BB02 A                                      COLOR(BLU)
+     A* 70                             23 23'F6=Add New Box'
 BB02 A  70                             23 27'F6=Add New Box'
      A                                      COLOR(BLU)
+DA08 A*                                23 42'F18=Toggle Cust# Boxes/All'
 BB02 A                                 23 43'F18=Toggle Cust# Boxes/All'
 DA08 A                                      COLOR(BLU)
+     A**
+     A**************************************************************
+     A* ADDBOX --- ADD BOX RECORD FORMAT
+     A**************************************************************
+     A**
      A          R ADDBOX
+     A*%%TS  SD  19990107  094214  VINEY       REL-V4R2M0  5769-PW1
      A                                      SETOF(91 'Cancel Invite')
      A                                      CA02(02)
 SS01 A                                      CF04(04 'Prompt')
@@ -104,7 +201,7 @@ SS01 A            CSRPOS         4S 0H
      A                                      DSPATR(HI)
      A                                  1 58'System:'
      A            SCSYSN        10A  O  1 67
-     A                                  2  2'XXXXXXXXXXXXXXXXXXXX'
+     A                                  2  2'XXXXXXX'
      A            ADDTXT        18A  O  2 30
      A                                  2 58'Name:'
      A            SCUSER        15A  O  2 65
@@ -126,6 +223,7 @@ SS01 A            CSRPOS         4S 0H
      A            ADFORM         1   B 12 39
      A  48                                  DSPATR(RI)
      A  48                                  DSPATR(PC)
+SS01 A**                               12 41'(S=Standard, N=Non-Standard)'
 DA08 A                                 14  3'Customer Number Suspend Box  :'
 DA08 A            ADSUSB         1   B 14 35
 DA08 A  49                                  DSPATR(RI)
@@ -139,7 +237,13 @@ SS01 A            ADFDES        15   O 12 41
      A                                      COLOR(BLU)
 SS01 A                                 23 34'F4=Prompt'
 SS01 A                                      COLOR(BLU)
+     A*
+     A**************************************************************
+     A* DL1SFL -- DELETE SUBFILE 1 -- BOX
+     A**************************************************************
+     A*
      A          R DL1SFL                    SFL
+     A*%%TS  SD  19981125  085355  VINEY       REL-V4R2M0  5769-PW1
      A  35                                  SFLNXTCHG
      A            DLRRN1         4S 0H      TEXT('Hidden-Subfile Record Number')
      A            S1BOX          7A  O  9  3
@@ -153,7 +257,13 @@ SS01 A                                      COLOR(BLU)
      A            S1CLKC         3A  O  9 57
      A            S1DSHP         6Y 0O  9 63EDTCDE(Y)
      A            S1CLKS         3A  O  9 72
+     A*
+     A**************************************************************
+     A* DL1SFC -- DELETE SUBFILE CONTROL 1 -- BOX
+     A**************************************************************
+     A*
      A          R DL1SFC                    SFLCTL(DL1SFL)
+     A*%%TS  SD  19981202  100505  VINEY       REL-V4R2M0  5769-PW1
      A                                      SFLSIZ(0013)
      A                                      SFLPAG(0012)
      A                                      CA02(02)
@@ -172,7 +282,7 @@ SS01 A                                      COLOR(BLU)
      A                                      DSPATR(HI)
      A                                  1 58'System:'
      A            SCSYSN        10A  O  1 67
-     A                                  2  2'XXXXXXXXXXXXXXXXXXXX'
+     A                                  2  2'XXXXXXX'
      A                                  2 29'Box Control Delete'
      A                                  2 58'Name:'
      A            SCUSER        15A  O  2 65
@@ -188,7 +298,13 @@ SS01 A                                      COLOR(BLU)
      A                                      Clk'
      A                                      DSPATR(HI)
      A                                      DSPATR(UL)
+     A*
+     A**************************************************************
+     A* DS2SFL -- DISPLAY SUBFILE 2 -- BATCH
+     A**************************************************************
+     A*
      A          R DS2SFL                    SFL
+     A*%%TS  SD  19990426  111809  VINEY       REL-V4R2M0  5769-PW1
      A  35                                  SFLNXTCHG
      A            DSRRN2         4S 0H      TEXT('Hidden-Subfile Record Number')
      A            S2EFLG         1A  H      TEXT('EDIT DTR TOT FLAG')
@@ -217,7 +333,13 @@ SS01 A                                      COLOR(BLU)
      A            S2VDTR         3Y 0O 10 67EDTCDE(3)
      A            S2SDTR         3Y 0O 10 71EDTCDE(3)
      A            S2DDTR         3Y 0O 10 75EDTCDE(3)
+     A*
+     A**************************************************************
+     A* DS2SFC -- DISPLAY SUBFILE CONTROL 2 -- BATCH
+     A**************************************************************
+     A*
      A          R DS2SFC                    SFLCTL(DS2SFL)
+     A*%%TS  SD  19990426  111809  VINEY       REL-V4R2M0  5769-PW1
      A                                      SFLSIZ(0013)
      A                                      SFLPAG(0012)
      A                                      CA02(02)
@@ -239,7 +361,7 @@ VA01 A                                      CA07(07 'Susp.Trips')
      A                                      DSPATR(HI)
      A                                  1 58'System:'
      A            SCSYSN        10A  O  1 67
-     A                                  2  2'XXXXXXXXXXXXXXXXXXXX'
+     A                                  2  2'XXXXXXX'
      A                                  2 28'Batch Control Display'
      A                                  2 58'Name:'
      A            SCUSER        15A  O  2 65
@@ -272,7 +394,13 @@ VA01 A                                      CA07(07 'Susp.Trips')
      A                                      Sus Rej'
      A                                      DSPATR(HI)
      A                                      DSPATR(UL)
+     A**
+     A**************************************************************
+     A* CMDKY2 --- COMMAND KEYS FOR SUBFILE - 2 (BATCH)
+     A**************************************************************
+     A**
      A          R CMDKY2
+     A*%%TS  SD  19990112  095240  VINEY       REL-V4R2M0  5769-PW1
      A                                      OVERLAY
      A                                 23  2'F1=Exit'
      A                                      COLOR(BLU)
@@ -286,7 +414,13 @@ VA01 A                                      COLOR(BLU)
      A  73                                  COLOR(BLU)
      A  74                             23 49'F18=ALL Batches  '
      A  74                                  COLOR(BLU)
+     A*
+     A**************************************************************
+     A* DL2SFL -- DELETE SUBFILE 2 -- BATCH
+     A**************************************************************
+     A**
      A          R DL2SFL                    SFL
+     A*%%TS  SD  19990426  111809  VINEY       REL-V4R2M0  5769-PW1
      A            DLRRN2         4S 0H      TEXT('Hidden-Subfile Record Number')
      A            S2BOX          7A  O  9  5
      A            S2BAT          7A  O  9 13
@@ -301,7 +435,13 @@ VA01 A                                      COLOR(BLU)
      A            S2VDTR         3Y 0O  9 67EDTCDE(3)
      A            S2SDTR         3Y 0O  9 71EDTCDE(3)
      A            S2DDTR         3Y 0O  9 75EDTCDE(3)
+     A*
+     A**************************************************************
+     A* DL2SFC -- DELETE SUBFILE CONTROL 2 -- BATCH
+     A**************************************************************
+     A*
      A          R DL2SFC                    SFLCTL(DL2SFL)
+     A*%%TS  SD  19990426  111809  VINEY       REL-V4R2M0  5769-PW1
      A                                      SFLSIZ(0013)
      A                                      SFLPAG(0012)
      A                                      CA02(02)
@@ -320,7 +460,7 @@ VA01 A                                      COLOR(BLU)
      A                                      DSPATR(HI)
      A                                  1 58'System:'
      A            SCSYSN        10A  O  1 67
-     A                                  2  2'XXXXXXXXXXXXXXXXXXXX'
+     A                                  2  2'XXXXXXX'
      A                                  2 29'Batch Control Delete'
      A                                  2 58'Name:'
      A            SCUSER        15A  O  2 65
@@ -336,25 +476,51 @@ VA01 A                                      COLOR(BLU)
      A                                       Rej'
      A                                      DSPATR(HI)
      A                                      DSPATR(UL)
+     A*
      A          R OPTIO2
      A                                      OVERLAY
      A                                 23  2'F1=Exit'  COLOR(BLU)
      A                                 23 11'F2=Cancel' COLOR(BLU)
+     A**
+     A**************************************************************
+     A* NODATA --- NO DATA ON FILE RECORD FORMAT
+     A**************************************************************
+     A**
      A          R NODATA
      A                                      SETOF(91 'Cancel Invite')
      A                                      OVERLAY
      A                                 14 10'(No Data available on file)'
+     A**
+     A**************************************************************
+     A* CMDKYD --- COMMAND KEYS FOR DELETE SUBFILE 1&2 (BOX/BATCH)
+     A**************************************************************
+     A**
      A          R CMDKYD
      A                                      OVERLAY
      A                                 23  2'F2=Cancel'  COLOR(BLU)
+     A**
+     A******************************
+     A* WAIT  FORMAT
+     A******************************
+     A**
      A          R WAITFMT                   TEXT('Dummy Record Format')
      A                                      FRCDTA
      A                                      LOCK
      A                                  1  2' '
+     A**
+     A**************************************************************
+     A* MSGSFL --- MESSAGE SUBFILE FORMAT
+     A**************************************************************
+     A**
      A          R MSGSFL                    SFL
      A                                      SFLMSGRCD(24)
      A            @MSGKY                    SFLMSGKEY
      A            PSPGNM                    SFLPGMQ
+     A**
+     A**************************************************************
+     A* MSGSFC --- MESSAGE SUBFILE CONTROL FORMAT
+     A**************************************************************
+     A**
      A          R MSGSFC                    SFLCTL(MSGSFL)
      A                                      SETOF(91 'Cancel Invite')
      A                                      SFLSIZ(2) SFLPAG(1)

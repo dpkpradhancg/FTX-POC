@@ -1,3 +1,64 @@
+     A*%%TS  SD  20200129  083438  PAULOSJ2    REL-V7R3M0  5770-WDS
+     A*
+     A*
+     A*TITLE DTSTENTD               Application Number:DTS.  .
+     A********************************************************************
+     A*                                                                  *
+     A*File Name:DTSTENTD                                              *
+     A*                                                                  *
+     A*Function:Driver Trip Entry Program                              *
+     A*                                                                  *
+     A*Author:Mike Kersic             Date:11/05/91                  *
+     A*                                                                  *
+Y2   A* CHANGED BY: TIM FOX                  DATE: 06/01/98           *
+Y2   A* YEAR 2000 COMPLIANCE      PROJECT #G752     PHASE I COMPLETE  *
+     A*    NO CHANGES NEEDED, PROGRAM IS YEAR 2000 COMPLIANT          *
+     A*                                                                  *
+KRI1 A*  CHANGED BY:  KRISHNA TANGA     9/22/99
+KRI1 A*  ---- ADDED TIMOUT FUNCTION TO THE DISPLAY FILE AND IT WILL
+KRI1 A*       AUTO-SIGNOF IF USER DONOT ENTER WITHIN 15 MINUTES.
+KRI1 A*       USED INDICATOR 64 (SCAN FOR KRI1)
+DA07 A*
+DA07 A*    Changed:  11/16/99   DEEPAK AGARWAL (TCS)
+DA07 A*    Changed for adding customer number on billing fuel screen.
+DA07 A*    Add same customer number criteria for in selecting the
+DA07 A*    billing fuel records.
+DA08 A*
+DA08 A*    Changed:  12/08/99   DEEPAK AGARWAL (TCS)
+DA08 A*    Changed for adding customer number suspended box field and
+DA08 A*    logic for transfer the trip from one box to the other.
+DA08 A*
+DA08 A*    Changed:  07/30/10   VASANTH D
+DA08 A*    Changed the program to use original count instead of
+DA08 A*    modified count for total trip counts.
+DA08 A*
+     A*-------------------------------------------------------------------
+     A*Changed by: Brundavathi S           Date:08/04/2010
+     A*Project   : 120597                  Tag :SB01
+     A*Description:Changed the edit code value for DSRCWT as '3'
+     A*-------------------------------------------------------------------
+     A*Changed by: Brundavathi S           Date:08/27/2010
+     A*Project   : 120597                  Tag :SB02
+     A*Description:Added a ticket recieved field in FULSFL.
+     A*-------------------------------------------------------------------
+     A*Changed by: Brunda S                Date:10/12/2010
+     A*Project   : 120597                  Tag :SB03
+     A*Description:Removed the protect for fuel tickect recieved field.
+     A*-------------------------------------------------------------------
+     A*    Changed:  07/27/10   Malarvizhi Y
+     A*    Tag    :  MV01
+     A*    New Screen is added to display error message whenever any
+     A*    DDM error occurs.
+     A********************************************************************
+     A*Changed by: Kasi Viswanath K        Date:04/25/2012
+     A*Project   :                         Tag :KK01
+     A*Description:Added a new confirmation window                   d.
+     A*-------------------------------------------------------------------------
+     A*Changed by: Kumar Vellaichamy       Date:04/25/2016
+     A*Project   :                         Tag :KV01
+     A*Description:Added a new field "Taxable" in additional state requiremnt
+     A*-------------------------------------------------------------------------
+     A*%%EC
      A                                      DSPSIZ(24 80 *DS3)
      A                                      REF(*LIBL/FDTSREF)
      A  64                                  INVITE
@@ -7,6 +68,7 @@
      A  22                                  CF04
      A                                      HELP(90)
      A          R TITLE
+     A*%%TS  DD  19960605  104810  DAWN        REL-V3R1M0  5763-CD1
      A                                      OVERLAY
 KRI1 A                                      SETOF(64 'Disable Invite')
      A                                  1  2DATE
@@ -17,13 +79,18 @@ KRI1 A                                      SETOF(64 'Disable Invite')
      A            MODE           7A  O  1 53DSPATR(HI)
      A                                  1 62'System:'
      A            LDSYSN        10A  O  1 70
+     A*                                 2  2'XXXXXXX'
      A            LDCNAM        24A  O  2  2DSPATR(HI)
      A                                  2 47'Name:'
      A            LDNAME        24A  O  2 53
      A                                  3  2'-----------------------------------
      A                                      ------------------------------------
      A                                      --------'
+     A***************************************************************
+     A* PROMPT FORMAT FOR MAINTAINING DRIVER TRIP REPORTS           *
+     A***************************************************************
      A          R PROMPT
+     A*%%TS  SD  19981231  103906  VINEY       REL-V4R2M0  5769-PW1
      A                                      CHGINPDFT(UL)
      A  34
      AO 20                                  CF02
@@ -86,7 +153,11 @@ KRI1 A                                      SETOF(64 'Disable Invite')
      A  43                                  DSPATR(PC)
      A  43                                  DSPATR(RI)
      A            FUNCLN        80A  O 23  1COLOR(BLU)
+     A***************************************************************
+     A* CUSTOMER AND DEPARTING/DESTINATION CITY & STATE PANEL       *
+     A***************************************************************
      A          R CUST
+     A*%%TS  SD  20031210  103712  ROSEMA      REL-V5R2M0  5722-WDS
      A                                      CF02
      A N27 32                               CF05
      A N27 33                               CF07
@@ -165,6 +236,7 @@ KRI1 A                                      SETOF(64 'Disable Invite')
      A            DSTCNT    R        O  8 69REFFLD(DTSSUBM)
      A                                      EDTCDE(1)
      A          R CUSTDAT
+     A*%%TS  SD  20031210  090301  ROSEMA      REL-V5R2M0  5722-WDS
      A                                      OVERLAY
      A                                      SETOF(64 'Disable Invite')
      A                                 11 11' Date '
@@ -177,11 +249,17 @@ KRI1 A                                      SETOF(64 'Disable Invite')
      A                                      COLOR(BLU)
      A N27 33 07                       23 54'F7=Sus/Rej'
      A                                      COLOR(BLU)
+     A*N27N32                          23 67'F13=Suprv'
+     A*                                     COLOR(BLU)
      A                                 23 76'Help'
      A                                      COLOR(BLU)
      A  22                             23 24'F4=Window'
      A                                      COLOR(BLU)
+     A***************************************************************
+     A* MILEAGE PANEL SUBFILE                                       *
+     A***************************************************************
      A          R MILSFL                    SFL
+     A*%%TS  SD  19981231  103906  VINEY       REL-V4R2M0  5769-PW1
      A                                      TEXT('Mileage Lines')
      A                                      CHANGE(23)
      A  65                                  SFLNXTCHG
@@ -232,13 +310,18 @@ KRI1 A                                      SETOF(64 'Disable Invite')
      A  35                                  DSPATR(HI)
      A N35                                  DSPATR(ND)
      A                                      EDTCDE(B)
+     A*
+     A* Mileage Panel Subfile Control
+     A*
      A          R MILCTL
+     A*%%TS  DD  19960625  102103  DAWN        REL-V3R1M0  5763-CD1
      A                                      SFLCTL(MILSFL)
      A                                      SFLSIZ(18)
      A                                      SFLPAG(9)
      A                                      CF02
      A N27 32                               CF05
      A N27 33                               CF07
+     A*N27                                  CF13
      A N27N28                               CF14
      A                                      CF15
      A N27N30                               CF16
@@ -285,10 +368,15 @@ KRI1 A                                      SETOF(64 'Disable Invite')
      A  57                             11 60'Miles'
      A  35                                  DSPATR(HI)
      A N35                                  DSPATR(ND)
+     A*
+     A* Mileage Panel Ending Speedo prompt and Function Key Area
+     A*
      A          R ENDSPD                    TEXT('Ending Speedo & F-Keys')
+     A*%%TS  DD  19960605  104810  DAWN        REL-V3R1M0  5763-CD1
      A                                      CF02
      A N27 32                               CF05
      A N27 33                               CF07
+     A*N27                                  CF13
      A N27N28                               CF14
      A                                      CF15
      A N68                                  PAGEDOWN(61)
@@ -316,6 +404,8 @@ KRI1 A                                      SETOF(64 'Disable Invite')
      A                                      COLOR(BLU)
      A N27 33 07                       23 54'F7=Sus/Rej'
      A                                      COLOR(BLU)
+     A*N27                             23  2'F13=Suprv'
+     A*                                     COLOR(BLU)
      A N27N28                          23 14'F14=Route'
      A                                      COLOR(BLU)
      A N35                             23 26'F15=Miles'
@@ -326,7 +416,11 @@ KRI1 A                                      SETOF(64 'Disable Invite')
      A                                      COLOR(BLU)
      A                                 23 76'Help'
      A                                      COLOR(BLU)
+     A*
+     A* Mileage Panel NO RECORDS FOUND format
+     A*
      A          R MILEOF
+     A*%%TS  SD  19911024  092550  MKERS       REL-R03M00  5728-PW1
      A                                      OVERLAY
 KRI1 A                                      SETOF(64 'Disable Invite')
      A            INSEOF         1A  I 13  3
@@ -334,7 +428,14 @@ KRI1 A                                      SETOF(64 'Disable Invite')
      A  27                                  DSPATR(ND PR)
      A                                 13  6'  (No mileage records found for th-
      A                                      is trip)'
+     A*___________________________________________________________________
+     A*___________________________________________________________________
+     A*
+     A* Additional State Requirements Panel Subfile
+     A*    Sub-panel for Mileage Panel
+     A*
      A          R ASRSFL                    SFL
+     A*%%TS  SD  19981231  103906  VINEY       REL-V4R2M0  5769-PW1
      A                                      TEXT('Mileage Lines')
      A  65                                  SFLNXTCHG
      A            HODOM     R        H      REFFLD(DTSMILE)
@@ -365,6 +466,7 @@ KRI1 A                                      SETOF(64 'Disable Invite')
      AO 72                                  DSPATR(PC)
      A  72                                  DSPATR(RI)
      A            DSRCWT    R        B 12 55REFFLD(DTSWGHT)
+SB01 A**                                    EDTCDE(Z)
 SB01 A                                      EDTCDE(3)
      A  27
      AON38                                  DSPATR(PR)
@@ -402,6 +504,7 @@ KV01 A N27 85                               DSPATR(UL)
 KV01 A N27N86                               DSPATR(PC)
 KV01 A  86                                  DSPATR(RI)
      A          R ASRCTL                    SFLCTL(ASRSFL)
+     A*%%TS  SD  19981231  103906  VINEY       REL-V4R2M0  5769-PW1
      A                                      SFLSIZ(0018)
      A                                      SFLPAG(0009)
      A                                      TEXT('Addtn"l Stare Requirements')
@@ -465,10 +568,13 @@ KRI1 A                                      SETOF(64 'Disable Invite')
      A                                 11 66'Axles'
      A                                      DSPATR(HI)
      A N39                                  DSPATR(ND)
+KV01 A*                                11 74'KYU#'
 KV01 A            DSASRTXT       9   O 11 72COLOR(WHT)
      A                                      DSPATR(HI)
+KV01 A*N84                                  DSPATR(ND)
 KV01 A N84N85                               DSPATR(ND)
      A          R ASRFUN                    TEXT('Addtn"l State Req. Functions')
+     A*%%TS  DD  19960605  104810  DAWN        REL-V3R1M0  5763-CD1
      A                                      BLINK
      A                                      OVERLAY
 KRI1 A                                      SETOF(64 'Disable Invite')
@@ -489,7 +595,15 @@ KRI1 A                                      SETOF(64 'Disable Invite')
      A                                      COLOR(BLU)
      A                                 23 76'Help'
      A                                      COLOR(BLU)
+     A* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+     A*
+     A*___________________________________________________________________
+     A*___________________________________________________________________
+     A*
+     A* Billing Fuel Panel Subfile
+     A*
      A          R BILSFL                    TEXT('Billing Fuel')
+     A*%%TS  DD  19960605  104810  DAWN        REL-V3R1M0  5763-CD1
      A                                      SFL
      A  65                                  SFLNXTCHG
 JP03 A            HSCORP    R        H      REFFLD(FTCORP FFUELTKT)
@@ -510,10 +624,14 @@ JP03 A            HSVEND    R        H      REFFLD(FTVEND FFUELTKT)
      A                                      EDTCDE(3)
 DA07 A            DSSCUS    R        O 12 32REFFLD(FTICUS FFUELTKT)
 DA07 A            DSSDST    R        O 12 41REFFLD(FTODIS FFUELTKT)
+DA07 A*           DSVEND    R        O 12 33REFFLD(FTVEND FFUELTKT)
 DA07 A            DSVEND    R        O 12 46REFFLD(FTVEND FFUELTKT)
+DA07 A*           DSSTNA    R        O 12 40REFFLD(FTSTNA FFUELTKT)
 DA07 A            DSSTNA    R   16   O 12 53REFFLD(FTSTNA FFUELTKT)
+DA07 A*           DSSTCT    R        O 12 65REFFLD(FTSTCT FFUELTKT)
 DA07 A            DSSTCT    R   10   O 12 70REFFLD(FTSTCT FFUELTKT)
      A          R BILCTL                    TEXT('Billing Fuel Control Record')
+     A*%%TS  DD  19960605  104810  DAWN        REL-V3R1M0  5763-CD1
      A                                      SFLCTL(BILSFL)
      A                                      SFLSIZ(20)
      A                                      SFLPAG(10)
@@ -554,13 +672,17 @@ DA07 A N27 33                               CF07
      A                                      DSPATR(HI)
 DA07 A                                 11 32'Cust Number'
 DA07 A                                      DSPATR(HI)
+DA07 A*                                11 33'Vendor'
 DA07 A                                 11 46'Vendor'
      A                                      DSPATR(HI)
+DA07 A*                                11 40'Vendor Name'
 DA07 A                                 11 53'Vendor Name'
      A                                      DSPATR(HI)
+DA07 A*                                11 65'Vendor City'
 DA07 A                                 11 70'Vendor City'
      A                                      DSPATR(HI)
      A          R BILFUN                    TEXT('Billing Fuel Function keys')
+     A*%%TS  DD  19960605  104810  DAWN        REL-V3R1M0  5763-CD1
      A                                      BLINK
      A                                      OVERLAY
 KRI1 A                                      SETOF(64 'Disable Invite')
@@ -576,12 +698,24 @@ DA07 A N27 33 07                       23 45'F7=Sus/Rej'
 DA07 A                                      COLOR(BLU)
      A                                 23 76'Help'
      A                                      COLOR(BLU)
+     A*
+     A* Billing Fuel Panel NO RECORDS FOUND format
+     A*
      A          R BILEOF
+     A*%%TS  DD  19960605  104810  DAWN        REL-V3R1M0  5763-CD1
      A                                      OVERLAY
 KRI1 A                                      SETOF(64 'Disable Invite')
      A                                 13  2'  (No billing fuel records found f-
      A                                      or this unit)'
+     A* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+     A*
+     A*___________________________________________________________________
+     A*___________________________________________________________________
+     A*
+     A* Fuel Purchased Panel Subfile
+     A*
      A          R FULSFL                    TEXT('Fuel Lines')
+     A*%%TS  DD  19960605  104810  DAWN        REL-V3R1M0  5763-CD1
      A                                      SFL
      A  65                                  SFLNXTCHG
 JP03 A            HSFSRC    R        H      REFFLD(FTSRC  FFUELTKT)
@@ -602,22 +736,26 @@ JP03 A            HSSRCF    R        H      REFFLD(TFFSRC FDTSFUEL)
      A  43                                  DSPATR(RI)
      A  43
      AO 53                                  DSPATR(PC)
+SB02 A**          DSSPUR    R        B 12 19REFFLD(DTSSTAT)
 SB02 A            DSSPUR    R        B 12 18REFFLD(DTSSTAT)
      A N27N31                               DSPATR(UL)
      A  27
      AO 31                                  DSPATR(PR)
      A  52                                  DSPATR(PC RI)
+SB02 A**          DSTKNO    R        B 12 22REFFLD(DTSTKNO)
 SB02 A            DSTKNO    R        B 12 21REFFLD(DTSTKNO)
      A                                      CHECK(RZ)
      A N27N31                               DSPATR(UL)
      A  27
      AO 31                                  DSPATR(PR)
      A  74                                  DSPATR(PC RI)
+SB02 A**          DSFPG0         5Y 0B 12 33EDTWRD('   0. ')
 SB02 A            DSFPG0         5Y 0B 12 31EDTWRD('   0. ')
      A N27N31                               DSPATR(UL)
      A  27
      AO 31                                  DSPATR(PR)
      A  75                                  DSPATR(PC RI)
+SB02 A**          DSQTM     R        B 12 41REFFLD(TFQTM)
 SB02 A            DSQTM     R        B 12 39REFFLD(TFQTM)
      A  28N31                               DSPATR(UL)
      A N28
@@ -625,31 +763,43 @@ SB02 A            DSQTM     R        B 12 39REFFLD(TFQTM)
      A  28N31
      AO 76                                  DSPATR(PC)
      A  76                                  DSPATR(RI)
+SB02 A**          DSVEND    R        B 12 44REFFLD(DTSVENO)
 SB02 A            DSVEND    R        B 12 42REFFLD(DTSVENO)
      A N27N31                               DSPATR(UL)
      A  27
      AO 31                                  DSPATR(PR)
      A  77                                  DSPATR(PC RI)
+SB02 A**          DSVNDN    R        B 12 51REFFLD(DTSVENM)
 SB02 A            DSVNDN    R        B 12 49REFFLD(DTSVENM)
      A N27N31                               DSPATR(UL)
      A  27
      AO 31                                  DSPATR(PR)
      A  78                                  DSPATR(PC RI)
+SB02 A**          DSVNDC    R        B 12 68REFFLD(DTSVENC)
 SB02 A            DSVNDC    R        B 12 66REFFLD(DTSVENC)
      A N27N31                               DSPATR(UL)
      A  27
      AO 31                                  DSPATR(PR)
      A  78                                  DSPATR(PC RI)
 SB02 A            DSTKTRCVD      1A  B 12 77
+SB02 A**SB03 N27N31                               DSPATR(UL)
 SB03 A N27                                  DSPATR(UL)
+SB02 A**SB03  27
+SB02 A**SB03O 31                                  DSPATR(PR)
 SB03 A  27                                  DSPATR(PR)
 SB02 A  35                                  DSPATR(PC RI)
      A            HSRC      R        H      REFFLD(DTSSRC)
+     A* Hidden fields for use with Addtn'l Fuel Reqmts (AFR)
      A            DSTAXP    R        H      REFFLD(DTSTAXP)
      A            DSORIG    R        H      REFFLD(DTSORIG)
      A            DSGRIN    R        H      REFFLD(DTSGRIN)
+     A*
      A            DSFX      R        H      REFFLD(DTSFULC)
+     A*
+     A* Fuel Purchased Panel Subfile Control
+     A*
      A          R FULCTL
+     A*%%TS  DD  19960605  104810  DAWN        REL-V3R1M0  5763-CD1
      A                                      SFLCTL(FULSFL)
      A                                      CF02
      A N27 32                               CF05
@@ -684,23 +834,34 @@ SB02 A                                      DSPATR(HI)
      A                                      DSPATR(HI)
      A                                 11 12'Date'
      A                                      DSPATR(HI)
+SB02 A**                               11 19'St'
 SB02 A                                 11 18'St'
      A                                      DSPATR(HI)
+SB02 A**                               11 22' Tkt # '
 SB02 A                                 11 21' Tkt # '
      A                                      DSPATR(HI)
+SB02 A**                               11 32'Quantity'
 SB02 A                                 11 31'Qty'
      A                                      DSPATR(HI)
+SB02 A**                               11 41'QM'
 SB02 A                                 11 39'QM'
      A                                      DSPATR(HI)
+SB02 A**                               11 44'Vendor'
 SB02 A                                 11 42'Vendor'
      A                                      DSPATR(HI)
+SB02 A**                               11 51'Vendor Name'
 SB02 A                                 11 49'Vendor Name'
      A                                      DSPATR(HI)
+SB02 A**                               11 68'City'
 SB02 A                                 11 66'City'
      A                                      DSPATR(HI)
 SB02 A                                 11 76'Y/N'
 SB02 A                                      DSPATR(HI)
+     A*
+     A* Fuel Purchased Panel Function Key Area
+     A*
      A          R FULFUN
+     A*%%TS  DD  19960605  104810  DAWN        REL-V3R1M0  5763-CD1
      A                                      OVERLAY
 KRI1 A                                      SETOF(64 'Disable Invite')
      A                                 23  2'F1=Exit'
@@ -719,7 +880,11 @@ KRI1 A                                      SETOF(64 'Disable Invite')
      A                                      COLOR(BLU)
      A                                 23 76'Help'
      A                                      COLOR(BLU)
+     A*
+     A* Fuel Purchased Panel NO RECORDS FOUND format
+     A*
      A          R FULEOF
+     A*%%TS  DD  19960605  104810  DAWN        REL-V3R1M0  5763-CD1
      A                                      OVERLAY
 KRI1 A                                      SETOF(64 'Disable Invite')
      A            INSEOF         1A  I 13  3
@@ -727,7 +892,15 @@ KRI1 A                                      SETOF(64 'Disable Invite')
      A  27                                  DSPATR(ND PR)
      A                                 13  6'  (No fuel records found for this -
      A                                      trip)'
+     A*
+     A*___________________________________________________________________
+     A*___________________________________________________________________
+     A*
+     A* Additional Fuel Requirements Panel Subfile
+     A*    Sub-panel for Fuel Purchased Panel
+     A*
      A          R AFRSFL                    TEXT('Addtn"l Fuel Requirements')
+     A*%%TS  DD  19960605  104810  DAWN        REL-V3R1M0  5763-CD1
      A                                      SFL
      A  65                                  SFLNXTCHG
      A            DSLINE    R        O 12  2REFFLD(DTSLINE)
@@ -767,6 +940,7 @@ KRI1 A                                      SETOF(64 'Disable Invite')
      A            DSFX      R        H      REFFLD(DTSFULC)
      A            HSRC      R        H      REFFLD(DTSSRC)
      A          R AFRCTL                    TEXT('Fuel Lines Control Record')
+     A*%%TS  DD  19960605  104810  DAWN        REL-V3R1M0  5763-CD1
      A                                      SFLCTL(AFRSFL)
      A                                      SFLSIZ(20)
      A                                      SFLPAG(10)
@@ -814,6 +988,7 @@ KRI1 A                                      SETOF(64 'Disable Invite')
      A  38                             11 70'Ticket No'
      A                                      DSPATR(HI)
      A          R AFRFUN                    TEXT('Addtn"l Fuel Req. Functions')
+     A*%%TS  DD  19960605  104810  DAWN        REL-V3R1M0  5763-CD1
      A                                      BLINK
      A                                      OVERLAY
 KRI1 A                                      SETOF(64 'Disable Invite')
@@ -831,7 +1006,15 @@ KRI1 A                                      SETOF(64 'Disable Invite')
      A                                      COLOR(BLU)
      A                                 23 76'Help'
      A                                      COLOR(BLU)
+     A* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+     A*
+     A*___________________________________________________________________
+     A*___________________________________________________________________
+     A*
+     A* Batch Trips List Panel Subfile
+     A*
      A          R LSTSFL                    SFL
+     A*%%TS  SD  19981221  101545  VINEY       REL-V4R2M0  5769-PW1
      A                                      TEXT('List Batch Trips')
      A  65                                  SFLNXTCHG
      A            WPRYR          3S 0H
@@ -839,6 +1022,7 @@ KRI1 A                                      SETOF(64 'Disable Invite')
      A            WKEYDT         6S 0H
      A            WSEQ           3S 0H
      A            WCORP          4A  H
+MV01 A*           LSTOPT         1A  B 11  3DSPATR(PC)
 MV01 A            LSTOPT         1A  B 11  3
      A                                      DSPATR(UL)
      A  83                                  DSPATR(RI)
@@ -856,6 +1040,7 @@ MV01 A  83                                  DSPATR(PC)
      A            WDSS      R        O 11 73REFFLD(DTSSTAT)
      A            WERR           5A  O 11 76
      A          R LSTCTL                    SFLCTL(LSTSFL)
+     A*%%TS  SD  19990426  111357  VINEY       REL-V4R2M0  5769-PW1
      A                                      SFLSIZ(0012)
      A                                      SFLPAG(0011)
      A                                      TEXT('List Batch Trips')
@@ -900,6 +1085,7 @@ KRI1 A                                      SETOF(64 'Disable Invite')
 DA08 A                                  5  2'Customer Suspend Box:'
 DA08 A            BCSSBX         1   O  5 25
      A                                  5 31'Batch Trips count :'
+VA01 A*           BTMDTR    R        O  5 52REFFLD(DTSSUBM)
 VA01 A            BTODTR    R        O  5 52REFFLD(DTSSUBM)
      A                                      EDTCDE(1)
      A                                      DSPATR(HI)
@@ -918,7 +1104,9 @@ VA01 A            BTODTR    R        O  5 52REFFLD(DTSSUBM)
      A                                  6  2'Type options, press Enter.'
      A                                      COLOR(BLU)
      A  02                              7  4'2=Change'
+DA08 A* 03                              7 17'4=Delete'
 DA08 A  03                              7 16'4=Delete'
+DA08 A*                                 7 30'5=Display'
 DA08 A                                  7 28'5=Display'
 DA08 A  88                              7 41'3=Transfer'
      A  18                              7 52'** SUSP/REJC TRIPS **'
@@ -956,6 +1144,7 @@ DA08 A  88                              7 41'3=Transfer'
      A                                 10 76'Code'
      A                                      DSPATR(HI)
      A          R LSTFUN
+     A*%%TS  SD  19990106  164210  VINEY       REL-V4R2M0  5769-PW1
      A                                      TEXT('Trip List Function keys')
 KRI1 A                                      SETOF(64 'Disable Invite')
      A                                      BLINK
@@ -972,12 +1161,27 @@ KRI1 A                                      SETOF(64 'Disable Invite')
      A                                      COLOR(BLU)
      A                                 23 76'Help'
      A                                      COLOR(BLU)
+     A*
+     A* Batch Trips List Panel for when No Records Exist
+     A* includes function key area
+     A*
      A          R LSTEOF
+     A*%%TS  DD  19960605  104810  DAWN        REL-V3R1M0  5763-CD1
      A                                      OVERLAY
 KRI1 A                                      SETOF(64 'Disable Invite')
      A                                 12  4'(No driver trip reports for this B-
      A                                      atch)'
+     A******                           12  4'(No driver trip reports for this +
+     A******                                 Branch/Batch)'
+     A* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+     A*
+     A*___________________________________________________________________
+     A*___________________________________________________________________
+     A*
+     A* Trip Number Delete Confirmation Panel Subfile
+     A*
      A          R DELSFL                    TEXT('Trip Delete Confirmation')
+     A*%%TS  SD  19910903  094400  MKERS       REL-R03M00  5728-PW1
      A                                      SFL
      A            DSHTRP    R        O  9  2REFFLD(DTSTRIP)
 MV01 A  67                                  DSPATR(RI)
@@ -1003,6 +1207,7 @@ MV01 A  67                                  DSPATR(RI)
      A            DSERR          5   O  9 75
 MV01 A  67                                  DSPATR(RI)
      A          R DELCTL                    TEXT('Trip Delete Confirmation')
+     A*%%TS  SD  19910903  094400  MKERS       REL-R03M00  5728-PW1
      A                                      SFLCTL(DELSFL)
      A                                      SFLSIZ(26)
      A                                      SFLPAG(13)
@@ -1024,6 +1229,7 @@ KRI1 A                                      SETOF(64 'Disable Invite')
      A                                      DSPATR(HI)
      A                                  1 62'System:'
      A            LDSYSN        10A  O  1 70
+     A*                                 2  2'XXXXXXX'
      A            LDCNAM        24A  O  2  2DSPATR(HI)
      A                                  2 47'Name:'
      A            LDNAME        24A  O  2 53
@@ -1062,6 +1268,7 @@ KRI1 A                                      SETOF(64 'Disable Invite')
      A                                  7 75'Error'
      A                                      DSPATR(HI)
      A          R DELFUN                    TEXT('Trip Delete Confirmation')
+     A*%%TS  DD  19960605  104810  DAWN        REL-V3R1M0  5763-CD1
      A                                      BLINK
      A                                      OVERLAY
 KRI1 A                                      SETOF(64 'Disable Invite')
@@ -1069,12 +1276,21 @@ KRI1 A                                      SETOF(64 'Disable Invite')
      A                                      COLOR(BLU)
      A                                 23 76'Help'
      A                                      COLOR(BLU)
+     A* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+     A*
+     A*___________________________________________________________________
+     A*___________________________________________________________________
+     A* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+     A*  Error Message Subfile - Displays Multiple Error Messages.
+     A* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
      A          R MSGSFL
+     A*%%TS  DD  19960605  104810  DAWN        REL-V3R1M0  5763-CD1
      A                                      SFL
      A                                      SFLMSGRCD(24)
      A            MSGKEY                    SFLMSGKEY
      A            PGMQ                      SFLPGMQ
      A          R MSGCTL
+     A*%%TS  DD  19960605  104810  DAWN        REL-V3R1M0  5763-CD1
      A                                      SFLCTL(MSGSFL)
      A  70                                  SFLDSP
      A  70                                  SFLDSPCTL
@@ -1083,8 +1299,11 @@ KRI1 A                                      SETOF(64 'Disable Invite')
      A                                      SFLSIZ(20)
      A                                      SFLPAG(1)
      A          R MSGCLR                    TEXT('SFL Overlay')
+     A*%%TS  DD  19960605  104810  DAWN        REL-V3R1M0  5763-CD1
      A                                 24  1' '
+     A*
      A          R ACQ_SCREEN
+     A*%%TS  SD  20100331  083814  CHARLESB    REL-V6R1M0  5761-WDS
      A                                      CHGINPDFT(UL)
      A                                      BLINK
      A                                      OVERLAY
@@ -1127,6 +1346,7 @@ KRI1 A                                      SETOF(64 'Disable Invite')
      A            VTCUSN        28A  O 13 39
      A            BRCUST         7Y 0O 13 71EDTCDE(Z)
 MV01 A          R DDMERR
+MV01 A*%%TS  SD  20100727  004402  YUVARAM2    REL-V6R1M0  5761-WDS
 MV01 A                                  1  2DATE
 MV01 A                                      EDTCDE(Y)
 MV01 A                                  1 12TIME
@@ -1171,6 +1391,7 @@ MV01 A  67                                  DSPATR(ND)
 MV01 A                                  3  2'-----------------------------------
 MV01 A                                      ------------------------------------
 MV01 A                                      ---------'
+     * Confirmation window for customer retrival
 KK01 A          R CNFWND
 KK01 A                                      OVERLAY
 KK01 A                                      SETOF(64 'Disable Invite')

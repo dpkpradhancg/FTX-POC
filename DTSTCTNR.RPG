@@ -1,21 +1,78 @@
+     F********************************************************************
+     F*Program Name:DTSTCTNR      Application Number:XXX.XX.X        *
+     F*                                                                  *
+     F*Function:DTS - CONFIRM TRIP NUMBER WINDOW                       *
+     F*                                                                  *
+     F*Author:Vinay Ramanand          Date:03/09/99                  *
+      *
+      * YEAR 2000  COMPLIANCE     PROJECT # G752     PHASE I COMPLETE
+      *
+      *
+KRI1  *    Changed:  09/22/99   KRISHNA TANGA
+KRI1  *     ------ Added timeout handling function for this program
+      *
+VIN01 *    Changed:  10/28/99   VINAY RAMANAND
+VIN01 *     ------ UPDATE NEW TRIP NO. ON TRACKING FILE ALSO
+      ********************************************************************
+      *Changed by: Brundavathi S           Date:07/28/2010           *
+      *Project   : 120597                  Tag :SB01                 *
+      *Description:Altered the program to do the following.            *
+      *             1.Removed the 'ACCEPT' functionality  and           *
+      *            2.To allow the user to enter the same information   *
+      *              (trip Number) twice for auto accept.              *
+      ********************************************************************
+      *Changed by: Malarvizhi Y            Date:07/27/2010           *
+      *Project   : 120597                  Tag :MV01                 *
+      *Description:Added code to display error screen with Box, Batch, *
+      *             and Trip details to the user, whenever DDM error    *
+      *            occurs.                                             *
+      ********************************************************************
+      *
+     F********************************************************************
+     F*Files                                                           *
+     F* Name    T/FDevice Description                               *
+     F*  DTSTCTND C E WORKSTN All Displays                               *
+     F*  FDTSHDR  I E DISK    DTS HEADER FILE                            *
+     F*                                                                  *
+     F********************************************************************
+     F*Modifications                                                   *
+     F* ---------------------------------------------------------------- *
+     F*Changed by:Programmer's Name       Date:Date Changed          *
+     F*   Description                                                    *
+     F*                                                                  *
+     F********************************************************************
+     F*Files                                                           *
+     F********************************************************************
      FDTSTCTNDCF  E                    WORKSTN      KINFDS IOFBK      UC
      F                                              KNUM        1
     F                                              KINFSR *PSSR
+MV01 F*FDTSHDR IF  E           K        DISK
 MV01 FFDTSHDR IF  E           K        DISK         KINFSR *PSSR      UC
 MV01 FFDTSMILEIF  E           K        DISK         KINFSR *PSSR      UC
 MV01 FFDTSFUELIF  E           K        DISK         KINFSR *PSSR      UC
      FDTSTRHF UF  E           K        DISK
      FDTSTRDF UF  E           K        DISK
 MV01 FFDTSDMWFO   E           K        DISK         KINFSR *PSSR      UC
+     E********************************************************************
+     E*Arrays                                                          *
+     E********************************************************************
      E                    MSG     1   6 55               Messages
      E                    TRP         8  1               Messages
+     I********************************************************************
+     I*Data Structures                                                 *
+     I********************************************************************
+     I*
+      * Local Data Area
+     I*
      ILDA         DS                                                      LDA
+      *   Progname, Y/N;  User Corp Code, Dist Number, User Name, InitialsLDA
      I                                      401 410 LDPGM                 LDA
      I                                      411 411 LDCODE                LDA
      I                                      412 415 LDCORP                LDA
      I                                      416 419 LDDIST                LDA
      I                                      420 443 LDNAME                LDA
      I                                      444 446 LDINIT                LDA
+      *   Prog Authority:  3 Auth Codes, 3 Limits, 24 Indicators          LDA
      I                                      447 448 LDAUT1                LDA
      I                                      449 450 LDAUT2                LDA
      I                                      451 452 LDAUT3                LDA
@@ -23,21 +80,27 @@ MV01 FFDTSDMWFO   E           K        DISK         KINFSR *PSSR      UC
      I                                    P 457 4600LDLIM2                LDA
      I                                    P 461 4640LDLIM3                LDA
      I                                      465 488 LDINDS                LDA
+      *   Job Source;  Device Type in Hex, Character;  Keyboard Type      LDA
      I                                      492 492 LDJSRC                LDA
      I                                      493 493 LDDVHX                LDA
      I                                      494 495 LDDVTP                LDA
      I                                      496 496 LDKBTP                LDA
+      *   System Number, Name;  User Level number;  System Type           LDA
      I                                      497 500 LDMACH                LDA
      I                                      501 510 LDSYSN                LDA
      I                                    P 511 5120LDLEVL                LDA
      I                                      513 520 LDSYST                LDA
+      *   User's Admin, Region, Area, Reporting District, Company Name    LDA
      I                                      521 524 LDADMN                LDA
      I                                      525 528 LDREGN                LDA
      I                                      529 532 LDAREA                LDA
      I                                      533 536 LDRDST                LDA
      I                                      537 560 LDCNAM                LDA
+      *   **NOTE** 561-600 reserved for future use                        LDA
      I                                      561 600 LD$$$$                LDA
+     I* I/O Feed Back Data Structure                                      IOFDBK
      IIOFBK       DS                                                      IOFDBK
+     I* File,*Status,*Opcode,*Routine,Src Stmt,*Record,Msgid              IOFDBK
      I                                        1   8 IFILE                 IOFDBK
      I                                       11  150ISTAT                 IOFDBK
      I                                       16  21 IOPCD                 IOFDBK
@@ -45,65 +108,103 @@ MV01 FFDTSDMWFO   E           K        DISK         KINFSR *PSSR      UC
      I                                       30  37 ISTMT                 IOFDBK
      I                                       38  45 IRNAM                 IOFDBK
      I                                       46  52 IMSID                 IOFDBK
+     I* Opd Type,Actual File/Lib,Pri/Sec Rec Length,Actual Mbr            IOFDBK
      I                                       81  82 IODPT                 IOFDBK
      I                                       83  92 IFNAM                 IOFDBK
      I                                       93 102 ILNAM                 IOFDBK
      I                                    B 125 1260IPLTH                 IOFDBK
      I                                    B 127 1280ISLTH                 IOFDBK
      I                                      129 138 IMNAM                 IOFDBK
+     I* Lines/Page or Screen, Chars per Line, Nbr Recs at Open            IOFDBK
      I                                    B 152 1530IPSIZ                 IOFDBK
      I                                    B 154 1550ILSIZ                 IOFDBK
      I                                    B 156 1590IRCNT                 IOFDBK
+     I* Src File(Y/N), Misc Flags, Recd Format, Cursor location,          IOFDBK
+     I* SF Dsp Rrn, Rel Rec Nbr                                           IOFDBK
      I                                      163 163 ISRCF                 IOFDBK
      I                                      196 196 IFLAG                 IOFDBK
      I                                      261 270 IRFMT                 IOFDBK
      I                                    B 370 3710ICURLN                IOFDBK
      I                                    B 376 3770IDSPRN                IOFDBK
      I                                    B 378 3790IRECN                 IOFDBK
+     I* Major/Minor Return Code                                           IOFDBK
      I                                      401 404 IMAMI                 IOFDBK
      I                                      401 402 IMAJR                 IOFDBK
      I                                      403 404 IMINR                 IOFDBK
      IPSSA       SDS                            429                       PSSA
+     I** Pgm Name, Status, Src Stmt, Parms, Rpg Routine, MsgId  Lib, Msg**PSSA
      I                                        1  10 PSPGNM                PSSA
      I                                       11  150PSPGSC                PSSA
      I                                       21  28 PSPGST                PSSA
      I                                       29  36 PSPGRT                PSSA
+     I****                                   37  390PSPARM                PSSA
      I                                       40  46 PSPGMI                PSSA
      I                                       81  90 PSPGLB                PSSA
      I                                       91 170 PSPGMS                PSSA
+     I*           ** Last File Used Name, Status, RPG Routine, Src Stmt **PSSA
      I                                      201 208 PSLFNM                PSSA
      I                                      209 213 PSLFSC                PSSA
      I                                      220 227 PSLFRT                PSSA
      I                                      228 235 PSLFST                PSSA
+     I*                              ** Job Name, User Name, Job Number **PSSA
      I                                      244 253 PSJBNM                PSSA
      I                                      254 263 PSJBUS                PSSA
      I                                      264 2690PSJBNR                PSSA
+     I*                                    ** Program Start Date & Time **PSSA
      I                                      276 2810PSMDY                 PSSA
      I                                      282 2850PSHM                  PSSA
 SB01 I              X'D0'                 C         WKCHAR
 SB01 I              X'E0'                 C         WCHAR1
+     C*
+     C********************************************************************
+     C*Housekeeping                                                    *
+     C********************************************************************
+     C**
 SB01 C                     MOVE *BLANKS   WKTRIP  8
 SB01 C                     MOVE ##TRIP    WKTRIP
      C                     MOVEL'Y'       @@LOOP  1
      C           @@LOOP    DOUEQ'N'
+      *
+      * Write/Read Prompt screen.
+      *
+      *
  KRI1C                     SETON                     91
  KRI1C                     WRITECNFIRM
  KRI1C                     READ DTSTCTND                 67
+ KRI1C*                    EXFMTCNFIRM
+      *
      C                     MOVE *OFF      *IN41            Trip Number
      C                     MOVE *BLANKS   ERRMSG
+      * RIGHT JUSTIFY TRIP NO.
      C                     CLEARWKC10
      C                     MOVE SCTRIP    WKC10  10
      C                     CALL 'SPRJBF10'
      C                     PARM           WKC10
      C                     MOVE WKC10     SCTRIP
+      *
+      * IF TRIP KEYED DOES NOT MATCH PREVIOUSLY KEYED TRIP
+      *
+SB01 C**         SCTRIP    IFNE ##TRIP
 SB01 C           SCTRIP    IFNE WKTRIP
+      *
+      *PUSH BUTTON = OFF
+      *
      C           *IN50     IFEQ '0'                        PUSH BUTT=0
+      *
+      * trip no. cannot be blanks
+      *
      C           SCTRIP    IFEQ *BLANKS
      C                     MOVE *ON       *IN41            Trip Number
      C                     MOVEAMSG,1     ERRMSG
      C                     ELSE
+      *
+      * edit trip for invalid characters
+      *
      C                     EXSR EDTRIP
      C           *IN41     IFEQ '0'
+      *
+      * A new trip must have a unique trip number.
+      *
      C           SCTRIP    SETLLRDTSHDR                  89
 MV01 C        N89SCTRIP    SETLLRDTSMILE                 89               89
 MV01 C        N89SCTRIP    SETLLRDTSFUEL                 89               89
@@ -116,14 +217,24 @@ MV01 C        N89SCTRIP    SETLLRDTSFUEL                 89               89
      C                     ENDIF
      C                     ENDIF
      C                     ENDIF
+     C**PUSH BUTTON IS ON
      C                     ELSE
+     C**IF CHOICE IS ACCEPT CHANGE TRIP NO.
      C                     MOVE *OFF      *IN50            PUSH BUTTONS
 SB01 C           PSHFL1    IFEQ 1                          ACCEPT
 SB01 C                     MOVE SCTRIP    WKTRIP
 SB01 C                     MOVE *BLANKS   SCTRIP
 SB01 C                     ENDIF
+SB01 C**         PSHFL1    IFEQ 2                          ACCEPT
+SB01 C**                   MOVEL'N'       @@LOOP
+SB01 C**                   ENDIF
+     C**
      C                     ENDIF
      C                     ELSE
+     C**
+SB01  *
+SB01  * trip no. cannot be blanks, when trip is re-entered.
+SB01  *
 SB01 C           SCTRIP    IFEQ *BLANKS
 SB01 C                     MOVE *ON       *IN41            Trip Number
 SB01 C                     MOVEAMSG,1     ERRMSG
@@ -131,13 +242,21 @@ SB01 C                     ELSE
      C                     MOVEL'N'       @@LOOP
 SB01 C                     ENDIF
      C                     ENDIF
+     C**
      C                     ENDDO
+VIN01C**
+|    C** IF THE SCREEN TRIP-NEW TRIP(SCTRIP) DOES NOT MATCH THE ENTRY
+|    C** PARAMETER TRIP-OLD TRIP(##TRIP) THEN CHECK TO SEE IF THE OLD
+|    C** TRIP EXISTS ON THE TRACKING FILE. IF SO, THEN UPDATE WITH NEW.
+|    C**
 |    C           ##TRIP    IFNE SCTRIP
+|    C**
 |    C           ##TRIP    CHAINDTSTRHF              66
 |    C           *IN66     IFEQ '0'
 |    C                     MOVELSCTRIP    TRHTRP
 |    C                     UPDATRDTSTRH
 |    C                     ENDIF
+|    C**
 |    C           ##TRIP    SETLLDTSTRDF
 |    C           *IN66     DOUEQ'1'
 |    C           ##TRIP    READEDTSTRDF                  66
@@ -145,12 +264,22 @@ SB01 C                     ENDIF
 |    C                     MOVELSCTRIP    TRDTRP
 |    C                     UPDATRDTSTRD
 |    C                     ENDIF
+|    C**
 |    C                     ENDDO
+|    C**
 |    C                     ENDIF
+VIN01C**
      C                     MOVELSCTRIP    ##TRIP
      C                     MOVEL'1'       *INLR
+      *
       /EJECT
+      *************************************************************
+      * EDTRIP - EDIT TRIP NUMBER                                 *
+      *************************************************************
      C           EDTRIP    BEGSR                                          $DLPMT
+      *                                                                   $DLPMT
+      * EDIT TRIP NO. FOR SPECIAL CHARACTERS                              $DLPMT
+      *                                                                   $DLPMT
      C                     CLEARTRP                                       $DLPMT
      C                     MOVEASCTRIP    TRP,1                           $DLPMT
      C                     Z-ADD1         @X      10                      $DLPMT
@@ -158,11 +287,17 @@ SB01 C                     ENDIF
      C                     MOVE 'Y'       BLNKAL  1                       $DLPMT
      C           @EXT      DOUEQ'Y'                                       $DLPMT
      C           @X        ORGT 8                                         $DLPMT
+      *                                                                   $VLPMT
+      * FIRST POSITION YOU HIT IS NOT A BLANK THEN SET THE BLANK          $VLPMT
+      * ALLOWED FLAG TO A NO --- BECAUSE YOU CANNOT HAVE EMBEDDED ' 'S    $VLPMT
+      *                                                                   $VLPMT
      C           TRP,@X    IFNE ' '                                       $DLPMT
      C                     MOVE 'N'       BLNKAL                          $DLPMT
      C                     ENDIF                                          $DLPMT
+      *                                                                   $VLPMT
      C           TRP,@X    IFGE 'A'                                       $DLPMT
      C           TRP,@X    ANDLE'Z'                                       $DLPMT
+      * Special characters will not allowed in trip number.
 SB01 C           TRP,@X    ANDNEWKCHAR                                    $DLPMT
 SB01 C           TRP,@X    ANDNEWCHAR1                                    $DLPMT
      C           TRP,@X    ORGE '0'                                       $DLPMT
@@ -176,14 +311,22 @@ SB01 C           TRP,@X    ANDNEWCHAR1                                    $DLPMT
      C                     MOVE 'Y'       @EXT                            $DLPMT
      C                     ENDIF                                          $DLPMT
      C                     ENDIF                                          $DLPMT
+      *                                                                   $VLPMT
      C                     ADD  1         @X                              $DLPMT
      C                     ENDDO                                          $DLPMT
+      *                                                                   $VLPMT
      C                     ENDSR                                          $VLPMT
+     C*
+     C********************************************************************
+     C**INZSR- First Time Initialization.                              *
+     C********************************************************************
      C           *INZSR    BEGSR
+     C*
      C           *ENTRY    PLIST
      C                     PARM           ##TRIP  8
 MV01 C                     PARM           ##BOX   7
 MV01 C                     PARM           ##BAT   7
+     C*
      C                     OPEN DTSTCTND
 MV01 C                     CLOSEFDTSHDR
 MV01 C                     OPEN FDTSHDR
@@ -191,8 +334,19 @@ MV01 C                     CLOSEFDTSMILE
 MV01 C                     OPEN FDTSMILE
 MV01 C                     CLOSEFDTSFUEL
 MV01 C                     OPEN FDTSFUEL
+     C* Load Program Constants
+     C*
      C                     MOVE '0'       *IN50
+     C*
      C                     ENDSR
+      *
+     C********************************************************************
+     C**PSSR- Perform Dislpay Timeout.                                 *
+     C********************************************************************
+     C*
+     C* Modified Error Handler for Display Timeouts & other errors
+     C* Calls:  SPCNLRPG  (send ESCAPE message to caller of this Pgm)
+     C*           FPEPGMER  (display explanatory message for user)
      C           *PSSR     BEGSR
 MV01 C           PSLFNM    IFEQ 'FDTSHDR'
 MV01 C           ##TRIP    ANDNE*BLANKS
@@ -224,7 +378,10 @@ MV01 C                     RETRN
 MV01 C                     ELSE
      C           ##PSSR    CABNE*BLANKS   @@PSSR           LOOP?
      C                     MOVE '1'       ##PSSR  1        SET ONE-TIME SW
+     C*
+     C* Trap DSPF timeouts and hard I/O errors here.
      C           PSLFNM    IFEQ 'DTSTCTND'
+     C* Close DSPF for timeout only.
      C           PSLFSC    IFEQ '01331'
      C                     MOVE PSLFNM    ##LFNM  8        HOLD
      C                     MOVE PSLFRT    ##LFRT  8          FILE
@@ -236,18 +393,26 @@ MV01 C                     ELSE
      C                     MOVE ##LFSC    PSLFSC             FILE ERROR
      C                     MOVE ##LFST    PSLFST             DATA
      C                     ENDIF                           ENDIF PSLFSC
+     C*
      C           PSLFSC    IFEQ '01331'                    timeout or
      C           PSLFSC    OREQ '01299'                    I/O error
      C                     CALL 'SPCNLRPG'             LR  SEND ESCAPE MSG
      C                     PARM           PSSA
      C                     ENDIF
+     C*
      C                     ENDIF
+     C*
+     C* All other errors - display explanatory message.
      C                     CALL 'FPEPGMER'             LR
      C                     PARM           PSSA
+     C*
+     C* In case retry option will be taken on this error.
      C           *INLR     IFEQ *OFF
      C                     MOVE *BLANK    ##PSSR
      C                     ENDIF
 MV01 C                     ENDIF
+     C*
+     C* Use RPG default error handler.
      C           @@PSSR    ENDSR
 ** MSG - Error Messages
 Trip Number cannot be blanks
